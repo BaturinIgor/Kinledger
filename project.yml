@@ -24,6 +24,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.kinledger
+        CODE_SIGN_ENTITLEMENTS: Kinledger/Kinledger.entitlements
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Kinledger
