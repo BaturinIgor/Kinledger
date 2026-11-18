@@ -11,8 +11,8 @@ struct EntryRow: View {
             : entry.occurredAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
         var parts = [when]
         if let note = entry.note, !note.isEmpty { parts.append(note) }
-        if entry.expense?.payer == .parent { parts.append("paid by her") }
-        if entry.expense?.payer == .repaid { parts.append("repaid") }
+        if entry.expense?.payer == .parent { parts.append(String(localized: "\(profile.nickname) paid")) }
+        if entry.expense?.payer == .repaid { parts.append(String(localized: "repaid")) }
         return parts.joined(separator: " · ")
     }
 

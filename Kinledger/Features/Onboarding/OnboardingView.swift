@@ -150,7 +150,7 @@ struct RecipientEditor: View {
     var body: some View {
         Card {
             HStack {
-                Text(person.name.isEmpty ? "New person" : person.name).font(.headline)
+                Text(person.name.isEmpty ? String(localized: "New person") : person.name).font(.headline)
                 Spacer()
                 Button("Remove", role: .destructive, action: onRemove).font(.subheadline)
             }
