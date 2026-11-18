@@ -7,6 +7,7 @@ import Observation
 final class AppModel {
     let store: EntryStore
     let receipts: ReceiptStore
+    let cloud: CloudBackup
     private(set) var entries: [Entry] = []
     private(set) var trash: [TrashedEntry] = []
     /// Nil until onboarding is done.
@@ -15,11 +16,13 @@ final class AppModel {
     /// Shown to the person when the phone could not save. Never swallowed.
     var problem: String?
 
-    init(store: EntryStore, receipts: ReceiptStore, problem: String? = nil) {
+    init(store: EntryStore, receipts: ReceiptStore, problem: String? = nil, cloudConfig: CloudConfig? = nil) {
         self.store = store
         self.receipts = receipts
         self.problem = problem
+        cloud = CloudBackup(store: store, receipts: receipts, config: cloudConfig)
         reload()
+        cloud.onDownloaded = { [weak self] in self?.reload() }
     }
 
     static func live() -> AppModel {
@@ -28,7 +31,7 @@ final class AppModel {
             let receipts = try ReceiptStore.onDisk()
             let purged = try store.purgeExpiredTrash()
             receipts.delete(purged.receiptFiles)
-            return AppModel(store: store, receipts: receipts)
+            return AppModel(store: store, receipts: receipts, cloudConfig: .current)
         } catch {
             // Keep the app usable, and say clearly that nothing is being kept.
             let fallback = try! EntryStore.inMemory()
@@ -131,6 +134,7 @@ final class AppModel {
         defer { reload() }
         do {
             try work()
+            cloud.syncSoon()
             return true
         } catch {
             problem = "Could not save: \(error.localizedDescription)"

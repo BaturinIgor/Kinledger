@@ -90,6 +90,24 @@ final class EntryStore: Sendable {
                 t.column("createdAt", .datetime).notNull()
             }
         }
+        migrator.registerMigration("v3-sync") { db in
+            try db.alter(table: "entry") { t in
+                t.add(column: "syncedAt", .datetime)
+            }
+            try db.alter(table: "profile") { t in
+                t.add(column: "syncedAt", .datetime)
+            }
+            // Small key-value table for the sync cursor and similar bookkeeping.
+            try db.create(table: "syncState") { t in
+                t.primaryKey("key", .text)
+                t.column("value", .text).notNull()
+            }
+            // Receipt photos already in the cloud, so each file uploads once.
+            try db.create(table: "receiptUpload") { t in
+                t.primaryKey("name", .text)
+                t.column("uploadedAt", .datetime).notNull()
+            }
+        }
         return migrator
     }
 
@@ -166,7 +184,7 @@ final class EntryStore: Sendable {
                 )
                 try revision.insert(db)
             }
-            let record = EntryRecord(entry, updatedAt: now, deletedAt: existing?.deletedAt)
+            let record = EntryRecord(entry, updatedAt: now, deletedAt: existing?.deletedAt, syncedAt: existing?.syncedAt)
             try record.save(db)
         }
     }
