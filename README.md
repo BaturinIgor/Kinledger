@@ -21,3 +21,9 @@ open Kinledger.xcodeproj
 ```
 
 Run the app with Cmd+R and the tests with Cmd+U. The `.xcodeproj` is generated from `project.yml` and is not committed.
+
+## Trying Pro without the App Store
+
+The Run scheme uses `StoreKit/Kinledger.storekit`, so in the simulator the Pro screen shows
+real-looking prices ($9.99 a month, $79 a year, 7-day trial) and purchases work without an
+Apple Developer account. Manage test purchases in Xcode under Debug → StoreKit → Manage Transactions.

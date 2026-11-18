@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MeView: View {
     @Environment(AppModel.self) private var model
+    @Environment(ProStore.self) private var pro
+    @State private var showPaywall = false
     @State private var shared: SharedFile?
 
     var body: some View {
@@ -32,12 +34,27 @@ struct MeView: View {
                         Label("Add a person", systemImage: "plus")
                     }
                 }
+                Section("Kinledger Pro") {
+                    if pro.isPro {
+                        Label("Pro is on. Thank you.", systemImage: "checkmark.seal")
+                    } else {
+                        Button { showPaywall = true } label: {
+                            Label("Family report and tax export", systemImage: "sparkles")
+                        }
+                    }
+                }
                 Section {
                     if model.careProfile.country.hasTaxExport {
-                        NavigationLink {
-                            TaxExportView()
-                        } label: {
-                            Label("Tax export", systemImage: "doc.text")
+                        if pro.isPro {
+                            NavigationLink {
+                                TaxExportView()
+                            } label: {
+                                Label("Tax export", systemImage: "doc.text")
+                            }
+                        } else {
+                            Button { showPaywall = true } label: {
+                                Label("Tax export · Pro", systemImage: "doc.text")
+                            }
                         }
                     }
                     Button {
@@ -63,6 +80,7 @@ struct MeView: View {
             }
             .navigationTitle("Me")
             .sheet(item: $shared) { file in ShareSheet(items: [file.url]) }
+            .sheet(isPresented: $showPaywall) { PaywallView() }
         }
     }
 }
