@@ -9,9 +9,9 @@ import StoreKit
 @MainActor
 @Observable
 final class ProStore {
-    static let monthlyID = "app.kinledger.pro.monthly"
-    static let yearlyID = "app.kinledger.pro.yearly"
-    static let productIDs: Set<String> = [monthlyID, yearlyID]
+    nonisolated static let monthlyID = "app.kinledger.pro.monthly"
+    nonisolated static let yearlyID = "app.kinledger.pro.yearly"
+    nonisolated static let productIDs: Set<String> = [monthlyID, yearlyID]
 
     private(set) var products: [Product] = []
     private(set) var isPro = false
@@ -64,7 +64,7 @@ final class ProStore {
         isPro = Self.unlocks(owned)
     }
 
-    static func unlocks(_ owned: Set<String>) -> Bool {
+    nonisolated static func unlocks(_ owned: Set<String>) -> Bool {
         !owned.isDisjoint(with: productIDs)
     }
 
