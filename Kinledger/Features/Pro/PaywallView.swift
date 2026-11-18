@@ -56,10 +56,15 @@ struct PaywallView: View {
                         }
                     }
                     .disabled(pro.products.isEmpty)
-                    Text("Free for 7 days, then the plan you chose. Cancel in Settings any time before the trial ends.")
+                    Text("Free for 7 days, then the plan you chose, renewing automatically until you cancel. Cancel in Settings any time, at least 24 hours before the trial or period ends.")
                         .font(.footnote)
                         .foregroundStyle(Palette.textSecondary)
                         .multilineTextAlignment(.center)
+                    HStack(spacing: 16) {
+                        Link("Terms of Use", destination: Links.terms)
+                        Link("Privacy Policy", destination: Links.privacy)
+                    }
+                    .font(.footnote)
                 }
                 .padding(20)
                 .background(Palette.background)

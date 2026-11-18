@@ -76,6 +76,12 @@ struct MeView: View {
                         }
                     }
                     Label("Notes are private by default", systemImage: "lock")
+                    Link(destination: Links.privacy) {
+                        Label("Privacy Policy", systemImage: "hand.raised")
+                    }
+                    Link(destination: Links.support) {
+                        Label("Help and contact", systemImage: "questionmark.circle")
+                    }
                 }
             }
             .navigationTitle("Me")
