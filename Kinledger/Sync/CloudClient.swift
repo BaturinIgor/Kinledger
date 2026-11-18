@@ -7,8 +7,8 @@ struct CloudConfig: Sendable, Equatable {
     let anonKey: String
 
     /// Fill these in from the Supabase project (Settings → API). Empty means cloud backup is off in this build.
-    static let projectURL = ""
-    static let projectAnonKey = ""
+    static let projectURL = "https://dzyriivgpbktbnxiolyl.supabase.co"
+    static let projectAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6eXJpaXZncGJrdGJueGlvbHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUwMjg1NjYsImV4cCI6MjExMDYwNDU2Nn0.bhATR1FHCKaIXBLQicDk3ECUDxfL-l6ezeKy24Vc8m0"
 
     static var current: CloudConfig? {
         guard !projectAnonKey.isEmpty, let url = URL(string: projectURL) else { return nil }

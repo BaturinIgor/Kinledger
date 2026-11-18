@@ -45,7 +45,7 @@ jobs:
           if [ -z "$APPLE_KEY_ID" ]; then echo "Apple key not set yet, skipping"; exit 0; fi
           supabase secrets set --project-ref "$PROJECT_REF" \
             APPLE_TEAM_ID="$APPLE_TEAM_ID" APPLE_KEY_ID="$APPLE_KEY_ID" \
-            APPLE_CLIENT_ID=app.kinledger APPLE_PRIVATE_KEY="$APPLE_PRIVATE_KEY"
+            APPLE_CLIENT_ID=app.kinledger APPLE_PRIVATE_KEY="$APPLE_PRIVATE_KEY" --yes
 
       - name: Deploy the delete-account function
-        run: supabase functions deploy delete-account --project-ref "$PROJECT_REF"
+        run: supabase functions deploy delete-account --project-ref "$PROJECT_REF" --yes
