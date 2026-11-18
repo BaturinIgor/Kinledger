@@ -1,0 +1,21 @@
+Bir ebeveyne bakmak çok fazla sessiz emek demektir. Kinledger bunu kayda geçirir.
+
+Eczaneye gidişi, doktor randevusunu, yanında geçirilen geceyi ya da market alışverişini birkaç dokunuşla kaydedin: ne kadar sürdüğü, ne ödediğiniz ve fişin fotoğrafı. Kinledger hepsini toplar.
+
+AİLE İÇİN NET BİR RAPOR
+Ayda bir kez kardeşlerinizle sakin bir özet paylaşın: bakım saatleri, ziyaretler, cepten ödenen para ve her kaydın ne zaman girildiği. Raporu PDF olarak ya da özel bir bağlantıyla açarlar; uygulama ya da hesap gerekmez. Bağlantıyı istediğiniz zaman kapatabilirsiniz.
+
+DÜRÜST BİR KAYIT
+Her kayıt ne zaman girildiğini gösterir. Değişikliklerin geçmişi saklanır, silinen kayıtlar 30 gün Çöp Kutusu’nda bekler. Hiçbir şey yanlışlıkla kaybolmaz.
+
+BAŞTAN GİZLİ
+Günlüğünüz iPhone’unuzda kalır. Yeni bir iPhone’da geri almak için Apple ile Giriş Yap ile bulut yedeklemeyi açın. Reklam yok, izleme yok, verileriniz asla satılmaz.
+
+VERGİ ZAMANI İÇİN
+ABD’de yıl içinde ödediğiniz sağlık harcamalarını fişleriyle birlikte, vergi danışmanınıza hazır şekilde dışa aktarın.
+
+ÜCRETSİZ: kayıt, toplamlar, fişler, geçmiş, yedekleme ve verilerinizin tamamını dışa aktarma.
+KINLEDGER PRO: aylık aile raporu ve vergi dışa aktarımı, aylık ya da yıllık. iPhone Ayarlar’dan istediğiniz zaman iptal edin.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

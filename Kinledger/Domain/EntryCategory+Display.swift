@@ -3,14 +3,14 @@ import Foundation
 extension EntryCategory {
     var label: String {
         switch self {
-        case .doctor: "Doctor"
-        case .pharmacy: "Pharmacy"
-        case .groceries: "Groceries"
-        case .overnight: "Overnight"
-        case .bills: "Bills & calls"
-        case .homeHelp: "Home help"
-        case .transport: "Transport"
-        case .other: "Other"
+        case .doctor: String(localized: "Doctor")
+        case .pharmacy: String(localized: "Pharmacy")
+        case .groceries: String(localized: "Groceries")
+        case .overnight: String(localized: "Overnight")
+        case .bills: String(localized: "Bills & calls")
+        case .homeHelp: String(localized: "Home help")
+        case .transport: String(localized: "Transport")
+        case .other: String(localized: "Other")
         }
     }
 

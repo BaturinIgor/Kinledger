@@ -35,7 +35,7 @@ struct ReportView: View {
                     Toggle("Include my private notes", isOn: $includeNotes)
                         .padding(.horizontal, 4)
 
-                    PrimaryButton(title: pro.isPro ? "Share PDF" : "Share PDF with Pro") {
+                    PrimaryButton(title: pro.isPro ? String(localized: "Share PDF") : String(localized: "Share PDF with Pro")) {
                         if pro.isPro { sharePDF() } else { showPaywall = true }
                     }
                         .disabled(report.entries.isEmpty)
@@ -44,7 +44,7 @@ struct ReportView: View {
                         Button {
                             if pro.isPro { Task { await shareLink() } } else { showPaywall = true }
                         } label: {
-                            Label(isMakingLink ? "Making the link…" : "Share a private link", systemImage: "link")
+                            Label(isMakingLink ? String(localized: "Making the link…") : String(localized: "Share a private link"), systemImage: "link")
                                 .frame(maxWidth: .infinity, minHeight: Metrics.minTouch)
                         }
                         .buttonStyle(.bordered)
@@ -88,7 +88,7 @@ struct ReportView: View {
         do {
             shared = SharedFile(url: try ReportPDF.render(report: report, includeNotes: includeNotes, profile: model.careProfile))
         } catch {
-            model.problem = "Could not make the PDF: \(error.localizedDescription)"
+            model.problem = String(localized: "Could not make the PDF: \(error.localizedDescription)")
         }
     }
 }
@@ -105,7 +105,7 @@ struct ReportPage: View {
                 Text("\(profile.nickname)'s care in \(report.month.formatted(.dateTime.month(.wide).year()))")
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(Palette.text)
-                Text(report.headline(parentName: profile.nickname, money: profile.money))
+                Text(report.headline(parentName: profile.nickname, money: { profile.money($0) }))
                     .font(.body)
                     .foregroundStyle(Palette.textSecondary)
             }

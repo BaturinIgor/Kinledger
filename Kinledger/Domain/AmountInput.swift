@@ -13,11 +13,24 @@ enum AmountInput {
     /// Whole amounts at or above this many cents are worth a second look.
     static let suspiciousFrom = 100_000
 
-    static func parse(_ text: String) -> Result {
-        let cleaned = text
-            .replacingOccurrences(of: "$", with: "")
-            .replacingOccurrences(of: ",", with: "")
-            .trimmingCharacters(in: .whitespaces)
+    /// The decimal mark the iPhone's number keypad shows: "." in the US and UK, "," in most of Europe.
+    static var localDecimalSeparator: String { Locale.current.decimalSeparator ?? "." }
+
+    static func parse(_ text: String, decimalSeparator: String = localDecimalSeparator) -> Result {
+        let comma = decimalSeparator == ","
+        let grouping: Character = comma ? "." : ","
+        var cleaned = text.filter { !$0.isWhitespace && $0 != "'" && !$0.isCurrencySymbol }
+        if comma {
+            // "42.80" typed on a comma keypad still means 42.80; "1.140,50" uses "." for thousands.
+            let dots = cleaned.filter { $0 == "." }.count
+            let afterDot = cleaned.split(separator: ".", omittingEmptySubsequences: false).last ?? ""
+            if !cleaned.contains(","), dots == 1, (1...2).contains(afterDot.count) {
+                cleaned = cleaned.replacingOccurrences(of: ".", with: ",")
+            }
+        }
+        let grouped = cleaned.contains(grouping)
+        cleaned = cleaned.replacingOccurrences(of: String(grouping), with: "")
+        if comma { cleaned = cleaned.replacingOccurrences(of: ",", with: ".") }
         if cleaned.isEmpty { return .empty }
         guard cleaned.allSatisfy({ "0123456789.".contains($0) }) else { return .invalid }
 
@@ -32,14 +45,14 @@ enum AmountInput {
         }
         let cents = whole * 100 + fraction
         // "1,140" was typed on purpose; "4280" with no point probably means 42.80.
-        if parts.count == 1 && !text.contains(",") && cents >= suspiciousFrom {
+        if parts.count == 1 && !grouped && cents >= suspiciousFrom {
             return .suspicious(typedCents: cents, suggestedCents: whole)
         }
         return .cents(cents)
     }
 
     /// The text to show for an amount in the field: 4280 → "42.80", 1800 → "18".
-    static func text(cents: Int) -> String {
-        cents % 100 == 0 ? "\(cents / 100)" : String(format: "%d.%02d", cents / 100, cents % 100)
+    static func text(cents: Int, decimalSeparator: String = localDecimalSeparator) -> String {
+        cents % 100 == 0 ? "\(cents / 100)" : String(format: "%d%@%02d", cents / 100, decimalSeparator, cents % 100)
     }
 }

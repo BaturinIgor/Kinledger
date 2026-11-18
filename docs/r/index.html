@@ -43,25 +43,48 @@
 </style>
 </head>
 <body>
-<main id="app"><p class="message">Loading the report…</p></main>
+<main id="app"><p class="message">…</p></main>
 <script src="config.js"></script>
+<script src="i18n.js"></script>
 <script>
 (() => {
   const app = document.getElementById("app");
-  const LABELS = { doctor: "Doctor", pharmacy: "Pharmacy", groceries: "Groceries", overnight: "Overnight",
-    bills: "Bills & calls", "home-help": "Home help", transport: "Transport", other: "Other" };
-  const COUNTRY = { US: ["en-US", "USD"], UK: ["en-GB", "GBP"], CA: ["en-CA", "CAD"], AU: ["en-AU", "AUD"], EU: ["en-IE", "EUR"] };
+  const ALL = window.KINLEDGER_I18N;
+  // The reader's own language, whatever the caregiver uses. Norwegian "no"/"nn" read as Bokmål.
+  const pick = () => {
+    for (const raw of navigator.languages || [navigator.language || "en"]) {
+      const tag = raw.toLowerCase();
+      if (tag.startsWith("zh")) return /hant|tw|hk|mo/.test(tag) ? "zh-Hant" : "zh-Hans";
+      const base = tag.split("-")[0];
+      if (base === "no" || base === "nn") return "nb";
+      if (ALL[base]) return base;
+    }
+    return "en";
+  };
+  const lang = pick();
+  const T = ALL[lang];
+  const locale = lang === "pt" ? "pt-BR" : lang;
+  document.documentElement.lang = locale;
+  const plural = new Intl.PluralRules(locale);
+  const fill = (text, values) => text.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
+  const count = (forms, n) => fill(forms[plural.select(n)] || forms.other, { n: n.toLocaleString(locale) });
+  const CURRENCY = { US: "USD", UK: "GBP", CA: "CAD", AU: "AUD", EU: "EUR" };
 
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const show = (text) => { app.replaceChildren(el("p", "message", text)); };
+  show(T.loading);
 
-  const duration = (m) => m < 60 ? `${m} min` : (m % 60 === 0 ? `${Math.floor(m / 60)} h` : `${Math.floor(m / 60)} h ${m % 60} min`);
-  const hours = (m) => { const h = Math.round(m / 30) / 2; return Number.isInteger(h) ? `${h} h` : `${h.toFixed(1)} h`; };
+  const num = (x) => x.toLocaleString(locale, { maximumFractionDigits: 1 });
+  const sep = T.sep ?? " ";
+  const unit = (n, u) => `${num(n)}${sep}${u}`;
+  const duration = (m) => m < 60 ? unit(m, T.min) : (m % 60 === 0 ? unit(Math.floor(m / 60), T.h) : `${unit(Math.floor(m / 60), T.h)} ${unit(m % 60, T.min)}`);
+  const hours = (m) => unit(Math.round(m / 30) / 2, T.h);
+  const category = (c) => T.cat[c] || T.cat.other;
 
   const token = location.hash.slice(1);
   const cfg = window.KINLEDGER_CONFIG || {};
-  if (!token) return show("This link is missing its key. Ask for the link again.");
-  if (!cfg.url || !cfg.anonKey) return show("Report links are not set up yet.");
+  if (!token) return show(T.noKey);
+  if (!cfg.url || !cfg.anonKey) return show(T.notSetUp);
 
   fetch(`${cfg.url}/rest/v1/rpc/shared_report`, {
     method: "POST",
@@ -70,14 +93,16 @@
   })
     .then((r) => r.ok ? r.json() : Promise.reject(r.status))
     .then(render)
-    .catch(() => show("The report could not load. Check the connection and try again."));
+    .catch(() => show(T.failed));
 
   function render(report) {
-    if (!report) return show("This link was turned off by the person who shared it.");
-    const profile = report.profile || { nickname: "Your parent", country: "US" };
-    const [locale, currency] = COUNTRY[profile.country] || COUNTRY.US;
-    const money = (cents) => new Intl.NumberFormat(locale, { style: "currency", currency,
-      minimumFractionDigits: cents % 100 === 0 ? 0 : 2, maximumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents / 100);
+    if (!report) return show(T.off);
+    const profile = report.profile || { nickname: T.parent, country: "US" };
+    const currency = profile.currency || CURRENCY[profile.country] || "USD";
+    const money = (cents) => {
+      const digits = cents % 100 === 0 ? 0 : 2;
+      return new Intl.NumberFormat(locale, { style: "currency", currency, minimumFractionDigits: digits, maximumFractionDigits: digits }).format(cents / 100);
+    };
     // The middle of the period is safely inside the month whatever the caregiver's time zone.
     const middle = new Date((Date.parse(report.period_start) + Date.parse(report.period_end)) / 2);
     const monthName = middle.toLocaleDateString(locale, { month: "long", year: "numeric", timeZone: "UTC" });
@@ -94,32 +119,35 @@
       if (e.expense && e.expense.receiptPath) receipts += 1;
     }
 
+    const title = fill(T.title, { name: profile.nickname, month: monthName });
+    document.title = `${title} · Kinledger`;
     const nodes = [];
-    nodes.push(el("h1", null, `${profile.nickname}'s care in ${monthName}`));
-    nodes.push(el("p", "lead", `${hours(minutes)} of care, ${visits === 1 ? "1 visit" : visits + " visits"} and ${money(paid)} paid out of pocket.`));
+    nodes.push(el("h1", null, title));
+    nodes.push(el("p", "lead", fill(T.lead, { hours: hours(minutes), visits: count(T.visits, visits), money: money(paid) })));
 
     const stats = el("div", "card stats");
-    for (const [value, label, cls] of [[hours(minutes), "time", "time"], [money(paid), "out of pocket", "money"], [String(visits), "visits", "visits"]]) {
+    for (const [value, label, cls] of [[hours(minutes), T.statTime, "time"], [money(paid), T.statPaid, "money"], [visits.toLocaleString(locale), T.statVisits, "visits"]]) {
       const s = el("div", "stat"); s.append(el("b", cls, value), el("span", null, label)); stats.append(s);
     }
     nodes.push(stats);
 
     const lines = Object.entries(spending).sort((a, b) => b[1] - a[1]);
     if (lines.length) {
-      const card = el("div", "card"); card.append(el("h2", null, "Where the money went"));
+      const card = el("div", "card"); card.append(el("h2", null, T.where));
       for (const [cat, cents] of lines) {
-        const line = el("div", "line"); line.append(el("span", null, LABELS[cat] || "Other"), el("b", "money", money(cents))); card.append(line);
+        const line = el("div", "line"); line.append(el("span", null, category(cat)), el("b", "money", money(cents))); card.append(line);
       }
       nodes.push(card);
     }
 
-    const list = el("div", "card"); list.append(el("h2", null, `All ${entries.length} entries`));
+    const list = el("div", "card"); list.append(el("h2", null, count(T.entries, entries.length)));
     for (const e of entries) {
       const row = el("div", "row");
       row.append(el("div", "date", new Date(e.occurredAt).toLocaleDateString(locale, { month: "short", day: "numeric" })));
       const body = el("div", "body");
       body.append(el("div", "title", e.title));
-      body.append(el("div", "meta", `${LABELS[e.category] || "Other"} · logged ${new Date(e.loggedAt).toLocaleString(locale, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}`));
+      const logged = new Date(e.loggedAt).toLocaleString(locale, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+      body.append(el("div", "meta", `${category(e.category)} · ${fill(T.logged, { date: logged })}`));
       if (e.note) body.append(el("div", "note", e.note));
       const amounts = el("div", "amounts");
       if (e.minutes) amounts.append(el("div", "time", duration(e.minutes)));
@@ -127,10 +155,10 @@
       row.append(body, amounts);
       list.append(row);
     }
-    if (!entries.length) list.append(el("p", "meta", "Nothing logged for this month yet."));
+    if (!entries.length) list.append(el("p", "meta", T.empty));
     nodes.push(list);
 
-    nodes.push(el("footer", null, `${receipts === 1 ? "1 receipt" : receipts + " receipts"} kept by the caregiver. Every entry shows when it was logged. Made with Kinledger.`));
+    nodes.push(el("footer", null, fill(T.footer, { receipts: count(T.receipts, receipts) })));
     app.replaceChildren(...nodes);
   }
 })();

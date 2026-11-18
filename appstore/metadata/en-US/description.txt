@@ -1,0 +1,21 @@
+Caring for a parent is a lot of quiet work. Kinledger keeps a record of it.
+
+Log a pharmacy run, a doctor visit, an overnight stay or a grocery bill in a few taps: how long it took, what you paid, and a photo of the receipt. Kinledger adds it up.
+
+ONE CLEAR REPORT FOR THE FAMILY
+Once a month, share a calm summary with your brothers and sisters: hours of care, visits, money paid out of pocket, and every entry with the time it was logged. They open it as a PDF or a private link. They don't need the app or an account, and you can turn the link off at any time.
+
+AN HONEST RECORD
+Every entry shows when it was logged. Changes keep their history, and deleted entries wait in Trash for 30 days. Nothing is lost by accident.
+
+PRIVATE BY DESIGN
+Your log stays on your iPhone. Turn on cloud backup with Sign in with Apple to get it back on a new phone. No ads, no tracking, and your entries are never sold.
+
+FOR TAX TIME
+In the United States, export the medical expenses you paid for the year, with receipts, ready for your tax preparer.
+
+FREE: logging, totals, receipts, history, backup and full export of your data.
+KINLEDGER PRO: the monthly family report and the tax export, monthly or yearly. Cancel any time in iPhone Settings.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

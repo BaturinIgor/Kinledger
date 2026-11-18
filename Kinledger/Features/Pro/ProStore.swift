@@ -50,7 +50,7 @@ final class ProStore {
         do {
             products = try await Product.products(for: Self.productIDs)
         } catch {
-            message = "Prices could not load. Check the connection and try again."
+            message = String(localized: "Prices could not load. Check the connection and try again.")
         }
     }
 
@@ -75,16 +75,16 @@ final class ProStore {
                 await transaction.finish()
                 await refreshEntitlements()
             case .success(.unverified):
-                message = "The App Store could not confirm this purchase."
+                message = String(localized: "The App Store could not confirm this purchase.")
             case .pending:
-                message = "Waiting for approval. Pro turns on as soon as it is approved."
+                message = String(localized: "Waiting for approval. Pro turns on as soon as it is approved.")
             case .userCancelled:
                 break
             @unknown default:
                 break
             }
         } catch {
-            message = "The purchase did not go through: \(error.localizedDescription)"
+            message = String(localized: "The purchase did not go through: \(error.localizedDescription)")
         }
     }
 
@@ -92,9 +92,9 @@ final class ProStore {
         do {
             try await AppStore.sync()
             await refreshEntitlements()
-            if !isPro { message = "No Pro subscription was found for this Apple ID." }
+            if !isPro { message = String(localized: "No Pro subscription was found for this Apple ID.") }
         } catch {
-            message = "Could not restore: \(error.localizedDescription)"
+            message = String(localized: "Could not restore: \(error.localizedDescription)")
         }
     }
 }

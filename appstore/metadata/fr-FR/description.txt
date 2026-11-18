@@ -1,0 +1,21 @@
+S’occuper d’un parent, c’est beaucoup de travail discret. Kinledger en garde la trace.
+
+Notez un passage à la pharmacie, un rendez-vous médical, une nuit sur place ou des courses en quelques gestes : le temps passé, ce que vous avez payé et une photo du reçu. Kinledger fait les comptes.
+
+UN RAPPORT CLAIR POUR LA FAMILLE
+Une fois par mois, partagez un résumé apaisé avec vos frères et sœurs : heures d’aide, visites, argent payé de votre poche, et chaque entrée avec l’heure où elle a été notée. Ils l’ouvrent en PDF ou via un lien privé, sans application ni compte, et vous pouvez désactiver le lien à tout moment.
+
+UN SUIVI HONNÊTE
+Chaque entrée indique quand elle a été notée. Les modifications gardent leur historique et les entrées supprimées restent 30 jours dans la corbeille. Rien ne se perd par erreur.
+
+PRIVÉ PAR CONCEPTION
+Votre journal reste sur votre iPhone. Activez la sauvegarde dans le cloud avec Se connecter avec Apple pour le retrouver sur un nouvel iPhone. Pas de publicité, pas de pistage, vos données ne sont jamais vendues.
+
+POUR LES IMPÔTS
+Aux États-Unis, exportez les frais médicaux payés dans l’année, avec les reçus, prêts pour votre comptable.
+
+GRATUIT : saisie, totaux, reçus, historique, sauvegarde et export complet de vos données.
+KINLEDGER PRO : le rapport mensuel pour la famille et l’export fiscal, au mois ou à l’année. Résiliable à tout moment dans les Réglages de l’iPhone.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

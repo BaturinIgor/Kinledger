@@ -33,9 +33,9 @@ struct MonthReport: Sendable {
     /// "You spent 52 h with Mom, visited 14 times and paid $1,140 yourself."
     func headline(parentName: String, money format: (Int) -> String = { Format.money(cents: $0) }) -> String {
         let hours = Format.durationSummary(minutes: totals.minutes)
-        let visits = totals.visits == 1 ? "once" : "\(totals.visits) times"
+        let visits = totals.visits == 1 ? String(localized: "once") : String(localized: "\(totals.visits) times")
         let money = format(totals.outOfPocketCents)
-        return "You spent \(hours) with \(parentName), visited \(visits) and paid \(money) yourself."
+        return String(localized: "You spent \(hours) with \(parentName), visited \(visits) and paid \(money) yourself.")
     }
 }
 

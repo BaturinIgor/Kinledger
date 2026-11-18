@@ -52,7 +52,7 @@ struct CloudBackupSection: View {
     }
 
     private var title: String {
-        cloud.isSignedIn ? "On this iPhone and in the cloud" : "Saved on this iPhone"
+        cloud.isSignedIn ? String(localized: "On this iPhone and in the cloud") : String(localized: "Saved on this iPhone")
     }
 
     private var footer: String {
@@ -89,7 +89,7 @@ struct AppleBackupButton: View {
                   let tokenData = credential.identityToken,
                   let token = String(data: tokenData, encoding: .utf8)
             else {
-                model.problem = "Apple did not return a sign-in token. Try again."
+                model.problem = String(localized: "Apple did not return a sign-in token. Try again.")
                 return
             }
             let raw = nonce
@@ -97,7 +97,7 @@ struct AppleBackupButton: View {
             Task { await cloud.signIn(appleIdentityToken: token, nonce: raw) }
         case .failure(let error):
             if (error as? ASAuthorizationError)?.code == .canceled { return }
-            model.problem = "Sign in with Apple did not finish: \(error.localizedDescription)"
+            model.problem = String(localized: "Sign in with Apple did not finish: \(error.localizedDescription)")
         }
     }
 }
@@ -158,7 +158,7 @@ struct DeleteAccountSheet: View {
                   let codeData = credential.authorizationCode,
                   let code = String(data: codeData, encoding: .utf8)
             else {
-                message = "Apple did not confirm. Try again."
+                message = String(localized: "Apple did not confirm. Try again.")
                 return
             }
             isWorking = true

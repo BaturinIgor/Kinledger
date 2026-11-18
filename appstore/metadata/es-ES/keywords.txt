@@ -1,0 +1,1 @@
+cuidador,mayores,padres,diario,gastos,recibos,familia,informe,demencia,mamá,papá,horas,cuidados

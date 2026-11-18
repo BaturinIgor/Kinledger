@@ -24,6 +24,33 @@ struct ProfileTests {
         #expect(CareProfile(parentName: "M", nickname: "Mum", country: .uk).money(4280) == "£42.80")
     }
 
+    @Test func countryIsGuessedFromThePhoneRegion() {
+        #expect(Country.guess(for: Locale(identifier: "en_US")) == .us)
+        #expect(Country.guess(for: Locale(identifier: "en_GB")) == .uk)
+        #expect(Country.guess(for: Locale(identifier: "fr_CA")) == .canada)
+        #expect(Country.guess(for: Locale(identifier: "en_AU")) == .australia)
+        #expect(Country.guess(for: Locale(identifier: "de_DE")) == .europe)
+        #expect(Country.guess(for: Locale(identifier: "ja_JP")) == .other)
+        #expect(Country.guess(for: Locale(identifier: "en")) == .other)
+    }
+
+    @Test func anotherCountryKeepsItsOwnCurrency() throws {
+        let store = try EntryStore.inMemory()
+        let profile = CareProfile(parentName: "Haruko", nickname: "Okaasan", country: .other, currency: "JPY")
+        try store.saveProfile(profile)
+        let saved = try #require(try store.profile())
+        #expect(saved.currencyCode == "JPY")
+        #expect(saved.money(428_000, locale: Locale(identifier: "en_US")) == "¥4,280")
+        #expect(CareProfile(parentName: "M", nickname: "Mom", country: .uk).currencyCode == "GBP")
+    }
+
+    @Test func relationsAreStoredInEnglishAndShownLocalized() {
+        let dave = Recipient(id: UUID(), name: "Dave", contact: "", relation: "Brother")
+        #expect(Recipient.relations.contains(dave.relation))
+        #expect(!dave.relationLabel.isEmpty)
+        #expect(Recipient.label(forRelation: "Cousin") == "Cousin")
+    }
+
     /// Release-blocking scenario 7: an update must not lose existing entries.
     @Test func upgradingAVersionOneDatabaseKeepsEntriesAndMakesACopy() throws {
         let dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)

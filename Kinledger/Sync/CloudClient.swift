@@ -34,8 +34,8 @@ enum CloudError: Error, Equatable, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .http(let status, let message): "The cloud answered \(status): \(message)"
-        case .badResponse: "The cloud sent an answer Kinledger could not read."
+        case .http(let status, let message): String(localized: "The cloud answered \(status): \(message)")
+        case .badResponse: String(localized: "The cloud sent an answer Kinledger could not read.")
         }
     }
 
