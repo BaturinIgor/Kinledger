@@ -97,7 +97,7 @@ struct StorageTests {
         try store.moveToTrash(recent.id, now: t0.addingTimeInterval(-29 * day))
         try store.moveToTrash(old.id, now: t0.addingTimeInterval(-31 * day))
 
-        #expect(try store.purgeExpiredTrash(now: t0) == 1)
+        #expect(try store.purgeExpiredTrash(now: t0).count == 1)
         #expect(try store.trash().map(\.entry.id) == [recent.id])
     }
 

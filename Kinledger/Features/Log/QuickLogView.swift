@@ -1,3 +1,4 @@
+import PhotosUI
 import SwiftUI
 
 /// Log what you did in a few taps. Also used to edit an existing entry.
@@ -16,6 +17,12 @@ struct QuickLogView: View {
     @State private var medical: Bool
     @State private var note: String
     @State private var acceptedLargeAmount = false
+    /// A receipt already saved for this entry, kept unless replaced or removed.
+    @State private var receiptPath: String?
+    /// A new photo, written to disk only when the entry is saved.
+    @State private var newReceipt: Data?
+    @State private var photoItem: PhotosPickerItem?
+    @State private var isTakingPhoto = false
 
     init(editing: Entry? = nil) {
         self.editing = editing
@@ -29,6 +36,7 @@ struct QuickLogView: View {
         _payer = State(initialValue: editing?.expense?.payer ?? .me)
         _medical = State(initialValue: editing?.expense?.medical ?? category.usuallyMedical)
         _note = State(initialValue: editing?.note ?? "")
+        _receiptPath = State(initialValue: editing?.expense?.receiptPath)
     }
 
     private var amount: AmountInput.Result { AmountInput.parse(amountText) }
@@ -42,7 +50,7 @@ struct QuickLogView: View {
         }
     }
 
-    private var canSave: Bool { minutes > 0 || amountCents != nil }
+    private var canSave: Bool { minutes > 0 || amountCents != nil || newReceipt != nil }
 
     private var amountCents: Int? {
         switch amount {
@@ -121,6 +129,7 @@ struct QuickLogView: View {
                             }
                             Toggle("Medical expense (tax export)", isOn: $medical)
                         }
+                        receiptControls
                     }
 
                     section("Note") {
@@ -147,6 +156,61 @@ struct QuickLogView: View {
         }
     }
 
+    @ViewBuilder
+    private var receiptControls: some View {
+        if let image = receiptPreview {
+            HStack(spacing: 12) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 56, height: 56)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                Text("Receipt attached").font(.subheadline.weight(.medium))
+                Spacer()
+                Button("Remove") {
+                    newReceipt = nil
+                    receiptPath = nil
+                }
+                .font(.subheadline)
+            }
+        } else {
+            HStack(spacing: 8) {
+                ChipButton(title: "Snap receipt", symbol: "camera", isOn: false) { isTakingPhoto = true }
+                PhotosPicker(selection: $photoItem, matching: .images) {
+                    Label("Choose photo", systemImage: "photo")
+                        .font(.subheadline.weight(.medium))
+                        .padding(.horizontal, 14)
+                        .frame(maxWidth: .infinity, minHeight: Metrics.minTouch)
+                        .foregroundStyle(Palette.text)
+                        .background(Palette.card, in: Capsule())
+                        .overlay(Capsule().strokeBorder(Palette.border))
+                }
+            }
+            .onChange(of: photoItem) {
+                Task { await loadPhoto() }
+            }
+            .fullScreenCover(isPresented: $isTakingPhoto) {
+                CameraPicker { image in newReceipt = image.receiptJPEG() }
+                    .ignoresSafeArea()
+            }
+        }
+    }
+
+    private var receiptPreview: UIImage? {
+        if let newReceipt { return UIImage(data: newReceipt) }
+        if let receiptPath { return UIImage(contentsOfFile: model.receipts.url(for: receiptPath).path) }
+        return nil
+    }
+
+    private func loadPhoto() async {
+        guard let photoItem,
+              let data = try? await photoItem.loadTransferable(type: Data.self),
+              let image = UIImage(data: data)
+        else { return }
+        newReceipt = image.receiptJPEG()
+        self.photoItem = nil
+    }
+
     private func pick(_ item: EntryCategory) {
         category = item
         visit = item.usuallyVisit
@@ -154,6 +218,11 @@ struct QuickLogView: View {
     }
 
     private func save() {
+        var savedReceipt = receiptPath
+        if let newReceipt {
+            guard let name = model.saveReceipt(newReceipt) else { return }
+            savedReceipt = name
+        }
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedNote = note.trimmingCharacters(in: .whitespacesAndNewlines)
         let entry = Entry(
@@ -164,8 +233,8 @@ struct QuickLogView: View {
             loggedAt: editing?.loggedAt ?? .now,
             minutes: minutes,
             visit: visit,
-            expense: amountCents.map {
-                Expense(amountCents: $0, payer: payer, medical: medical, receiptPath: editing?.expense?.receiptPath)
+            expense: (amountCents ?? (savedReceipt == nil ? nil : 0)).map {
+                Expense(amountCents: $0, payer: payer, medical: medical, receiptPath: savedReceipt)
             },
             note: trimmedNote.isEmpty ? nil : trimmedNote
         )

@@ -6,13 +6,15 @@ import Observation
 @Observable
 final class AppModel {
     let store: EntryStore
+    let receipts: ReceiptStore
     private(set) var entries: [Entry] = []
     private(set) var trash: [TrashedEntry] = []
     /// Shown to the person when the phone could not save. Never swallowed.
     var problem: String?
 
-    init(store: EntryStore, problem: String? = nil) {
+    init(store: EntryStore, receipts: ReceiptStore, problem: String? = nil) {
         self.store = store
+        self.receipts = receipts
         self.problem = problem
         reload()
     }
@@ -20,19 +22,21 @@ final class AppModel {
     static func live() -> AppModel {
         do {
             let store = try EntryStore.onDisk()
-            try store.purgeExpiredTrash()
-            return AppModel(store: store)
+            let receipts = try ReceiptStore.onDisk()
+            let purged = try store.purgeExpiredTrash()
+            receipts.delete(purged.receiptFiles)
+            return AppModel(store: store, receipts: receipts)
         } catch {
             // Keep the app usable, and say clearly that nothing is being kept.
             let fallback = try! EntryStore.inMemory()
-            return AppModel(store: fallback, problem: "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (\(error.localizedDescription))")
+            return AppModel(store: fallback, receipts: try! ReceiptStore.temporary(), problem: "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (\(error.localizedDescription))")
         }
     }
 
     static func preview(_ entries: [Entry] = SampleData.entries) -> AppModel {
         let store = try! EntryStore.inMemory()
         for entry in entries { try? store.save(entry) }
-        return AppModel(store: store)
+        return AppModel(store: store, receipts: try! ReceiptStore.temporary())
     }
 
     func reload() {
@@ -68,6 +72,35 @@ final class AppModel {
 
     func restore(_ revision: EntryRevision) {
         perform { try store.restore(revision) }
+    }
+
+    /// Saves a receipt photo and returns its file name, or nil if it could not be saved.
+    func saveReceipt(_ jpeg: Data) -> String? {
+        do {
+            return try receipts.save(jpeg)
+        } catch {
+            problem = "Could not save the receipt photo: \(error.localizedDescription)"
+            return nil
+        }
+    }
+
+    func exportAllData() -> URL? {
+        attempt("Could not build the export") { try Exporter.allData(entries: entries + trash.map(\.entry), receipts: receipts) }
+    }
+
+    func exportTaxYear(_ year: Int) -> URL? {
+        attempt("Could not build the tax export") {
+            try Exporter.taxYear(TaxYearSummary(entries: entries, year: year), receipts: receipts)
+        }
+    }
+
+    private func attempt<T>(_ message: String, _ work: () throws -> T) -> T? {
+        do {
+            return try work()
+        } catch {
+            problem = "\(message): \(error.localizedDescription)"
+            return nil
+        }
     }
 
     @discardableResult
