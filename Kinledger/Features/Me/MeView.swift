@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MeView: View {
     @Environment(AppModel.self) private var model
+    @State private var shared: SharedFile?
 
     var body: some View {
         NavigationStack {
@@ -20,6 +21,20 @@ struct MeView: View {
                 }
                 Section {
                     NavigationLink {
+                        TaxExportView()
+                    } label: {
+                        Label("Tax export", systemImage: "doc.text")
+                    }
+                    Button {
+                        if let url = model.exportAllData() { shared = SharedFile(url: url) }
+                    } label: {
+                        Label("Export all my data", systemImage: "square.and.arrow.up")
+                    }
+                } footer: {
+                    Text("A spreadsheet of every entry plus all receipt photos. Free, any time.")
+                }
+                Section {
+                    NavigationLink {
                         TrashView()
                     } label: {
                         LabeledContent {
@@ -32,6 +47,7 @@ struct MeView: View {
                 }
             }
             .navigationTitle("Me")
+            .sheet(item: $shared) { file in ShareSheet(items: [file.url]) }
         }
     }
 }

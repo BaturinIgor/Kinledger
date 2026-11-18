@@ -174,18 +174,25 @@ final class EntryStore: Sendable {
         try save(revision.previous, now: now)
     }
 
-    /// Removes entries that have been in the trash longer than `trashDays`. Returns how many.
+    /// Removes entries that have been in the trash longer than `trashDays`.
+    /// Returns the receipt files those entries used, so the caller can delete them too.
     @discardableResult
-    func purgeExpiredTrash(now: Date = .now) throws -> Int {
+    func purgeExpiredTrash(now: Date = .now) throws -> PurgeResult {
         let cutoff = now.addingTimeInterval(-Double(Self.trashDays) * 24 * 60 * 60)
         return try writer.write { db in
             let expired = try EntryRecord
                 .filter(Column("deletedAt") != nil && Column("deletedAt") < cutoff)
                 .fetchAll(db)
-                .map(\.id)
-            guard !expired.isEmpty else { return 0 }
-            _ = try EntryRevisionRecord.filter(expired.contains(Column("entryId"))).deleteAll(db)
-            return try EntryRecord.deleteAll(db, keys: expired)
+            guard !expired.isEmpty else { return PurgeResult(count: 0, receiptFiles: []) }
+            let ids = expired.map(\.id)
+            _ = try EntryRevisionRecord.filter(ids.contains(Column("entryId"))).deleteAll(db)
+            let count = try EntryRecord.deleteAll(db, keys: ids)
+            return PurgeResult(count: count, receiptFiles: expired.compactMap(\.receiptPath))
         }
     }
+}
+
+struct PurgeResult: Equatable, Sendable {
+    let count: Int
+    let receiptFiles: [String]
 }

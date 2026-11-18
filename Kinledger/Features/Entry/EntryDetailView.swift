@@ -41,6 +41,15 @@ struct EntryDetailView: View {
                     if let note = entry.note, !note.isEmpty {
                         Text("Note (private): \(note)").font(.body).foregroundStyle(Palette.text)
                     }
+                    if let name = entry.expense?.receiptPath,
+                       let image = UIImage(contentsOfFile: model.receipts.url(for: name).path) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 280)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .accessibilityLabel("Receipt photo")
+                    }
                 }
 
                 Label("History", systemImage: "clock.arrow.circlepath")
