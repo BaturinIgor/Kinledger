@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct KinledgerApp: App {
-    @State private var model = AppModel.live()
+    @State private var model = ScreenshotData.isActive ? AppModel.screenshots() : AppModel.live()
     @State private var pro = ProStore()
     @Environment(\.scenePhase) private var scenePhase
 

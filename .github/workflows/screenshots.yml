@@ -1,0 +1,57 @@
+name: App Store screenshots
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - KinledgerUITests/**
+      - Kinledger/Data/ScreenshotData.swift
+      - .github/workflows/screenshots.yml
+
+jobs:
+  screenshots:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Boot a 6.9-inch iPhone
+        id: sim
+        run: |
+          udid=$(xcrun simctl list devices available -j \
+            | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for k in sorted(d, reverse=True) if "iOS" in k for x in d[k] if "Pro Max" in x["name"]))')
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+          xcrun simctl boot "$udid" || true
+          xcrun simctl bootstatus "$udid" -b
+          xcrun simctl status_bar "$udid" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing -project Kinledger.xcodeproj -scheme Screenshots \
+            -destination "id=${{ steps.sim.outputs.udid }}" CODE_SIGNING_ALLOWED=NO | tail -20
+
+      - name: Take screenshots in 18 languages
+        run: |
+          set -o pipefail
+          mkdir -p shots
+          for pair in en:en_US es:es_ES fr:fr_FR de:de_DE it:it_IT pt-BR:pt_BR nl:nl_NL sv:sv_SE da:da_DK \
+                      nb:nb_NO pl:pl_PL ru:ru_RU uk:uk_UA tr:tr_TR ja:ja_JP ko:ko_KR zh-Hans:zh_CN zh-Hant:zh_TW; do
+            lang=${pair%%:*}; loc=${pair#*:}
+            echo "::group::$lang"
+            TEST_RUNNER_SHOT_LANG=$lang TEST_RUNNER_SHOT_LOCALE=$loc TEST_RUNNER_SCREENSHOT_DIR="$PWD/shots" \
+              xcodebuild test-without-building -project Kinledger.xcodeproj -scheme Screenshots \
+              -destination "id=${{ steps.sim.outputs.udid }}" CODE_SIGNING_ALLOWED=NO | tail -5
+            echo "::endgroup::"
+          done
+          ls shots | wc -l
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-store-screenshots
+          path: shots
