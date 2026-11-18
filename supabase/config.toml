@@ -1,0 +1,5 @@
+# Minimal Supabase CLI config, used by .github/workflows/cloud-deploy.yml.
+project_id = "kinledger"
+
+[functions.delete-account]
+verify_jwt = true
