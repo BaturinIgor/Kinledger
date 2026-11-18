@@ -3,6 +3,8 @@ import SwiftUI
 /// Monthly report preview and PDF (R6–R8). The private web link comes with cloud sync.
 struct ReportView: View {
     @Environment(AppModel.self) private var model
+    @Environment(ProStore.self) private var pro
+    @State private var showPaywall = false
     @State private var month: Date = Calendar.current.startOfMonth(for: .now)
     @State private var includeNotes = false
     @State private var shared: SharedFile?
@@ -31,7 +33,9 @@ struct ReportView: View {
                     Toggle("Include my private notes", isOn: $includeNotes)
                         .padding(.horizontal, 4)
 
-                    PrimaryButton(title: "Share PDF") { sharePDF() }
+                    PrimaryButton(title: pro.isPro ? "Share PDF" : "Share PDF with Pro") {
+                        if pro.isPro { sharePDF() } else { showPaywall = true }
+                    }
                         .disabled(report.entries.isEmpty)
 
                     Label("A private link your family opens without the app arrives with cloud backup.",
@@ -48,6 +52,7 @@ struct ReportView: View {
             .sheet(item: $shared) { file in
                 ShareSheet(items: [file.url])
             }
+            .sheet(isPresented: $showPaywall) { PaywallView() }
         }
     }
 
@@ -134,5 +139,5 @@ extension Calendar {
 }
 
 #Preview {
-    ReportView().environment(AppModel.preview())
+    ReportView().environment(AppModel.preview()).environment(ProStore(unlocked: false))
 }

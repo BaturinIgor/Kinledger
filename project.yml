@@ -49,5 +49,7 @@ schemes:
     build:
       targets:
         Kinledger: all
+    run:
+      storeKitConfiguration: StoreKit/Kinledger.storekit
     test:
       targets: [KinledgerTests]

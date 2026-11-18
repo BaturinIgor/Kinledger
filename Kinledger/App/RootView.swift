@@ -68,5 +68,5 @@ struct ProblemBanner: View {
 }
 
 #Preview {
-    RootView().environment(AppModel.preview())
+    RootView().environment(AppModel.preview()).environment(ProStore(unlocked: true))
 }

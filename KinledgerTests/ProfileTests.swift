@@ -52,3 +52,17 @@ struct ProfileTests {
         #expect(FileManager.default.fileExists(atPath: dir.appending(path: EntryStore.preMigrationCopyName).path))
     }
 }
+
+struct ProTests {
+    @Test func yearlyPlanSavesAThird() {
+        #expect(Pricing.yearlySavingsPercent(monthly: Decimal(string: "9.99")!, yearly: 79) == 34)
+        #expect(Pricing.yearlySavingsPercent(monthly: 10, yearly: 200) == 0)
+    }
+
+    @Test func eitherPlanUnlocksPro() {
+        #expect(ProStore.unlocks([ProStore.monthlyID]))
+        #expect(ProStore.unlocks([ProStore.yearlyID]))
+        #expect(!ProStore.unlocks([]))
+        #expect(!ProStore.unlocks(["something.else"]))
+    }
+}
