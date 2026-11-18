@@ -1,6 +1,6 @@
 # Design tokens
 
-Source of truth: `src/constants/theme.ts`. Mockups: [Kinledger MVP mockups](https://claude.ai/artifact/12KEn6bYc7X67UZBuwEncV).
+Source of truth: `Kinledger/Design/Palette.swift`. Mockups: [Kinledger MVP mockups](https://claude.ai/artifact/12KEn6bYc7X67UZBuwEncV).
 
 One color per quantity, the same in the app and in the report siblings see. Red is for input errors only.
 
@@ -15,4 +15,4 @@ One color per quantity, the same in the app and in the report siblings see. Red 
 | visits | #4353A6 | #9AA6F0 | Visits |
 | error | #B3261E | #F2B8B5 | Input errors only |
 
-All text pairs pass WCAG AA. Body 17, labels at least 14. Touch targets 44, primary actions 56.
+All text pairs pass WCAG AA. Text uses system text styles, so it follows Dynamic Type (body 17 at the default size). Touch targets 44, primary actions 56.

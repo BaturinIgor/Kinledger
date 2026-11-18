@@ -4,9 +4,10 @@ Full plan with reasoning: [Kinledger: plan by version](https://claude.ai/artifac
 
 | Version | Target | Theme |
 | --- | --- | --- |
-| 1.0 | before 2027-01-20 | Must have: log, money, monthly report, US medical-expense export, no data loss |
+| 1.0 | before 2027-01-20 | iPhone only. Must have: log, money, monthly report, US medical-expense export, no data loss |
 | 1.1 | March 2027 | Family nearby: siblings reply to the report, second caregiver, reminders, several parents, UK/EU/CA/AU formats |
 | 1.2 | May 2027 | Faster: lock-screen timer, home widget, document vault, who-owes-whom, calendar sync, search |
+| Android | after 1.1, once iOS shows demand | Separate native app on the same backend and report page |
 | 2.0 | autumn 2027 | Family account with roles, paid-helper hours, yearly report, plain-language monthly summary, Spanish |
 
 ## 1.0 must have
@@ -18,5 +19,5 @@ Full plan with reasoning: [Kinledger: plan by version](https://claude.ai/artifac
 - Monthly report: private link siblings open in a browser, notes private unless chosen; shows when each entry was logged.
 - US medical-expense export (CSV + receipts ZIP) for the 2027 tax season.
 - Data safety: every scenario in [data-safety.md](data-safety.md) passes.
-- Light and dark themes, large type, 44–56 pt touch targets.
+- Light and dark themes, Dynamic Type, 44–56 pt touch targets.
 - Free tier plus Pro ($9.99/month or $79/year, 7-day trial).

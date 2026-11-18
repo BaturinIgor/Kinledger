@@ -8,6 +8,7 @@ A logged entry is never lost: not on a lost phone, an app update, a network fail
 | --- | --- |
 | Phone | Every entry is written to local SQLite first, before any network call. |
 | Account | Sign in with Apple or Google in the first minutes; data belongs to the person, not the phone. |
+| Backend | Our own sync server, not CloudKit, so the web report and a future Android app read the same data. |
 | Sync | Background upload with retries; every entry has a client-generated id, so retries never duplicate. |
 | Receipts | The photo stays on the phone until the server confirms the upload. |
 | Trash | Delete moves an entry to trash for 30 days. |
@@ -29,7 +30,7 @@ A logged entry is never lost: not on a lost phone, an app update, a network fail
 1. Offline: airplane mode, 20 entries and 5 receipts, network back on, everything reaches the cloud.
 2. App killed mid-save: the entry is there after restart, with no duplicate.
 3. New phone: sign in with the same account, all entries and receipts are there.
-4. Lost phone: a second device and the web show everything up to the last sync.
+4. Lost phone: a second iPhone and the web show everything up to the last sync.
 5. Accidental delete: the entry comes back from trash within 30 days.
 6. Wrong edit: the previous version can be restored from history.
 7. Upgrade from 1.0 to the current version on a 5,000-entry database loses nothing.
