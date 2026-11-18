@@ -38,7 +38,9 @@ enum ScreenshotData {
         return PlanOffer(
             id: id,
             price: id == ProStore.yearlyID ? yearly : monthly,
-            format: .currency(code: currency).locale(locale)
+            format: currency == "TWD"
+                ? .currency(code: currency).locale(locale).precision(.fractionLength(0))
+                : .currency(code: currency).locale(locale)
         )
     }
 

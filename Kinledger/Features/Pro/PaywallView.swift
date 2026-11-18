@@ -55,7 +55,7 @@ struct PaywallView: View {
                             if pro.isPro { dismiss() }
                         }
                     }
-                    .disabled(pro.products.isEmpty)
+                    .disabled(pro.products.isEmpty && !ScreenshotData.isActive)
                     Text("Free for 7 days, then the plan you chose, renewing automatically until you cancel. Cancel in Settings any time, at least 24 hours before the trial or period ends.")
                         .font(.footnote)
                         .foregroundStyle(Palette.textSecondary)
