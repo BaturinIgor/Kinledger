@@ -29,10 +29,12 @@ jobs:
           version: latest
 
       - name: Link the project
-        run: supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+        run: supabase link --project-ref "$PROJECT_REF"
 
       - name: Apply database migrations
-        run: supabase db push --password "$SUPABASE_DB_PASSWORD"
+        # Newer CLIs push to the local database unless told otherwise, and ask before
+        # changing production. Pressing "Run workflow" is that confirmation.
+        run: supabase db push --remote --yes --password "$SUPABASE_DB_PASSWORD"
 
       - name: Store the Apple key for account deletion
         env:
@@ -43,7 +45,7 @@ jobs:
           if [ -z "$APPLE_KEY_ID" ]; then echo "Apple key not set yet, skipping"; exit 0; fi
           supabase secrets set --project-ref "$PROJECT_REF" \
             APPLE_TEAM_ID="$APPLE_TEAM_ID" APPLE_KEY_ID="$APPLE_KEY_ID" \
-            APPLE_CLIENT_ID=app.kinledger APPLE_PRIVATE_KEY="$APPLE_PRIVATE_KEY"
+            APPLE_CLIENT_ID=app.kinledger APPLE_PRIVATE_KEY="$APPLE_PRIVATE_KEY" --yes
 
       - name: Deploy the delete-account function
-        run: supabase functions deploy delete-account --project-ref "$PROJECT_REF"
+        run: supabase functions deploy delete-account --project-ref "$PROJECT_REF" --yes
