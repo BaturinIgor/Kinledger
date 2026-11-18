@@ -22,6 +22,8 @@ struct TrashedEntry: Identifiable, Hashable, Sendable {
 /// - Schema changes are numbered migrations, and the file is copied before migrating.
 final class EntryStore: Sendable {
     static let trashDays = 30
+    static let fileName = "kinledger.sqlite"
+    static let preMigrationCopyName = "kinledger-before-migration.sqlite"
 
     let writer: any DatabaseWriter
 
@@ -38,7 +40,7 @@ final class EntryStore: Sendable {
     /// The app's store in Application Support, which iOS includes in device backups.
     static func onDisk(directory: URL = URL.applicationSupportDirectory) throws -> EntryStore {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let file = directory.appending(path: "kinledger.sqlite")
+        let file = directory.appending(path: Self.fileName)
         let queue = try DatabaseQueue(path: file.path)
         try copyBeforeMigrating(queue, file: file)
         return try EntryStore(writer: queue)
@@ -72,6 +74,22 @@ final class EntryStore: Sendable {
                 t.column("snapshot", .blob).notNull()
             }
         }
+        migrator.registerMigration("v2-profile") { db in
+            try db.create(table: "profile") { t in
+                t.primaryKey("id", .integer)
+                t.column("parentName", .text).notNull()
+                t.column("nickname", .text).notNull()
+                t.column("country", .text).notNull()
+                t.column("updatedAt", .datetime).notNull()
+            }
+            try db.create(table: "recipient") { t in
+                t.primaryKey("id", .text)
+                t.column("name", .text).notNull()
+                t.column("contact", .text).notNull()
+                t.column("relation", .text).notNull()
+                t.column("createdAt", .datetime).notNull()
+            }
+        }
         return migrator
     }
 
@@ -82,7 +100,7 @@ final class EntryStore: Sendable {
             return try !migrator.hasCompletedMigrations(db)
         }
         guard needsCopy else { return }
-        let copyURL = file.deletingLastPathComponent().appending(path: "kinledger-before-migration.sqlite")
+        let copyURL = file.deletingLastPathComponent().appending(path: preMigrationCopyName)
         try? FileManager.default.removeItem(at: copyURL)
         let copy = try DatabaseQueue(path: copyURL.path)
         try queue.backup(to: copy)

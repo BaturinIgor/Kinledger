@@ -6,8 +6,15 @@ struct KinledgerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            Group {
+                if model.profile == nil {
+                    OnboardingView()
+                } else {
+                    RootView()
+                }
+            }
                 .environment(model)
+                .environment(\.careProfile, model.careProfile)
                 .tint(Palette.time)
         }
     }

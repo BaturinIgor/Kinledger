@@ -9,6 +9,9 @@ final class AppModel {
     let receipts: ReceiptStore
     private(set) var entries: [Entry] = []
     private(set) var trash: [TrashedEntry] = []
+    /// Nil until onboarding is done.
+    private(set) var profile: CareProfile?
+    private(set) var recipients: [Recipient] = []
     /// Shown to the person when the phone could not save. Never swallowed.
     var problem: String?
 
@@ -33,9 +36,13 @@ final class AppModel {
         }
     }
 
-    static func preview(_ entries: [Entry] = SampleData.entries) -> AppModel {
+    static func preview(_ entries: [Entry] = SampleData.entries, onboarded: Bool = true) -> AppModel {
         let store = try! EntryStore.inMemory()
         for entry in entries { try? store.save(entry) }
+        if onboarded {
+            try? store.saveProfile(CareProfile(parentName: "Margaret", nickname: "Mom", country: .us))
+            try? store.saveRecipient(Recipient(id: UUID(), name: "Dave", contact: "dave@example.com", relation: "Brother"))
+        }
         return AppModel(store: store, receipts: try! ReceiptStore.temporary())
     }
 
@@ -43,9 +50,25 @@ final class AppModel {
         do {
             entries = try store.entries()
             trash = try store.trash()
+            profile = try store.profile()
+            recipients = try store.recipients()
         } catch {
             problem = "Could not read your entries: \(error.localizedDescription)"
         }
+    }
+
+    var careProfile: CareProfile { profile ?? .placeholder }
+
+    func saveProfile(_ profile: CareProfile) {
+        perform { try store.saveProfile(profile) }
+    }
+
+    func saveRecipient(_ recipient: Recipient) {
+        perform { try store.saveRecipient(recipient) }
+    }
+
+    func deleteRecipient(_ id: UUID) {
+        perform { try store.deleteRecipient(id) }
     }
 
     func entry(_ id: UUID) -> Entry? {
