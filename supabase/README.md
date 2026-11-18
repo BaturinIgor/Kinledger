@@ -3,6 +3,11 @@
 The phone keeps everything in SQLite and works offline. This project holds a copy so a lost or
 new phone gets everything back, and later serves the family report link.
 
+## Deploying without a terminal
+
+`.github/workflows/cloud-deploy.yml` does steps 2 and the account-deletion deploy below from the
+GitHub Actions tab. Set the secrets listed at the top of that file, then run "Deploy cloud (Supabase)".
+
 ## One-time setup (about 5 minutes)
 
 1. Create a free project at https://supabase.com (region close to the US, for example `us-east-1`).
