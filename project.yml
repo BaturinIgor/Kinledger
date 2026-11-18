@@ -51,6 +51,17 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: app.kinledger.tests
+  KinledgerUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [KinledgerUITests]
+    dependencies:
+      - target: Kinledger
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: app.kinledger.uitests
+        TEST_TARGET_NAME: Kinledger
 schemes:
   Kinledger:
     build:
@@ -60,3 +71,11 @@ schemes:
       storeKitConfiguration: StoreKit/Kinledger.storekit
     test:
       targets: [KinledgerTests]
+  Screenshots:
+    build:
+      targets:
+        Kinledger: all
+        KinledgerUITests: [test]
+    test:
+      targets: [KinledgerUITests]
+      storeKitConfiguration: StoreKit/Kinledger.storekit
