@@ -121,6 +121,30 @@ final class CloudBackup {
         status = isConfigured ? .signedOut : .notConfigured
     }
 
+    /// Backs up first, so the link shows everything logged so far, then creates the link.
+    func shareReportLink(month: Date, includeNotes: Bool) async -> Result<URL, ReportLinkFailure> {
+        guard let client, isSignedIn else { return .failure(ReportLinkFailure("Turn on backup in Me to share a link.")) }
+        await syncNow()
+        guard let session else { return .failure(ReportLinkFailure("Sign in again in Me to share a link.")) }
+        let link = ReportLink(month: month, includeNotes: includeNotes)
+        do {
+            try await client.createReportLink(link, session: session)
+            return .success(link.url)
+        } catch {
+            return .failure(ReportLinkFailure("The link could not be made: \(error.localizedDescription)"))
+        }
+    }
+
+    func revokeReportLinks() async -> String? {
+        guard let client, let session else { return "Backup is not on, so there are no links." }
+        do {
+            try await client.revokeAllReportLinks(session: session)
+            return nil
+        } catch {
+            return "Links were not turned off: \(error.localizedDescription)"
+        }
+    }
+
     /// Deletes the cloud copy and the account. Entries on this iPhone stay.
     /// Returns an error message to show, or nil when it worked.
     func deleteAccount(appleAuthorizationCode: String) async -> String? {
@@ -218,4 +242,9 @@ final class CloudBackup {
             status = .waiting(0)
         }
     }
+}
+
+struct ReportLinkFailure: Error, Equatable {
+    let message: String
+    init(_ message: String) { self.message = message }
 }

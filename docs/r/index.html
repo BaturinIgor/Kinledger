@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Care report · Kinledger</title>
+<style>
+  :root {
+    --bg: #F7F5F0; --card: #FFFFFF; --border: #E4E1D8; --text: #18211E; --muted: #4F5A55;
+    --time: #0B6E66; --money: #A24E05; --visits: #4353A6; --soft: #ECE9E1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121816; --card: #1B2320; --border: #2C3632; --text: #ECF1EE; --muted: #A9B4AF;
+      --time: #5CC2B5; --money: #F0A55A; --visits: #9AA6F0; --soft: #2C3632;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-bottom: 16px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat b { display: block; font-size: 24px; }
+  .stat span { color: var(--muted); font-size: 14px; }
+  .time { color: var(--time); } .money { color: var(--money); } .visits { color: var(--visits); }
+  h2 { font-size: 18px; margin: 0 0 10px; }
+  .row { display: flex; gap: 10px; padding: 10px 0; border-top: 1px solid var(--soft); }
+  .row:first-of-type { border-top: 0; }
+  .date { width: 56px; flex: none; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 15px; }
+  .body { flex: 1; min-width: 0; }
+  .title { overflow-wrap: anywhere; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .note { color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .amounts { text-align: right; flex: none; font-size: 15px; }
+  .line { display: flex; justify-content: space-between; padding: 4px 0; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 24px; }
+  .message { text-align: center; padding: 48px 0; color: var(--muted); }
+</style>
+</head>
+<body>
+<main id="app"><p class="message">Loading the report…</p></main>
+<script src="config.js"></script>
+<script>
+(() => {
+  const app = document.getElementById("app");
+  const LABELS = { doctor: "Doctor", pharmacy: "Pharmacy", groceries: "Groceries", overnight: "Overnight",
+    bills: "Bills & calls", "home-help": "Home help", transport: "Transport", other: "Other" };
+  const COUNTRY = { US: ["en-US", "USD"], UK: ["en-GB", "GBP"], CA: ["en-CA", "CAD"], AU: ["en-AU", "AUD"], EU: ["en-IE", "EUR"] };
+
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const show = (text) => { app.replaceChildren(el("p", "message", text)); };
+
+  const duration = (m) => m < 60 ? `${m} min` : (m % 60 === 0 ? `${Math.floor(m / 60)} h` : `${Math.floor(m / 60)} h ${m % 60} min`);
+  const hours = (m) => { const h = Math.round(m / 30) / 2; return Number.isInteger(h) ? `${h} h` : `${h.toFixed(1)} h`; };
+
+  const token = location.hash.slice(1);
+  const cfg = window.KINLEDGER_CONFIG || {};
+  if (!token) return show("This link is missing its key. Ask for the link again.");
+  if (!cfg.url || !cfg.anonKey) return show("Report links are not set up yet.");
+
+  fetch(`${cfg.url}/rest/v1/rpc/shared_report`, {
+    method: "POST",
+    headers: { apikey: cfg.anonKey, Authorization: `Bearer ${cfg.anonKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ link_token: token }),
+  })
+    .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+    .then(render)
+    .catch(() => show("The report could not load. Check the connection and try again."));
+
+  function render(report) {
+    if (!report) return show("This link was turned off by the person who shared it.");
+    const profile = report.profile || { nickname: "Your parent", country: "US" };
+    const [locale, currency] = COUNTRY[profile.country] || COUNTRY.US;
+    const money = (cents) => new Intl.NumberFormat(locale, { style: "currency", currency,
+      minimumFractionDigits: cents % 100 === 0 ? 0 : 2, maximumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents / 100);
+    // The middle of the period is safely inside the month whatever the caregiver's time zone.
+    const middle = new Date((Date.parse(report.period_start) + Date.parse(report.period_end)) / 2);
+    const monthName = middle.toLocaleDateString(locale, { month: "long", year: "numeric", timeZone: "UTC" });
+    const entries = report.entries || [];
+
+    let minutes = 0, paid = 0, visits = 0, receipts = 0; const spending = {};
+    for (const e of entries) {
+      minutes += e.minutes || 0;
+      if (e.visit) visits += 1;
+      if (e.expense && e.expense.payer === "me") {
+        paid += e.expense.amountCents;
+        spending[e.category] = (spending[e.category] || 0) + e.expense.amountCents;
+      }
+      if (e.expense && e.expense.receiptPath) receipts += 1;
+    }
+
+    const nodes = [];
+    nodes.push(el("h1", null, `${profile.nickname}'s care in ${monthName}`));
+    nodes.push(el("p", "lead", `${hours(minutes)} of care, ${visits === 1 ? "1 visit" : visits + " visits"} and ${money(paid)} paid out of pocket.`));
+
+    const stats = el("div", "card stats");
+    for (const [value, label, cls] of [[hours(minutes), "time", "time"], [money(paid), "out of pocket", "money"], [String(visits), "visits", "visits"]]) {
+      const s = el("div", "stat"); s.append(el("b", cls, value), el("span", null, label)); stats.append(s);
+    }
+    nodes.push(stats);
+
+    const lines = Object.entries(spending).sort((a, b) => b[1] - a[1]);
+    if (lines.length) {
+      const card = el("div", "card"); card.append(el("h2", null, "Where the money went"));
+      for (const [cat, cents] of lines) {
+        const line = el("div", "line"); line.append(el("span", null, LABELS[cat] || "Other"), el("b", "money", money(cents))); card.append(line);
+      }
+      nodes.push(card);
+    }
+
+    const list = el("div", "card"); list.append(el("h2", null, `All ${entries.length} entries`));
+    for (const e of entries) {
+      const row = el("div", "row");
+      row.append(el("div", "date", new Date(e.occurredAt).toLocaleDateString(locale, { month: "short", day: "numeric" })));
+      const body = el("div", "body");
+      body.append(el("div", "title", e.title));
+      body.append(el("div", "meta", `${LABELS[e.category] || "Other"} · logged ${new Date(e.loggedAt).toLocaleString(locale, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}`));
+      if (e.note) body.append(el("div", "note", e.note));
+      const amounts = el("div", "amounts");
+      if (e.minutes) amounts.append(el("div", "time", duration(e.minutes)));
+      if (e.expense && e.expense.payer === "me") amounts.append(el("div", "money", money(e.expense.amountCents)));
+      row.append(body, amounts);
+      list.append(row);
+    }
+    if (!entries.length) list.append(el("p", "meta", "Nothing logged for this month yet."));
+    nodes.push(list);
+
+    nodes.push(el("footer", null, `${receipts === 1 ? "1 receipt" : receipts + " receipts"} kept by the caregiver. Every entry shows when it was logged. Made with Kinledger.`));
+    app.replaceChildren(...nodes);
+  }
+})();
+</script>
+</body>
+</html>

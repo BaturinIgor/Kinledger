@@ -8,6 +8,8 @@ struct ReportView: View {
     @State private var month: Date = Calendar.current.startOfMonth(for: .now)
     @State private var includeNotes = false
     @State private var shared: SharedFile?
+    @State private var sharedLink: SharedLink?
+    @State private var isMakingLink = false
 
     private var report: MonthReport { MonthReport(entries: model.entries, month: month) }
 
@@ -38,10 +40,24 @@ struct ReportView: View {
                     }
                         .disabled(report.entries.isEmpty)
 
-                    Label("A private link your family opens without the app arrives with cloud backup.",
-                          systemImage: "link")
-                        .font(.subheadline)
-                        .foregroundStyle(Palette.textSecondary)
+                    if model.cloud.isSignedIn {
+                        Button {
+                            if pro.isPro { Task { await shareLink() } } else { showPaywall = true }
+                        } label: {
+                            Label(isMakingLink ? "Making the link…" : "Share a private link", systemImage: "link")
+                                .frame(maxWidth: .infinity, minHeight: Metrics.minTouch)
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(isMakingLink || report.entries.isEmpty)
+                        Text("Family open it in any browser, no app or account. Turn links off any time in Me.")
+                            .font(.footnote)
+                            .foregroundStyle(Palette.textSecondary)
+                    } else {
+                        Label("Turn on backup in Me to send a private link your family opens without the app.",
+                              systemImage: "link")
+                            .font(.subheadline)
+                            .foregroundStyle(Palette.textSecondary)
+                    }
                 }
                 .padding(16)
                 .frame(maxWidth: Metrics.maxContentWidth)
@@ -53,6 +69,18 @@ struct ReportView: View {
                 ShareSheet(items: [file.url])
             }
             .sheet(isPresented: $showPaywall) { PaywallView() }
+            .sheet(item: $sharedLink) { link in
+                ShareSheet(items: [link.url])
+            }
+        }
+    }
+
+    private func shareLink() async {
+        isMakingLink = true
+        defer { isMakingLink = false }
+        switch await model.cloud.shareReportLink(month: month, includeNotes: includeNotes) {
+        case .success(let url): sharedLink = SharedLink(url: url)
+        case .failure(let failure): model.problem = failure.message
         }
     }
 
@@ -140,4 +168,9 @@ extension Calendar {
 
 #Preview {
     ReportView().environment(AppModel.preview()).environment(ProStore(unlocked: false))
+}
+
+struct SharedLink: Identifiable {
+    let url: URL
+    var id: String { url.absoluteString }
 }

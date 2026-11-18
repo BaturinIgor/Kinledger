@@ -195,6 +195,37 @@ struct CloudClient: Sendable {
         return try await send(request)
     }
 
+    // MARK: Report links
+
+    func createReportLink(_ link: ReportLink, session: CloudSession) async throws {
+        let row: [String: Any] = [
+            "token": link.token,
+            "period_start": CloudCodec.format(link.periodStart),
+            "period_end": CloudCodec.format(link.periodEnd),
+            "include_notes": link.includeNotes,
+        ]
+        var request = makeRequest(path: "rest/v1/report_links", session: session)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        request.httpBody = try JSONSerialization.data(withJSONObject: [row])
+        _ = try await send(request)
+    }
+
+    /// Turns off every link this person has shared. The reports stop loading at once.
+    func revokeAllReportLinks(session: CloudSession, now: Date = .now) async throws {
+        var request = makeRequest(
+            path: "rest/v1/report_links",
+            query: [URLQueryItem(name: "revoked_at", value: "is.null")],
+            session: session
+        )
+        request.httpMethod = "PATCH"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["revoked_at": CloudCodec.format(now)])
+        _ = try await send(request)
+    }
+
     // MARK: Account
 
     /// Deletes the cloud account and everything in it. `authorizationCode` comes from a fresh
