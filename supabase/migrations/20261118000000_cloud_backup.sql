@@ -92,6 +92,7 @@ create policy "own receipts: read" on storage.objects
 create policy "own receipts: add" on storage.objects
   for insert to authenticated
   with check (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);
+-- Deleting photos happens only in the delete-account function, with the service role.
 create policy "own receipts: replace" on storage.objects
   for update to authenticated
   using (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);

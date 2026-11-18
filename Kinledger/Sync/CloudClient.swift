@@ -195,6 +195,18 @@ struct CloudClient: Sendable {
         return try await send(request)
     }
 
+    // MARK: Account
+
+    /// Deletes the cloud account and everything in it. `authorizationCode` comes from a fresh
+    /// Sign in with Apple, so the server can revoke the Apple tokens as the App Store requires.
+    func deleteAccount(authorizationCode: String, session: CloudSession) async throws {
+        var request = makeRequest(path: "functions/v1/delete-account", session: session)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["authorization_code": authorizationCode])
+        _ = try await send(request)
+    }
+
     // MARK: Plumbing
 
     func makeRequest(path: String, query: [URLQueryItem] = [], session: CloudSession?) -> URLRequest {

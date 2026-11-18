@@ -117,7 +117,25 @@ final class CloudBackup {
         scheduled?.cancel()
         session = nil
         keychain.clear()
+        try? store.resetSyncState()
         status = isConfigured ? .signedOut : .notConfigured
+    }
+
+    /// Deletes the cloud copy and the account. Entries on this iPhone stay.
+    /// Returns an error message to show, or nil when it worked.
+    func deleteAccount(appleAuthorizationCode: String) async -> String? {
+        guard let client, var session else { return "Backup is not on, so there is no cloud account to delete." }
+        scheduled?.cancel()
+        do {
+            if session.isExpired() {
+                session = try await client.refresh(session)
+            }
+            try await client.deleteAccount(authorizationCode: appleAuthorizationCode, session: session)
+            signOut()
+            return nil
+        } catch {
+            return "The cloud account was not deleted: \(error.localizedDescription)"
+        }
     }
 
     // MARK: Syncing

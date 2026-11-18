@@ -112,6 +112,31 @@ struct SyncTests {
         #expect(CloudCodec.parse("2026-11-18T15:00:00Z") != nil)
     }
 
+    @Test func turningBackupOffMakesEverythingUploadAgainLater() throws {
+        let store = try EntryStore.inMemory()
+        try store.save(entry(receipt: "a.jpg"), now: t0)
+        try store.markSynced(store.pendingEntries())
+        try store.markReceiptUploaded("a.jpg")
+        try store.setSyncValue("cursor", for: EntryStore.cursorKey)
+
+        try store.resetSyncState()
+
+        #expect(try store.pendingCount() == 1)
+        #expect(try store.receiptsToUpload() == ["a.jpg"])
+        #expect(try store.syncValue(EntryStore.cursorKey) == nil)
+        #expect(try store.entries().count == 1)
+    }
+
+    @Test func deleteAccountSendsTheAppleCode() async throws {
+        let transport = RecordingTransport(body: Data(#"{"deleted":true}"#.utf8))
+        let client = CloudClient(config: config, transport: transport)
+        try await client.deleteAccount(authorizationCode: "code-1", session: session)
+        let request = try #require(transport.requests.first)
+        #expect(request.url?.path == "/functions/v1/delete-account")
+        let body = try #require(JSONSerialization.jsonObject(with: request.httpBody ?? Data()) as? [String: String])
+        #expect(body["authorization_code"] == "code-1")
+    }
+
     @Test func receiptNamesCannotLeaveTheFolder() {
         #expect(ReceiptStore.isSafeName("3F2A.jpg"))
         #expect(!ReceiptStore.isSafeName("../kinledger.sqlite"))

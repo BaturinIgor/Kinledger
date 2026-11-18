@@ -144,6 +144,17 @@ extension EntryStore {
         }
     }
 
+    /// Forgets what the cloud has, so every entry and photo uploads again on the next sign-in.
+    /// Used when backup is turned off or the cloud account is deleted. No entry is touched.
+    func resetSyncState() throws {
+        try writer.write { db in
+            try db.execute(sql: "UPDATE entry SET syncedAt = NULL")
+            try db.execute(sql: "UPDATE profile SET syncedAt = NULL")
+            try db.execute(sql: "DELETE FROM receiptUpload")
+            try db.execute(sql: "DELETE FROM syncState")
+        }
+    }
+
     // MARK: Bookkeeping
 
     func syncValue(_ key: String) throws -> String? {

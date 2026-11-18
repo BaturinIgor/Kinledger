@@ -5,6 +5,8 @@ import SwiftUI
 struct CloudBackupSection: View {
     @Environment(AppModel.self) private var model
 
+    @State private var isDeleting = false
+
     private var cloud: CloudBackup { model.cloud }
 
     var body: some View {
@@ -34,12 +36,14 @@ struct CloudBackupSection: View {
                 .disabled(cloud.status == .syncing)
                 Button("Turn off backup on this iPhone") { cloud.signOut() }
                     .foregroundStyle(Palette.textSecondary)
+                Button("Delete cloud account", role: .destructive) { isDeleting = true }
             }
         } header: {
             Text("Backup")
         } footer: {
             Text(footer)
         }
+        .sheet(isPresented: $isDeleting) { DeleteAccountSheet() }
     }
 
     private var title: String {
@@ -89,6 +93,79 @@ struct AppleBackupButton: View {
         case .failure(let error):
             if (error as? ASAuthorizationError)?.code == .canceled { return }
             model.problem = "Sign in with Apple did not finish: \(error.localizedDescription)"
+        }
+    }
+}
+
+/// Deleting the cloud account asks for Apple sign-in once more, so the server can revoke the login.
+struct DeleteAccountSheet: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
+    @State private var nonce = ""
+    @State private var isWorking = false
+    @State private var message: String?
+
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Delete your cloud account?")
+                    .font(.title2.weight(.semibold))
+                    .foregroundStyle(Palette.text)
+                Text("This removes the cloud copy of every entry and receipt photo, and your Kinledger account. Entries on this iPhone stay, and you can export them first in Me.")
+                    .foregroundStyle(Palette.textSecondary)
+                Text("A phone you lose afterwards cannot get them back.")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(Palette.moneyInk)
+                if isWorking {
+                    ProgressView("Deleting…")
+                } else {
+                    SignInWithAppleButton(.continue) { request in
+                        nonce = CloudBackup.makeNonce()
+                        request.requestedScopes = []
+                        request.nonce = CloudBackup.sha256(nonce)
+                    } onCompletion: { result in
+                        handle(result)
+                    }
+                    .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
+                    .frame(height: Metrics.primaryTouch)
+                    Text("Confirm with Apple to delete.")
+                        .font(.footnote)
+                        .foregroundStyle(Palette.textSecondary)
+                }
+                if let message {
+                    Text(message).font(.subheadline).foregroundStyle(Palette.error)
+                }
+                Spacer()
+            }
+            .padding(20)
+            .background(Palette.background)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+            }
+        }
+    }
+
+    private func handle(_ result: Result<ASAuthorization, Error>) {
+        switch result {
+        case .success(let authorization):
+            guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                  let codeData = credential.authorizationCode,
+                  let code = String(data: codeData, encoding: .utf8)
+            else {
+                message = "Apple did not confirm. Try again."
+                return
+            }
+            isWorking = true
+            let cloud = model.cloud
+            Task {
+                let failure = await cloud.deleteAccount(appleAuthorizationCode: code)
+                isWorking = false
+                if let failure { message = failure } else { dismiss() }
+            }
+        case .failure(let error):
+            if (error as? ASAuthorizationError)?.code == .canceled { return }
+            message = error.localizedDescription
         }
     }
 }

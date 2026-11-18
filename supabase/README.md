@@ -15,6 +15,15 @@ new phone gets everything back, and later serves the family report link.
 5. Sign in with Apple needs the paid Apple Developer account and the
    "Sign in with Apple" capability on the app id. Until then the app runs with backup off.
 
+## Account deletion (required by the App Store)
+
+`functions/delete-account` revokes the person's Sign in with Apple tokens, removes their receipt
+photos and deletes the user (all rows go with it). To deploy:
+
+1. In the Apple Developer account: Keys → new key with "Sign in with Apple" → download the `.p8`.
+2. `supabase secrets set APPLE_TEAM_ID=... APPLE_KEY_ID=... APPLE_CLIENT_ID=app.kinledger APPLE_PRIVATE_KEY="$(cat AuthKey_XXXX.p8)"`
+3. `supabase functions deploy delete-account`
+
 ## Rules the schema enforces
 
 - Each person reads and writes only their own rows (row-level security on every table and the receipts bucket).
