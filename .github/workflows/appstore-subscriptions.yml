@@ -1,0 +1,31 @@
+name: App Store subscriptions
+
+# Run from the Actions tab. Creates the Kinledger Pro group, both plans, their names in every
+# language, prices in every country (from the US price) and the free week.
+# Safe to run again: only what is missing is added. Text and prices: appstore/subscriptions.json.
+#
+# Secrets (Settings → Secrets and variables → Actions), from App Store Connect →
+# Users and Access → Integrations → App Store Connect API → Team Keys (role App Manager):
+#   ASC_KEY_ID        the key id
+#   ASC_ISSUER_ID     the issuer id shown above the list of keys
+#   ASC_PRIVATE_KEY   contents of AuthKey_<id>.p8
+
+on:
+  workflow_dispatch:
+
+jobs:
+  subscriptions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "pyjwt[crypto]==2.9.0" requests==2.32.3
+      - name: Create the subscriptions
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+        run: python appstore/create_subscriptions.py

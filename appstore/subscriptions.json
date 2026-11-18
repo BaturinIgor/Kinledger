@@ -1,0 +1,35 @@
+{
+  "_note": "Read by appstore/create_subscriptions.py. Names up to 30 characters, descriptions up to 45. Group name is what people see in Settings > Subscriptions.",
+  "bundleId": "app.kinledger",
+  "group": "Kinledger Pro",
+  "plans": [
+    {"productId": "app.kinledger.pro.monthly", "referenceName": "Kinledger Pro Monthly", "period": "ONE_MONTH", "usd": "9.99", "level": 2},
+    {"productId": "app.kinledger.pro.yearly", "referenceName": "Kinledger Pro Yearly", "period": "ONE_YEAR", "usd": "79.00", "level": 1}
+  ],
+  "trial": "ONE_WEEK",
+  "reviewNote": "Pro unlocks sharing the monthly care report (PDF and private web link) and the US medical-expense export. Open the Report tab and tap Share PDF to see the paywall. Logging, totals and backup stay free.",
+  "locales": {
+    "en-US":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, monthly", "yearly": "Kinledger Pro, yearly", "description": "Family report, PDF and US tax export"},
+    "en-GB":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, monthly", "yearly": "Kinledger Pro, yearly", "description": "Monthly family report as a link and PDF"},
+    "en-CA":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, monthly", "yearly": "Kinledger Pro, yearly", "description": "Monthly family report as a link and PDF"},
+    "en-AU":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, monthly", "yearly": "Kinledger Pro, yearly", "description": "Monthly family report as a link and PDF"},
+    "es-ES":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, mensual", "yearly": "Kinledger Pro, anual", "description": "Informe mensual para la familia, enlace y PDF"},
+    "es-MX":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, mensual", "yearly": "Kinledger Pro, anual", "description": "Informe mensual para la familia, enlace y PDF"},
+    "fr-FR":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, mensuel", "yearly": "Kinledger Pro, annuel", "description": "Rapport mensuel pour la famille, lien et PDF"},
+    "de-DE":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, monatlich", "yearly": "Kinledger Pro, jährlich", "description": "Monatsbericht für die Familie, Link und PDF"},
+    "it":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, mensile", "yearly": "Kinledger Pro, annuale", "description": "Resoconto mensile per la famiglia, link e PDF"},
+    "pt-BR":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, mensal", "yearly": "Kinledger Pro, anual", "description": "Relatório mensal para a família, link e PDF"},
+    "nl-NL":   {"group": "Kinledger Pro", "monthly": "Kinledger Pro, maandelijks", "yearly": "Kinledger Pro, jaarlijks", "description": "Maandverslag voor de familie, link en pdf"},
+    "sv":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, månadsvis", "yearly": "Kinledger Pro, årsvis", "description": "Månadsrapport till familjen, länk och PDF"},
+    "da":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, månedlig", "yearly": "Kinledger Pro, årlig", "description": "Månedsrapport til familien, link og PDF"},
+    "no":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, månedlig", "yearly": "Kinledger Pro, årlig", "description": "Månedsrapport til familien, lenke og PDF"},
+    "pl":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, miesięcznie", "yearly": "Kinledger Pro, rocznie", "description": "Miesięczny raport dla rodziny, link i PDF"},
+    "ru":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, на месяц", "yearly": "Kinledger Pro, на год", "description": "Отчёт за месяц для семьи: ссылка и PDF"},
+    "uk":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, на місяць", "yearly": "Kinledger Pro, на рік", "description": "Звіт за місяць для родини: посилання і PDF"},
+    "tr":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro, aylık", "yearly": "Kinledger Pro, yıllık", "description": "Aile için aylık rapor, bağlantı ve PDF"},
+    "ja":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro 月額", "yearly": "Kinledger Pro 年額", "description": "家族向けの月次レポート（リンクとPDF）"},
+    "ko":      {"group": "Kinledger Pro", "monthly": "Kinledger Pro 월간", "yearly": "Kinledger Pro 연간", "description": "가족을 위한 월간 보고서(링크 및 PDF)"},
+    "zh-Hans": {"group": "Kinledger Pro", "monthly": "Kinledger Pro 月度", "yearly": "Kinledger Pro 年度", "description": "给家人的月度报告，链接和 PDF"},
+    "zh-Hant": {"group": "Kinledger Pro", "monthly": "Kinledger Pro 月費", "yearly": "Kinledger Pro 年費", "description": "給家人的每月報告，連結與 PDF"}
+  }
+}
