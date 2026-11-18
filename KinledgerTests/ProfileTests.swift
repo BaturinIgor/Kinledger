@@ -42,12 +42,27 @@ struct ProfileTests {
             let old = try DatabaseQueue(path: file.path)
             try EntryStore.migrator.migrate(old, upTo: "v1")
             try old.write { db in
-                for e in entries { try EntryRecord(e, updatedAt: SampleData.month).insert(db) }
+                // Raw SQL with the version 1 columns, so later fields on EntryRecord never change this test.
+                for e in entries {
+                    try db.execute(
+                        sql: """
+                            INSERT INTO entry (id, category, title, occurredAt, loggedAt, updatedAt, minutes, visit,
+                                               amountCents, payer, medical, receiptPath, note, deletedAt)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL, NULL)
+                            """,
+                        arguments: [e.id.uuidString, e.category.rawValue, e.title, e.occurredAt, e.loggedAt,
+                                    SampleData.month, e.minutes, e.visit, e.expense?.amountCents,
+                                    e.expense?.payer.rawValue, e.expense?.medical ?? false]
+                    )
+                }
             }
         }
 
         let upgraded = try EntryStore.onDisk(directory: dir)
         #expect(try upgraded.entries().count == 500)
+        #expect(try upgraded.entries().sorted { $0.title < $1.title } == entries.sorted { $0.title < $1.title })
+        // Everything from before cloud backup is waiting to upload.
+        #expect(try upgraded.pendingCount() == 500)
         #expect(try upgraded.profile() == nil)
         #expect(FileManager.default.fileExists(atPath: dir.appending(path: EntryStore.preMigrationCopyName).path))
     }

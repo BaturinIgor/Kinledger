@@ -24,6 +24,17 @@ final class ReceiptStore: Sendable {
         return name
     }
 
+    /// Writes a photo under a known name, used when it comes back from the cloud.
+    func write(_ jpeg: Data, name: String) throws {
+        guard Self.isSafeName(name) else { throw CocoaError(.fileWriteInvalidFileName) }
+        try jpeg.write(to: url(for: name), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+    }
+
+    /// A plain file name such as "UUID.jpg", never a path that could leave the receipts folder.
+    static func isSafeName(_ name: String) -> Bool {
+        !name.isEmpty && !name.contains("/") && !name.contains("\\") && !name.hasPrefix(".")
+    }
+
     func url(for name: String) -> URL {
         directory.appending(path: name)
     }

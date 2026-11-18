@@ -9,18 +9,7 @@ struct MeView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    Label {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Saved on this iPhone")
-                            Text("\(model.entries.count) entries. Cloud backup comes with sign-in.")
-                                .font(.subheadline)
-                                .foregroundStyle(Palette.textSecondary)
-                        }
-                    } icon: {
-                        Image(systemName: "iphone").foregroundStyle(Palette.time)
-                    }
-                }
+                CloudBackupSection()
                 Section("Family on the report") {
                     ForEach(model.recipients) { person in
                         LabeledContent(person.name, value: person.relation)

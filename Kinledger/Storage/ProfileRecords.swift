@@ -9,12 +9,14 @@ struct ProfileRecord: Codable, FetchableRecord, PersistableRecord {
     var nickname: String
     var country: String
     var updatedAt: Date
+    var syncedAt: Date?
 
-    init(_ profile: CareProfile, updatedAt: Date) {
+    init(_ profile: CareProfile, updatedAt: Date, syncedAt: Date? = nil) {
         parentName = profile.parentName
         nickname = profile.nickname
         country = profile.country.rawValue
         self.updatedAt = updatedAt
+        self.syncedAt = syncedAt
     }
 
     var profile: CareProfile {

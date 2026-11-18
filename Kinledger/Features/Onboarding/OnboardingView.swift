@@ -8,6 +8,7 @@ struct OnboardingView: View {
     @State private var nickname = ""
     @State private var country: Country = .us
     @State private var people: [Recipient] = []
+    @State private var isRestoring = false
 
     private var canContinue: Bool {
         !parentName.trimmingCharacters(in: .whitespaces).isEmpty
@@ -53,8 +54,13 @@ struct OnboardingView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         Button("Back") { step = 1 }
                     }
+                } else if model.cloud.isConfigured {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Restore") { isRestoring = true }
+                    }
                 }
             }
+            .sheet(isPresented: $isRestoring) { RestoreSheet() }
         }
     }
 
