@@ -32,8 +32,9 @@ jobs:
         run: supabase link --project-ref "$PROJECT_REF"
 
       - name: Apply database migrations
-        # Newer CLIs push to the local database unless told otherwise.
-        run: supabase db push --remote --password "$SUPABASE_DB_PASSWORD"
+        # Newer CLIs push to the local database unless told otherwise, and ask before
+        # changing production. Pressing "Run workflow" is that confirmation.
+        run: supabase db push --remote --yes --password "$SUPABASE_DB_PASSWORD"
 
       - name: Store the Apple key for account deletion
         env:
