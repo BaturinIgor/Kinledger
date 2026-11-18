@@ -45,6 +45,16 @@ final class ScreenshotTests: XCTestCase {
         tabs.buttons.element(boundBy: 3).tap()
         try shot("3-report")
 
+        // The paywall, also used as the subscription review screenshot in App Store Connect.
+        let share = app.buttons["sharePDF"]
+        if share.waitForExistence(timeout: 3) {
+            share.tap()
+            sleep(2)
+            try shot("7-paywall")
+            app.swipeDown(velocity: .fast)
+            sleep(1)
+        }
+
         tabs.buttons.element(boundBy: 1).tap()
         try shot("4-log")
 

@@ -39,6 +39,7 @@ struct ReportView: View {
                         if pro.isPro { sharePDF() } else { showPaywall = true }
                     }
                         .disabled(report.entries.isEmpty)
+                        .accessibilityIdentifier("sharePDF")
 
                     if model.cloud.isSignedIn {
                         Button {

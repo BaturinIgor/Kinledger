@@ -75,3 +75,4 @@ schemes:
         KinledgerUITests: [test]
     test:
       targets: [KinledgerUITests]
+      storeKitConfiguration: StoreKit/Kinledger.storekit
