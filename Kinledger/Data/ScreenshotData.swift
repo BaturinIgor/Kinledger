@@ -25,6 +25,23 @@ enum ScreenshotData {
         }
     }
 
+    /// What Pro costs in the screenshot's currency: Apple's usual price for $9.99 a month and $79 a year.
+    static func offer(id: String, locale: Locale = .current) -> PlanOffer {
+        let currency = profile(locale: locale).currencyCode
+        let prices: [String: (Decimal, Decimal)] = [
+            "JPY": (1500, 12000), "KRW": (14000, 110000), "CNY": (68, 548), "TWD": (330, 2590),
+            "SEK": (119, 949), "NOK": (119, 949), "DKK": (79, 599), "PLN": (Decimal(string: "44.99")!, Decimal(string: "349.99")!),
+            "RUB": (899, 6990), "UAH": (399, 3190), "TRY": (Decimal(string: "349.99")!, Decimal(string: "2799.99")!),
+            "BRL": (Decimal(string: "54.90")!, Decimal(string: "429.90")!),
+        ]
+        let (monthly, yearly) = prices[currency] ?? (Decimal(string: "9.99")!, 79)
+        return PlanOffer(
+            id: id,
+            price: id == ProStore.yearlyID ? yearly : monthly,
+            format: .currency(code: currency).locale(locale)
+        )
+    }
+
     static func profile(locale: Locale = .current) -> CareProfile {
         let country = Country.guess(for: locale)
         return CareProfile(
@@ -55,8 +72,12 @@ enum ScreenshotData {
             (.groceries, String(localized: "Groceries"), 45, true, 5430, .me, false, nil),
             (.other, String(localized: "Lunch together"), 75, true, 2600, .me, false, nil),
         ]
+        // Daytime hours, so the list reads like a real month (an overnight stay starts in the evening).
+        let hours = [15, 10, 21, 11, 17, 9, 14, 19, 12, 13]
         return items.enumerated().map { index, item in
-            let occurred = now.addingTimeInterval(-span * Double(index) / Double(items.count) - 3600)
+            let spread = now.addingTimeInterval(-span * Double(index) / Double(items.count) - 3600)
+            var occurred = calendar.date(bySettingHour: hours[index], minute: index % 2 == 0 ? 0 : 30, second: 0, of: spread) ?? spread
+            if occurred > now.addingTimeInterval(-3600) { occurred = spread }
             return Entry(
                 id: UUID(),
                 category: item.0,
@@ -80,6 +101,7 @@ extension AppModel {
         try? store.saveProfile(profile)
         try? store.saveRecipient(Recipient(id: UUID(), name: String(localized: "Dave"), contact: "dave@example.com", relation: "Brother"))
         for entry in ScreenshotData.entries(currency: profile.currencyCode) { try? store.save(entry) }
-        return AppModel(store: store, receipts: try! ReceiptStore.temporary())
+        // The real cloud setup, signed out: the backup line reads as it does for a new user.
+        return AppModel(store: store, receipts: try! ReceiptStore.temporary(), cloudConfig: .current)
     }
 }
