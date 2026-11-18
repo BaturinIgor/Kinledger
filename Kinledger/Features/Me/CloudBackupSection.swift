@@ -57,9 +57,9 @@ struct CloudBackupSection: View {
 
     private var footer: String {
         if cloud.isSignedIn {
-            return "\(model.entries.count) entries. A new phone gets everything back after the same sign-in."
+            return String(localized: "\(model.entries.count) entries. A new phone gets everything back after the same sign-in.")
         }
-        return "\(model.entries.count) entries. With backup on, a lost or broken phone loses nothing. Turning it off never deletes entries."
+        return String(localized: "\(model.entries.count) entries. With backup on, a lost or broken phone loses nothing. Turning it off never deletes entries.")
     }
 }
 

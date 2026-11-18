@@ -134,7 +134,7 @@ enum Changes {
     static func loggedLine(_ entry: Entry, calendar: Calendar = .current) -> String {
         let when = entry.loggedAt.formatted(date: .abbreviated, time: .shortened)
         let sameDay = calendar.isDate(entry.loggedAt, inSameDayAs: entry.occurredAt)
-        return sameDay ? "\(when), the same day" : when
+        return sameDay ? String(localized: "\(when), the same day") : when
     }
 }
 
