@@ -1,0 +1,21 @@
+Cuidar da mãe ou do pai é muito trabalho silencioso. O Kinledger registra tudo.
+
+Anote uma ida à farmácia, uma consulta, uma noite na casa dela ou as compras em poucos toques: quanto tempo levou, quanto você pagou e uma foto do recibo. O Kinledger faz as contas.
+
+UM RELATÓRIO CLARO PARA A FAMÍLIA
+Uma vez por mês, compartilhe um resumo tranquilo com seus irmãos: horas de cuidado, visitas, dinheiro do próprio bolso e cada registro com a hora em que foi anotado. Eles abrem em PDF ou por um link privado, sem app e sem conta, e você pode desativar o link quando quiser.
+
+UM REGISTRO HONESTO
+Cada registro mostra quando foi anotado. As alterações mantêm o histórico e o que é apagado fica 30 dias na Lixeira. Nada se perde por engano.
+
+PRIVADO DESDE O INÍCIO
+Seu diário fica no seu iPhone. Ative o backup na nuvem com Iniciar sessão com a Apple para recuperá-lo num iPhone novo. Sem anúncios, sem rastreamento, e seus dados nunca são vendidos.
+
+PARA O IMPOSTO
+Nos Estados Unidos, exporte as despesas médicas pagas no ano, com recibos, prontas para o contador.
+
+GRÁTIS: registros, totais, recibos, histórico, backup e exportação completa dos seus dados.
+KINLEDGER PRO: o relatório mensal para a família e a exportação para impostos, mensal ou anual. Cancele quando quiser nos Ajustes do iPhone.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

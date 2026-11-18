@@ -1,0 +1,21 @@
+Att ta hand om en förälder är mycket tyst arbete. Kinledger för bok över det.
+
+Anteckna ett apoteksbesök, ett läkarbesök, en övernattning eller matinköp med några tryck: hur lång tid det tog, vad du betalade och ett foto av kvittot. Kinledger räknar ihop.
+
+EN TYDLIG RAPPORT TILL FAMILJEN
+En gång i månaden delar du en lugn sammanfattning med dina syskon: timmar, besök, pengar ur egen ficka och varje post med tiden då den antecknades. De öppnar den som pdf eller via en privat länk, utan app eller konto, och du kan stänga av länken när du vill.
+
+ÄRLIG BOKFÖRING
+Varje post visar när den antecknades. Ändringar behåller sin historik och raderade poster ligger kvar i papperskorgen i 30 dagar. Inget försvinner av misstag.
+
+PRIVAT FRÅN BÖRJAN
+Dagboken stannar på din iPhone. Slå på molnbackup med Logga in med Apple för att få tillbaka den på en ny iPhone. Ingen reklam, ingen spårning och dina uppgifter säljs aldrig.
+
+INFÖR DEKLARATIONEN
+I USA exporterar du årets betalda sjukvårdskostnader med kvitton, klara för din deklarationshjälp.
+
+GRATIS: anteckningar, summor, kvitton, historik, backup och full export av dina data.
+KINLEDGER PRO: månadsrapporten till familjen och skatteexporten, per månad eller år. Avsluta när du vill i Inställningar.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

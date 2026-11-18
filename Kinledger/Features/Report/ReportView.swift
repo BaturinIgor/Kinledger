@@ -105,7 +105,7 @@ struct ReportPage: View {
                 Text("\(profile.nickname)'s care in \(report.month.formatted(.dateTime.month(.wide).year()))")
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(Palette.text)
-                Text(report.headline(parentName: profile.nickname, money: profile.money))
+                Text(report.headline(parentName: profile.nickname, money: { profile.money($0) }))
                     .font(.body)
                     .foregroundStyle(Palette.textSecondary)
             }

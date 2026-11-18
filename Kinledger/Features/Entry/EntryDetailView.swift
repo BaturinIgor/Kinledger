@@ -59,7 +59,7 @@ struct EntryDetailView: View {
                 Card {
                     ForEach(history) { revision in
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(Changes.summary(from: revision.previous, to: entry, money: profile.money))
+                            Text(Changes.summary(from: revision.previous, to: entry, money: { profile.money($0) }))
                                 .font(.callout.weight(.semibold))
                                 .foregroundStyle(Palette.text)
                             HStack {
