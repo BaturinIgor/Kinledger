@@ -136,27 +136,38 @@ struct StorageTests {
 
 struct AmountInputTests {
     @Test func parsesDollarsAndCents() {
-        #expect(AmountInput.parse("42.80") == .cents(4280))
-        #expect(AmountInput.parse("$1,140") == .cents(114_000))
-        #expect(AmountInput.parse("18") == .cents(1800))
-        #expect(AmountInput.parse(".5") == .cents(50))
-        #expect(AmountInput.parse("") == .empty)
+        #expect(AmountInput.parse("42.80", decimalSeparator: ".") == .cents(4280))
+        #expect(AmountInput.parse("$1,140", decimalSeparator: ".") == .cents(114_000))
+        #expect(AmountInput.parse("18", decimalSeparator: ".") == .cents(1800))
+        #expect(AmountInput.parse(".5", decimalSeparator: ".") == .cents(50))
+        #expect(AmountInput.parse("", decimalSeparator: ".") == .empty)
     }
 
     @Test func rejectsWhatIsNotMoney() {
-        #expect(AmountInput.parse("abc") == .invalid)
-        #expect(AmountInput.parse("4.555") == .invalid)
-        #expect(AmountInput.parse("1.2.3") == .invalid)
+        #expect(AmountInput.parse("abc", decimalSeparator: ".") == .invalid)
+        #expect(AmountInput.parse("4.555", decimalSeparator: ".") == .invalid)
+        #expect(AmountInput.parse("1.2.3", decimalSeparator: ".") == .invalid)
     }
 
     @Test func flagsAMissingDecimalPoint() {
-        #expect(AmountInput.parse("4280") == .suspicious(typedCents: 428_000, suggestedCents: 4280))
-        #expect(AmountInput.parse("999") == .cents(99_900))
+        #expect(AmountInput.parse("4280", decimalSeparator: ".") == .suspicious(typedCents: 428_000, suggestedCents: 4280))
+        #expect(AmountInput.parse("999", decimalSeparator: ".") == .cents(99_900))
     }
 
     @Test func formatsForTheField() {
-        #expect(AmountInput.text(cents: 4280) == "42.80")
-        #expect(AmountInput.text(cents: 1800) == "18")
+        #expect(AmountInput.text(cents: 4280, decimalSeparator: ".") == "42.80")
+        #expect(AmountInput.text(cents: 1800, decimalSeparator: ".") == "18")
+    }
+
+    /// German, French, Russian and most other keypads type "," for the decimal mark.
+    @Test func readsACommaKeypad() {
+        #expect(AmountInput.parse("42,80", decimalSeparator: ",") == .cents(4280))
+        #expect(AmountInput.parse("1.140,50", decimalSeparator: ",") == .cents(114_050))
+        #expect(AmountInput.parse("1 140", decimalSeparator: ",") == .suspicious(typedCents: 114_000, suggestedCents: 1140))
+        #expect(AmountInput.parse("42.80", decimalSeparator: ",") == .cents(4280))
+        #expect(AmountInput.parse("18 €", decimalSeparator: ",") == .cents(1800))
+        #expect(AmountInput.parse("4,555", decimalSeparator: ",") == .invalid)
+        #expect(AmountInput.text(cents: 4280, decimalSeparator: ",") == "42,80")
     }
 }
 
