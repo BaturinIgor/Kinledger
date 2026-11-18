@@ -20,8 +20,10 @@ struct EntryRecord: Codable, FetchableRecord, PersistableRecord {
     var note: String?
     /// Set when the entry is in the trash. Rows are only removed 30 days later.
     var deletedAt: Date?
+    /// The `updatedAt` that the cloud copy has. Nil or older than `updatedAt` means it still needs uploading.
+    var syncedAt: Date?
 
-    init(_ entry: Entry, updatedAt: Date, deletedAt: Date? = nil) {
+    init(_ entry: Entry, updatedAt: Date, deletedAt: Date? = nil, syncedAt: Date? = nil) {
         id = entry.id.uuidString
         category = entry.category.rawValue
         title = entry.title
@@ -36,6 +38,7 @@ struct EntryRecord: Codable, FetchableRecord, PersistableRecord {
         receiptPath = entry.expense?.receiptPath
         note = entry.note
         self.deletedAt = deletedAt
+        self.syncedAt = syncedAt
     }
 
     var entry: Entry {

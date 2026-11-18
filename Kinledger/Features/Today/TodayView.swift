@@ -15,6 +15,7 @@ struct TodayView: View {
                     Text(now.formatted(.dateTime.weekday(.wide).month(.abbreviated).day()))
                         .font(.subheadline.weight(.medium))
                         .foregroundStyle(Palette.textSecondary)
+                    BackupStatusLine(status: model.cloud.status)
 
                     Card {
                         Text("\(now.formatted(.dateTime.month(.wide))) so far")
