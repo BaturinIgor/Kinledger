@@ -46,9 +46,17 @@ jobs:
                       nb:nb_NO pl:pl_PL ru:ru_RU uk:uk_UA tr:tr_TR ja:ja_JP ko:ko_KR zh-Hans:zh_CN zh-Hant:zh_TW; do
             lang=${pair%%:*}; loc=${pair#*:}
             echo "::group::$lang"
-            TEST_RUNNER_SHOT_LANG=$lang TEST_RUNNER_SHOT_LOCALE=$loc TEST_RUNNER_SCREENSHOT_DIR="$PWD/shots" \
-              xcodebuild test-without-building -project Kinledger.xcodeproj -scheme Screenshots \
-              -destination "id=${{ steps.sim.outputs.udid }}" CODE_SIGNING_ALLOWED=NO | tail -5
+            # The simulator sometimes still reports the test runner as "installing" right after
+            # the previous language; wait and try that language once more before failing.
+            for attempt in 1 2; do
+              if TEST_RUNNER_SHOT_LANG=$lang TEST_RUNNER_SHOT_LOCALE=$loc TEST_RUNNER_SCREENSHOT_DIR="$PWD/shots" \
+                xcodebuild test-without-building -project Kinledger.xcodeproj -scheme Screenshots \
+                -destination "id=${{ steps.sim.outputs.udid }}" CODE_SIGNING_ALLOWED=NO | tail -5; then
+                break
+              fi
+              if [ "$attempt" = 2 ]; then exit 1; fi
+              echo "Retrying $lang"; sleep 15
+            done
             echo "::endgroup::"
           done
           ls shots | wc -l
