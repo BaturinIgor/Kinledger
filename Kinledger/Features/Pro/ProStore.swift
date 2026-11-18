@@ -104,7 +104,10 @@ enum Pricing {
     static func yearlySavingsPercent(monthly: Decimal, yearly: Decimal) -> Int {
         let fullYear = monthly * 12
         guard fullYear > 0 else { return 0 }
-        let saving = (fullYear - yearly) / fullYear * 100
-        return max(0, NSDecimalNumber(decimal: saving).intValue)
+        var saving = (fullYear - yearly) / fullYear * 100
+        // Round first: NSDecimalNumber.intValue returns 0 for decimals with a long mantissa.
+        var whole = Decimal()
+        NSDecimalRound(&whole, &saving, 0, .down)
+        return max(0, Int(truncating: whole as NSNumber))
     }
 }
