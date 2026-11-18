@@ -32,7 +32,7 @@ struct TodayView: View {
                     if model.entries.isEmpty {
                         EmptyToday(onLogCare: onLogCare)
                     } else {
-                        PrimaryButton(title: "Log care", action: onLogCare)
+                        PrimaryButton(title: String(localized: "Log care"), action: onLogCare)
                         Text("Recent")
                             .font(.headline)
                             .foregroundStyle(Palette.text)
@@ -72,9 +72,9 @@ struct MonthStats: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            StatTile(label: "of care", value: Format.durationSummary(minutes: totals.minutes), tone: .time)
-            StatTile(label: "I paid", value: profile.money(totals.outOfPocketCents), tone: .money)
-            StatTile(label: "visits", value: "\(totals.visits)", tone: .visits)
+            StatTile(label: String(localized: "of care"), value: Format.durationSummary(minutes: totals.minutes), tone: .time)
+            StatTile(label: String(localized: "I paid"), value: profile.money(totals.outOfPocketCents), tone: .money)
+            StatTile(label: String(localized: "visits"), value: "\(totals.visits)", tone: .visits)
         }
     }
 }
@@ -92,7 +92,7 @@ private struct EmptyToday: View {
                 .font(.body)
                 .foregroundStyle(Palette.textSecondary)
                 .multilineTextAlignment(.center)
-            PrimaryButton(title: "Log care", action: onLogCare)
+            PrimaryButton(title: String(localized: "Log care"), action: onLogCare)
         }
         .padding(.top, 32)
         .frame(maxWidth: .infinity)

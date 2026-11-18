@@ -1,0 +1,21 @@
+Sich um Mutter oder Vater zu kümmern ist viel stille Arbeit. Kinledger hält sie fest.
+
+Erfasse den Gang zur Apotheke, einen Arzttermin, eine Übernachtung oder den Einkauf mit wenigen Tipps: wie lange es gedauert hat, was du bezahlt hast, und ein Foto vom Beleg. Kinledger rechnet zusammen.
+
+EIN KLARER BERICHT FÜR DIE FAMILIE
+Einmal im Monat teilst du eine ruhige Übersicht mit deinen Geschwistern: Stunden, Besuche, Geld aus eigener Tasche und jeden Eintrag mit dem Zeitpunkt, an dem er erfasst wurde. Sie öffnen ihn als PDF oder über einen privaten Link, ohne App und ohne Konto. Den Link kannst du jederzeit ausschalten.
+
+EHRLICH DOKUMENTIERT
+Jeder Eintrag zeigt, wann er erfasst wurde. Änderungen behalten ihren Verlauf, gelöschte Einträge liegen 30 Tage im Papierkorb. Nichts geht aus Versehen verloren.
+
+PRIVAT VON ANFANG AN
+Dein Tagebuch bleibt auf deinem iPhone. Mit dem Cloud-Backup über „Mit Apple anmelden“ holst du es auf ein neues iPhone zurück. Keine Werbung, kein Tracking, deine Daten werden nie verkauft.
+
+FÜR DIE STEUER
+In den USA exportierst du die bezahlten Krankheitskosten des Jahres mit Belegen, fertig für die Steuerberatung.
+
+KOSTENLOS: Erfassen, Summen, Belege, Verlauf, Backup und vollständiger Export deiner Daten.
+KINLEDGER PRO: der monatliche Familienbericht und der Steuerexport, monatlich oder jährlich. Jederzeit in den iPhone-Einstellungen kündbar.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

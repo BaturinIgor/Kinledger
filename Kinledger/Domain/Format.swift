@@ -6,7 +6,7 @@ enum Format {
         if minutes < 60 { return "\(minutes) min" }
         let h = minutes / 60
         let m = minutes % 60
-        return m == 0 ? "\(h) h" : "\(h) h \(m) min"
+        return m == 0 ? String(localized: "\(h) h") : String(localized: "\(h) h \(m) min")
     }
 
     /// Month totals round to half hours: 0 → "0 h", 1890 → "31.5 h".

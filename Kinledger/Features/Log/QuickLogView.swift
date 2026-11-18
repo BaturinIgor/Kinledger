@@ -44,9 +44,9 @@ struct QuickLogView: View {
 
     private var amountError: String? {
         switch amount {
-        case .invalid: "Use numbers only, like 42.80."
+        case .invalid: String(localized: "Use numbers only, like 42.80.")
         case .suspicious(_, let suggested) where !acceptedLargeAmount:
-            "That looks too large for one receipt. Did you mean \(profile.money(suggested))?"
+            String(localized: "That looks too large for one receipt. Did you mean \(profile.money(suggested))?")
         default: nil
         }
     }
@@ -65,7 +65,7 @@ struct QuickLogView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    section("What did you do?") {
+                    section(String(localized: "What did you do?")) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104), spacing: 8)], spacing: 8) {
                             ForEach(EntryCategory.allCases, id: \.self) { item in
                                 ChipButton(title: item.label, symbol: item.symbol, isOn: item == category) {
@@ -78,7 +78,7 @@ struct QuickLogView: View {
                             .accessibilityLabel("Title")
                     }
 
-                    section("Time") {
+                    section(String(localized: "Time")) {
                         HStack(spacing: 8) {
                             ForEach([30, 60, 120, 240], id: \.self) { preset in
                                 ChipButton(title: Format.duration(minutes: preset), isOn: minutes == preset) {
@@ -91,9 +91,9 @@ struct QuickLogView: View {
                         Toggle("Counts as a visit", isOn: $visit)
                     }
 
-                    section("Money") {
+                    section(String(localized: "Money")) {
                         HStack {
-                            Text(profile.country.locale.currencySymbol ?? "$").foregroundStyle(Palette.textSecondary)
+                            Text(profile.currencySymbol).foregroundStyle(Palette.textSecondary)
                             TextField("0.00", text: $amountText)
                                 .keyboardType(.decimalPad)
                                 .onChange(of: amountText) { acceptedLargeAmount = false }
@@ -124,16 +124,16 @@ struct QuickLogView: View {
                         if amountCents != nil {
                             Text("Whose money was it?").font(.subheadline.weight(.semibold))
                             HStack(spacing: 8) {
-                                ChipButton(title: "Mine", isOn: payer == .me, tone: .money) { payer = .me }
-                                ChipButton(title: "Hers", isOn: payer == .parent, tone: .money) { payer = .parent }
-                                ChipButton(title: "Repaid", isOn: payer == .repaid, tone: .money) { payer = .repaid }
+                                ChipButton(title: String(localized: "Mine"), isOn: payer == .me, tone: .money) { payer = .me }
+                                ChipButton(title: String(localized: "\(profile.nickname)'s"), isOn: payer == .parent, tone: .money) { payer = .parent }
+                                ChipButton(title: String(localized: "Repaid"), isOn: payer == .repaid, tone: .money) { payer = .repaid }
                             }
                             Toggle("Medical expense (tax export)", isOn: $medical)
                         }
                         receiptControls
                     }
 
-                    section("Note") {
+                    section(String(localized: "Note")) {
                         TextField("Only you see it unless you share", text: $note, axis: .vertical)
                             .lineLimit(2...5)
                             .textFieldStyle(.roundedBorder)
@@ -142,7 +142,7 @@ struct QuickLogView: View {
                 .padding(16)
             }
             .background(Palette.background)
-            .navigationTitle(editing == nil ? "Quick log" : "Edit entry")
+            .navigationTitle(editing == nil ? String(localized: "Quick log") : String(localized: "Edit entry"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -176,7 +176,7 @@ struct QuickLogView: View {
             }
         } else {
             HStack(spacing: 8) {
-                ChipButton(title: "Snap receipt", symbol: "camera", isOn: false) { isTakingPhoto = true }
+                ChipButton(title: String(localized: "Snap receipt"), symbol: "camera", isOn: false) { isTakingPhoto = true }
                 PhotosPicker(selection: $photoItem, matching: .images) {
                     Label("Choose photo", systemImage: "photo")
                         .font(.subheadline.weight(.medium))

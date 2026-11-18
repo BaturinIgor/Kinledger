@@ -41,7 +41,7 @@ struct TaxExportView: View {
                     .font(.footnote)
                     .foregroundStyle(Palette.textSecondary)
 
-                PrimaryButton(title: "Export for \(String(year))") {
+                PrimaryButton(title: String(localized: "Export for \(String(year))")) {
                     if let url = model.exportTaxYear(year) { shared = SharedFile(url: url) }
                 }
                 .disabled(summary.expenses.isEmpty)

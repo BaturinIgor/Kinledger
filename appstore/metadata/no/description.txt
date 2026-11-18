@@ -1,0 +1,21 @@
+Å ta vare på en forelder er mye stille arbeid. Kinledger holder oversikt.
+
+Noter en tur til apoteket, et legebesøk, en overnatting eller handling med noen få trykk: hvor lang tid det tok, hva du betalte, og et bilde av kvitteringen. Kinledger summerer.
+
+EN TYDELIG RAPPORT TIL FAMILIEN
+En gang i måneden deler du en rolig oppsummering med søsknene dine: timer, besøk, penger av egen lomme og hver oppføring med tidspunktet den ble notert. De åpner den som PDF eller via en privat lenke, uten app eller konto, og du kan slå av lenken når som helst.
+
+ÆRLIG FØRT
+Hver oppføring viser når den ble notert. Endringer beholder historikken, og slettede oppføringer ligger 30 dager i papirkurven. Ingenting forsvinner ved et uhell.
+
+PRIVAT FRA START
+Dagboken blir på iPhonen din. Slå på skysikkerhetskopi med Logg på med Apple for å få den tilbake på en ny iPhone. Ingen reklame, ingen sporing, og dataene dine selges aldri.
+
+TIL SKATTEN
+I USA eksporterer du årets betalte medisinske utgifter med kvitteringer, klare for regnskapsføreren.
+
+GRATIS: notering, summer, kvitteringer, historikk, sikkerhetskopi og full eksport av dataene dine.
+KINLEDGER PRO: den månedlige familierapporten og skatteeksporten, månedlig eller årlig. Si opp når som helst i Innstillinger.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

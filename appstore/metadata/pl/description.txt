@@ -1,0 +1,21 @@
+Opieka nad rodzicem to dużo cichej pracy. Kinledger ją zapisuje.
+
+Zapisz wizytę w aptece, u lekarza, noc u rodzica albo zakupy kilkoma stuknięciami: ile to trwało, ile zapłaciłeś i zdjęcie paragonu. Kinledger wszystko zsumuje.
+
+JASNY RAPORT DLA RODZINY
+Raz w miesiącu udostępnij rodzeństwu spokojne podsumowanie: godziny opieki, wizyty, pieniądze z własnej kieszeni i każdy wpis z godziną zapisania. Otworzą go jako PDF albo przez prywatny link, bez aplikacji i konta. Link możesz wyłączyć w każdej chwili.
+
+UCZCIWY ZAPIS
+Każdy wpis pokazuje, kiedy został zapisany. Zmiany zachowują historię, a usunięte wpisy czekają 30 dni w koszu. Nic nie zginie przez przypadek.
+
+PRYWATNOŚĆ OD POCZĄTKU
+Dziennik zostaje na Twoim iPhonie. Włącz kopię w chmurze przez Zaloguj się, używając Apple, aby odzyskać go na nowym iPhonie. Bez reklam, bez śledzenia, a Twoje dane nigdy nie są sprzedawane.
+
+DO PODATKÓW
+W Stanach Zjednoczonych wyeksportujesz wydatki medyczne zapłacone w danym roku, z paragonami, gotowe dla doradcy podatkowego.
+
+ZA DARMO: wpisy, sumy, paragony, historia, kopia zapasowa i pełny eksport danych.
+KINLEDGER PRO: miesięczny raport dla rodziny i eksport podatkowy, miesięcznie lub rocznie. Anuluj w dowolnej chwili w Ustawieniach iPhone’a.
+
+Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy: https://baturinigor.github.io/Kinledger/privacy

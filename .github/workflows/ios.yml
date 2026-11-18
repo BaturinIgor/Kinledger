@@ -34,3 +34,33 @@ jobs:
             -destination "id=${{ steps.sim.outputs.udid }}" \
             CODE_SIGNING_ALLOWED=NO \
             | tee build.log
+
+      - name: Export strings for translation
+        if: always()
+        run: |
+          xcodebuild -exportLocalizations \
+            -project Kinledger.xcodeproj \
+            -localizationPath loc \
+            -exportLanguage en \
+            -sdk iphonesimulator \
+            CODE_SIGNING_ALLOWED=NO > export.log 2>&1 || { tail -80 export.log; exit 1; }
+          python3 - <<'PY'
+          import glob, json, xml.etree.ElementTree as ET
+          ns = {"x": "urn:oasis:names:tc:xliff:document:1.2"}
+          out = []
+          for path in glob.glob("loc/**/*.xliff", recursive=True):
+              for f in ET.parse(path).getroot().findall("x:file", ns):
+                  for u in f.iter("{urn:oasis:names:tc:xliff:document:1.2}trans-unit"):
+                      src = u.find("x:source", ns)
+                      out.append({"file": f.get("original"), "id": u.get("id"), "source": src.text if src is not None else ""})
+          print("LOCKEYS " + json.dumps(out, ensure_ascii=False))
+          print("LOCKEYS-COUNT", len(out))
+          PY
+
+      - name: Keep the exported strings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: localization-export
+          path: loc
+          if-no-files-found: ignore

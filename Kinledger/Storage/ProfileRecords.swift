@@ -10,8 +10,10 @@ struct ProfileRecord: Codable, FetchableRecord, PersistableRecord {
     var country: String
     var updatedAt: Date
     var syncedAt: Date?
+    var currency: String?
 
     init(_ profile: CareProfile, updatedAt: Date, syncedAt: Date? = nil) {
+        currency = profile.currency
         parentName = profile.parentName
         nickname = profile.nickname
         country = profile.country.rawValue
@@ -20,7 +22,7 @@ struct ProfileRecord: Codable, FetchableRecord, PersistableRecord {
     }
 
     var profile: CareProfile {
-        CareProfile(parentName: parentName, nickname: nickname, country: Country(rawValue: country) ?? .us)
+        CareProfile(parentName: parentName, nickname: nickname, country: Country(rawValue: country) ?? .us, currency: currency)
     }
 }
 

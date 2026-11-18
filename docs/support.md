@@ -31,3 +31,7 @@ Me → Export all my data: a spreadsheet plus every receipt photo, free at any t
 ## Contact
 
 Open an issue at [github.com/BaturinIgor/Kinledger/issues](https://github.com/BaturinIgor/Kinledger/issues). We answer within two working days.
+
+---
+
+English · [Español](/Kinledger/support/es) · [Français](/Kinledger/support/fr) · [Deutsch](/Kinledger/support/de) · [Italiano](/Kinledger/support/it) · [Português (Brasil)](/Kinledger/support/pt-br) · [Nederlands](/Kinledger/support/nl) · [Svenska](/Kinledger/support/sv) · [Dansk](/Kinledger/support/da) · [Norsk](/Kinledger/support/nb) · [Polski](/Kinledger/support/pl) · [Русский](/Kinledger/support/ru) · [Українська](/Kinledger/support/uk) · [Türkçe](/Kinledger/support/tr) · [日本語](/Kinledger/support/ja) · [한국어](/Kinledger/support/ko) · [简体中文](/Kinledger/support/zh-hans) · [繁體中文](/Kinledger/support/zh-hant)
