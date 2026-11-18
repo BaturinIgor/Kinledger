@@ -12,6 +12,9 @@ name: App Store subscriptions
 
 on:
   workflow_dispatch:
+  # Temporary: lets the first run happen from this branch before it is merged.
+  push:
+    branches: [asc-subscriptions]
 
 jobs:
   subscriptions:
