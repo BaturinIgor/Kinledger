@@ -169,25 +169,25 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@, do dziś"
+            "value": "%@ do tej pory"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@, на сегодня"
+            "value": "%@ на сегодня"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@, станом на сьогодні"
+            "value": "%@ на сьогодні"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@, şu ana kadar"
+            "value": "Şu ana kadar %@"
           }
         },
         "ja": {
@@ -269,7 +269,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ sine"
+            "value": "%@s"
           }
         },
         "pl": {
@@ -770,13 +770,13 @@
               "many": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld изменений сохранено на этом iPhone и ждут копирования"
+                  "value": "%lld изменений сохранены на этом iPhone и ждут копирования"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld изменения сохранено на этом iPhone и ждут копирования"
+                  "value": "%lld изменения сохранены на этом iPhone и ждут копирования"
                 }
               }
             }
@@ -800,13 +800,13 @@
               "many": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld змін збережено на цьому iPhone і чекають копіювання"
+                  "value": "%lld змін збережені на цьому iPhone і чекають копіювання"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld зміни збережено на цьому iPhone і чекають копіювання"
+                  "value": "%lld зміни збережені на цьому iPhone і чекають копіювання"
                 }
               }
             }
@@ -2375,7 +2375,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wyjazd do lekarza, wizyta w aptece, noc u mamy. Stuknij + i wybierz, co zrobiłeś."
+            "value": "Wyjazd do lekarza, wizyta w aptece, noc u mamy. Stuknij + i wybierz czynność."
           }
         },
         "ru": {
@@ -2411,13 +2411,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开车送去看医生、去趟药店、在她家过夜。轻点 + 并选择您做了什么。"
+            "value": "开车送去看医生、去趟药店、在她家过夜。轻点 +，然后选择您做的事。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "開車送去看醫生、跑一趟藥局、在她家過夜。點一下 + 並選擇您做了什麼。"
+            "value": "開車送去看醫生、跑一趟藥局、在她家過夜。點一下 +，然後選擇您做的事。"
           }
         }
       }
@@ -2587,7 +2587,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zestawienie tego, co zapłaciłeś, a nie porada podatkowa."
+            "value": "Zestawienie twoich wydatków, a nie porada podatkowa."
           }
         },
         "ru": {
@@ -2651,7 +2651,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eine Tabelle mit allen Einträgen plus alle Belegfotos. Kostenlos, jederzeit."
+            "value": "Eine Tabelle mit allen Einträgen und allen Belegfotos. Kostenlos, jederzeit."
           }
         },
         "it": {
@@ -2757,7 +2757,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Neu"
+            "value": "Hinzufügen"
           }
         },
         "it": {
@@ -3563,7 +3563,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appleで確認されませんでした。もう一度お試しください。"
+            "value": "Appleによる確認が完了しませんでした。もう一度お試しください。"
           }
         },
         "ko": {
@@ -3857,7 +3857,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wstecz"
+            "value": "Wróć"
           }
         },
         "ru": {
@@ -3969,13 +3969,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сохранить копию сейчас"
+            "value": "Создать копию сейчас"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Зберегти копію зараз"
+            "value": "Створити копію зараз"
           }
         },
         "tr": {
@@ -4705,7 +4705,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopia zaraz się zacznie"
+            "value": "Tworzenie kopii zaraz się zacznie"
           }
         },
         "ru": {
@@ -5471,7 +5471,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@に変更"
+            "value": "変更：%@"
           }
         },
         "ko": {
@@ -6465,7 +6465,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Land für Geld und Steuer"
+            "value": "Land für Geld und Steuern"
           }
         },
         "it": {
@@ -6489,55 +6489,55 @@
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Land för pengar och skatt"
+            "value": "Land för valuta och skatt"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Land for penge og skat"
+            "value": "Land for valuta og skat"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Land for penger og skatt"
+            "value": "Land for valuta og skatt"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kraj dla pieniędzy i podatków"
+            "value": "Kraj (waluta i podatki)"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Страна для денег и налогов"
+            "value": "Страна (валюта и налоги)"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Країна для грошей і податків"
+            "value": "Країна (валюта й податки)"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Para ve vergi için ülke"
+            "value": "Ülke (para birimi ve vergi)"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "お金と税金の国"
+            "value": "通貨と税金の基準となる国"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "돈과 세금 기준 국가"
+            "value": "통화 및 세금 기준 국가"
           }
         },
         "zh-Hans": {
@@ -6743,7 +6743,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "日付を変更"
+            "value": "日付を変更しました"
           }
         },
         "ko": {
@@ -7392,13 +7392,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "已删除的记录会在这里保留 %lld 天，之后永久删除。恢复的记录会保留历史。"
+            "value": "已删除的记录会在这里保留 %lld 天，之后永久删除。恢复的记录会保留历史记录。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "已刪除的紀錄會在這裡保留 %lld 天，之後永久刪除。還原的紀錄會保留歷史。"
+            "value": "已刪除的紀錄會在這裡保留 %lld 天，之後永久刪除。還原的紀錄會保留歷史紀錄。"
           }
         }
       }
@@ -7592,7 +7592,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "詳細を変更"
+            "value": "詳細を変更しました"
           }
         },
         "ko": {
@@ -8334,7 +8334,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "記録したものはすべてここに新しい順で表示されます。"
+            "value": "記録したものはすべて、新しい順にここに表示されます。"
           }
         },
         "ko": {
@@ -8970,25 +8970,25 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "7日間無料、その後は選んだプランが解約するまで自動更新されます。無料期間または期間終了の24時間前までに、設定からいつでも解約できます。"
+            "value": "7日間無料、その後は解約するまで選択したプランが自動更新されます。「設定」からいつでも解約できます（無料期間または現在の期間が終了する24時間前まで）。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "7일 동안 무료, 이후 선택한 요금제가 해지할 때까지 자동 갱신됩니다. 체험 기간이나 이용 기간이 끝나기 최소 24시간 전에 설정에서 언제든지 해지하세요."
+            "value": "7일 동안 무료로 이용한 후, 해지할 때까지 선택한 요금제가 자동 갱신됩니다. 설정에서 언제든지 해지할 수 있으며, 체험 기간이나 이용 기간이 끝나기 최소 24시간 전에 해지해야 합니다."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "免费 7 天，之后按您选择的方案自动续订，直到您取消。请至少在试用期或订阅期结束前 24 小时，随时在“设置”中取消。"
+            "value": "免费试用 7 天，之后按您选择的方案自动续订，直到您取消为止。您可以随时在“设置”中取消，但需在试用期或订阅期结束前至少 24 小时取消。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "免費 7 天，之後依您選擇的方案自動續訂，直到您取消為止。請至少在試用期或訂閱期結束前 24 小時，隨時在「設定」中取消。"
+            "value": "免費試用 7 天，之後依您選擇的方案自動續訂，直到您取消為止。您可以隨時在「設定」中取消，但須在試用期或訂閱期結束前至少 24 小時取消。"
           }
         }
       }
@@ -9194,7 +9194,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "采购"
+            "value": "买菜购物"
           }
         },
         "zh-Hant": {
@@ -9406,13 +9406,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "历史"
+            "value": "历史记录"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "歷史"
+            "value": "歷史紀錄"
           }
         }
       }
@@ -9912,7 +9912,7 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Можливо, його переміщено в кошик."
+            "value": "Можливо, його переміщено в Смітник."
           }
         },
         "tr": {
@@ -9982,7 +9982,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Houd %@"
+            "value": "Behoud %@"
           }
         },
         "sv": {
@@ -10058,7 +10058,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kinledger no puede abrir su almacenamiento en este iPhone, así que las nuevas entradas no se guardan. Reinicia la app. (%@)"
+            "value": "Kinledger no puede abrir su almacenamiento en este iPhone, así que los nuevos registros no se guardan. Reinicia la app. (%@)"
           }
         },
         "fr": {
@@ -10376,7 +10376,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Registro"
+            "value": "Diario"
           }
         },
         "fr": {
@@ -10388,7 +10388,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verlauf"
+            "value": "Einträge"
           }
         },
         "it": {
@@ -10848,7 +10848,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lager lenken…"
+            "value": "Lager lenken …"
           }
         },
         "pl": {
@@ -11354,7 +11354,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mãe"
+            "value": "Mamãe"
           }
         },
         "nl": {
@@ -11526,13 +11526,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "金额"
+            "value": "费用"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "金額"
+            "value": "費用"
           }
         }
       }
@@ -11926,7 +11926,7 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "У кошик"
+            "value": "У Смітник"
           }
         },
         "tr": {
@@ -12032,7 +12032,7 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Переміщено в кошик. Зберігається 30 днів."
+            "value": "Переміщено в Смітник. Зберігається 30 днів."
           }
         },
         "tr": {
@@ -12474,7 +12474,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "이 Apple ID로 된 Pro 구독을 찾지 못했습니다."
+            "value": "이 Apple ID에 연결된 Pro 구독을 찾지 못했습니다."
           }
         },
         "zh-Hans": {
@@ -12892,7 +12892,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "メモを変更"
+            "value": "メモを変更しました"
           }
         },
         "ko": {
@@ -13434,13 +13434,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在此 iPhone 和云端"
+            "value": "已保存在此 iPhone 和云端"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "在此 iPhone 和雲端"
+            "value": "已儲存在此 iPhone 和雲端"
           }
         }
       }
@@ -13586,7 +13586,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eén keer per maand krijgen ze een privéverslag met je uren en kosten. Ze hebben de app of een account niet nodig."
+            "value": "Eén keer per maand krijgen ze een privéverslag met je uren en kosten. Ze hebben geen app of account nodig."
           }
         },
         "sv": {
@@ -13634,7 +13634,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "月に一度、あなたの時間と費用をまとめた非公開レポートが届きます。アプリもアカウントも不要です。"
+            "value": "月に一度、あなたが費やした時間と費用をまとめた非公開レポートが届きます。アプリもアカウントも不要です。"
           }
         },
         "ko": {
@@ -13740,7 +13740,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "共有しない限り、あなただけが見られます"
+            "value": "共有しない限り、あなただけが見ることができます"
           }
         },
         "ko": {
@@ -13886,7 +13886,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Andere Familie"
+            "value": "Anderes Familienmitglied"
           }
         },
         "it": {
@@ -13904,7 +13904,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Andere familie"
+            "value": "Ander familielid"
           }
         },
         "sv": {
@@ -13916,19 +13916,19 @@
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Anden familie"
+            "value": "Andet familiemedlem"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Annen familie"
+            "value": "Annet familiemedlem"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inna rodzina"
+            "value": "Inny krewny"
           }
         },
         "ru": {
@@ -13946,7 +13946,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Diğer aile"
+            "value": "Diğer aile üyesi"
           }
         },
         "ja": {
@@ -14064,7 +14064,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "숙박"
+            "value": "하룻밤 돌봄"
           }
         },
         "zh-Hans": {
@@ -14142,7 +14142,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Payé par vous et marqué médical. %1$#@n1@, %2$lld avec reçu."
+            "value": "Payées par vous et marquées comme médicales. %1$#@n1@, %2$lld avec reçu."
           },
           "substitutions": {
             "n1": {
@@ -15502,13 +15502,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Récent"
+            "value": "Récents"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zuletzt"
+            "value": "Neueste"
           }
         },
         "it": {
@@ -15892,13 +15892,13 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "返金済み"
+            "value": "精算済み"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "환급됨"
+            "value": "돌려받음"
           }
         },
         "zh-Hans": {
@@ -15910,7 +15910,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "已退款"
+            "value": "已還款"
           }
         }
       }
@@ -15998,13 +15998,13 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "返金済み"
+            "value": "精算済み"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "환급됨"
+            "value": "돌려받음"
           }
         },
         "zh-Hans": {
@@ -16016,7 +16016,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "已退款"
+            "value": "已還款"
           }
         }
       }
@@ -16244,7 +16244,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rétablir cette version"
+            "value": "Restaurer cette version"
           }
         },
         "de": {
@@ -16356,7 +16356,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sichern"
+            "value": "Speichern"
           }
         },
         "it": {
@@ -16716,19 +16716,19 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zapisano na tym iPhonie. Kopia wkrótce spróbuje ponownie."
+            "value": "Zapisano na tym iPhonie. Wkrótce ponowimy tworzenie kopii."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сохранено на этом iPhone. Копия скоро попробует ещё раз."
+            "value": "Сохранено на этом iPhone. Скоро попробуем сделать копию снова."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Збережено на цьому iPhone. Копія скоро спробує ще раз."
+            "value": "Збережено на цьому iPhone. Скоро спробуємо скопіювати ще раз."
           }
         },
         "tr": {
@@ -16928,13 +16928,13 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zapisano na tym iPhonie. Zaloguj się ponownie w sekcji Ja, aby kontynuować kopię."
+            "value": "Zapisano na tym iPhonie. Zaloguj się ponownie w sekcji Ja, aby dalej tworzyć kopie."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сохранено на этом iPhone. Войдите снова в Профиле, чтобы копия продолжилась."
+            "value": "Сохранено на этом iPhone. Войдите снова в Профиле, чтобы копирование продолжилось."
           }
         },
         "uk": {
@@ -17146,13 +17146,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поделиться личной ссылкой"
+            "value": "Поделиться закрытой ссылкой"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поділитися особистим посиланням"
+            "value": "Поділитися приватним посиланням"
           }
         },
         "tr": {
@@ -17782,13 +17782,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Войдите с тем же Apple ID, что и для резервной копии. Записи, фото чеков и данные о том, о ком вы заботитесь, вернутся на этот iPhone."
+            "value": "Войдите с тем же Аккаунтом Apple, что и для резервной копии. Записи, фото чеков и данные о том, о ком вы заботитесь, вернутся на этот iPhone."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Увійдіть із тим самим Apple ID, що й для резервної копії. Записи, фото чеків і дані про те, про кого ви дбаєте, повернуться на цей iPhone."
+            "value": "Увійдіть із тим самим обліковим записом Apple, що й для резервної копії. Записи, фото чеків і дані про те, про кого ви дбаєте, повернуться на цей iPhone."
           }
         },
         "tr": {
@@ -18536,7 +18536,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tek bir fiş için çok fazla görünüyor. %@ mi demek istediniz?"
+            "value": "Tek bir fiş için çok fazla görünüyor. Şunu mu demek istediniz: %@?"
           }
         },
         "ja": {
@@ -19366,7 +19366,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Spowoduje to usunięcie kopii w chmurze wszystkich wpisów i zdjęć paragonów oraz Twojego konta Kinledger. Wpisy na tym iPhonie zostaną, a najpierw możesz je wyeksportować w sekcji Ja."
+            "value": "Spowoduje to usunięcie kopii w chmurze wszystkich wpisów i zdjęć paragonów oraz twojego konta Kinledger. Wpisy na tym iPhonie zostaną, a najpierw możesz je wyeksportować w sekcji Ja."
           }
         },
         "ru": {
@@ -20132,7 +20132,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "記録すると合計が埋まっていきます。ほとんどの人は最初の記録を10秒以内に追加しています。"
+            "value": "記録するたびに合計が更新されます。ほとんどの人は10秒以内に最初の記録を追加しています。"
           }
         },
         "ko": {
@@ -20332,7 +20332,7 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кошик"
+            "value": "Смітник"
           }
         },
         "tr": {
@@ -20438,7 +20438,7 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кошик порожній"
+            "value": "Смітник порожній"
           }
         },
         "tr": {
@@ -20856,13 +20856,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Включите резервную копию в Профиле, чтобы отправить личную ссылку, которую семья откроет без приложения."
+            "value": "Включите резервную копию в Профиле, чтобы отправить закрытую ссылку, которую семья откроет без приложения."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Увімкніть резервну копію в Профілі, щоб надіслати особисте посилання, яке родина відкриє без застосунку."
+            "value": "Увімкніть резервну копію в Профілі, щоб надіслати приватне посилання, яке родина відкриє без застосунку."
           }
         },
         "tr": {
@@ -20880,7 +20880,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "가족이 앱 없이 여는 비공개 링크를 보내려면 ‘나’에서 백업을 켜세요."
+            "value": "가족이 앱 없이 열 수 있는 비공개 링크를 보내려면 ‘나’에서 백업을 켜세요."
           }
         },
         "zh-Hans": {
@@ -21444,7 +21444,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "US-Export der Krankheitskosten mit Belegen"
+            "value": "Export der Krankheitskosten (USA) mit Belegen"
           }
         },
         "it": {
@@ -21774,13 +21774,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usado no app e no relatório, como “Cuidados com Mãe em novembro”."
+            "value": "Usado no app e no relatório, como “Cuidados com Mamãe em novembro”."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gebruikt in de app en het verslag, zoals ‘Zorg voor mama in november’."
+            "value": "Gebruikt in de app en het verslag, zoals ‘Zorg voor Mama in november’."
           }
         },
         "sv": {
@@ -22080,7 +22080,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Warte auf Zustimmung. Pro wird aktiv, sobald sie erteilt ist."
+            "value": "Warten auf Genehmigung. Pro wird aktiv, sobald sie erteilt ist."
           }
         },
         "it": {
@@ -22280,7 +22280,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cómo le llamas"
+            "value": "El nombre que usas"
           }
         },
         "fr": {
@@ -22298,7 +22298,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Come lo chiami"
+            "value": "Il nome che usi"
           }
         },
         "pt-BR": {
@@ -22364,19 +22364,19 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "부르는 호칭"
+            "value": "호칭"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "您怎么称呼他们"
+            "value": "称呼"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "您怎麼稱呼他們"
+            "value": "稱呼"
           }
         }
       }
@@ -22476,13 +22476,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "时间点"
+            "value": "日期和时间"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "時間點"
+            "value": "日期與時間"
           }
         }
       }
@@ -22534,13 +22534,13 @@
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hvor mine penge gik hen"
+            "value": "Hvad mine penge gik til"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hvor pengene mine gikk"
+            "value": "Hva pengene mine gikk til"
           }
         },
         "pl": {
@@ -22758,7 +22758,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@: kto ma widzieć, jak się sprawy mają?"
+            "value": "%@: kto ma wiedzieć, co słychać?"
           }
         },
         "ru": {
@@ -22794,13 +22794,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "谁应该了解%@的近况？"
+            "value": "您想让谁了解%@的近况？"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "誰應該知道%@的近況？"
+            "value": "您想讓誰知道%@的近況？"
           }
         }
       }
@@ -23234,31 +23234,31 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pasaste %1$@ con %2$@, fuiste a verle %3$@ y pagaste %4$@ de tu bolsillo."
+            "value": "Pasaste %1$@ con %2$@, fuiste %3$@ de visita y pagaste %4$@ de tu bolsillo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous avez passé %1$@ avec %2$@, êtes venu %3$@ et avez payé %4$@ de votre poche."
+            "value": "Vous avez passé %1$@ avec %2$@, lui avez rendu visite %3$@ et avez payé %4$@ de votre poche."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Du hast %1$@ mit %2$@ verbracht, %3$@ besucht und %4$@ selbst bezahlt."
+            "value": "Du hast %1$@ mit %2$@ verbracht, warst %3$@ zu Besuch und hast %4$@ selbst bezahlt."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hai passato %1$@ con %2$@, ci sei stato %3$@ e hai pagato %4$@ di tasca tua."
+            "value": "Hai passato %1$@ con %2$@, hai fatto visita %3$@ e hai pagato %4$@ di tasca tua."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Você passou %1$@ com %2$@, fez visitas %3$@ e pagou %4$@ do próprio bolso."
+            "value": "Você passou %1$@ com %2$@, esteve lá %3$@ e pagou %4$@ do próprio bolso."
           }
         },
         "nl": {
@@ -23288,7 +23288,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "%2$@: spędziłeś razem %1$@, odwiedziłeś %3$@ i zapłaciłeś %4$@ z własnej kieszeni."
+            "value": "%2$@: razem %1$@, odwiedziny %3$@, z własnej kieszeni %4$@."
           }
         },
         "ru": {
@@ -23318,7 +23318,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "%2$@와(과) %1$@을(를) 함께했고, %3$@ 방문했으며, %4$@을(를) 직접 냈습니다."
+            "value": "%2$@ 곁에서 %1$@ 보냈고, %3$@ 방문했으며, 직접 낸 돈은 %4$@입니다."
           }
         },
         "zh-Hans": {
