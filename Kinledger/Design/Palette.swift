@@ -19,11 +19,13 @@ enum Palette {
 
     static let money = Color(light: 0xA24E05, dark: 0xF0A55A)
     static let moneySoft = Color(light: 0xFCEBD3, dark: 0x3A2A17)
+    static let moneyInk = Color(light: 0x6B3307, dark: 0xF7C99A)
 
     static let visits = Color(light: 0x4353A6, dark: 0x9AA6F0)
     static let visitsSoft = Color(light: 0xE5E8F7, dark: 0x1E2540)
 
     static let error = Color(light: 0xB3261E, dark: 0xF2B8B5)
+    static let neutralSoft = Color(light: 0xECE9E1, dark: 0x2C3632)
 }
 
 /// The three quantities the app counts, each with its own color pair.
