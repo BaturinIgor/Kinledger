@@ -31,12 +31,12 @@ struct EntryDetailView: View {
                         }
                     }
                     HStack(spacing: 8) {
-                        StatTile(label: "time", value: Format.duration(minutes: entry.minutes), tone: .time)
+                        StatTile(label: String(localized: "time"), value: Format.duration(minutes: entry.minutes), tone: .time)
                         if let expense = entry.expense {
                             StatTile(label: payerLabel(expense.payer), value: profile.money(expense.amountCents), tone: .money)
                         }
                         if entry.visit {
-                            StatTile(label: "visit", value: "1", tone: .visits)
+                            StatTile(label: String(localized: "visit"), value: "1", tone: .visits)
                         }
                     }
                     if let note = entry.note, !note.isEmpty {
@@ -106,9 +106,9 @@ struct EntryDetailView: View {
 
     private func payerLabel(_ payer: Payer) -> String {
         switch payer {
-        case .me: "I paid"
-        case .parent: "she paid"
-        case .repaid: "repaid"
+        case .me: String(localized: "I paid")
+        case .parent: String(localized: "\(profile.nickname) paid")
+        case .repaid: String(localized: "repaid")
         }
     }
 }
@@ -117,18 +117,18 @@ struct EntryDetailView: View {
 enum Changes {
     static func summary(from old: Entry, to new: Entry, money: (Int) -> String = { Format.money(cents: $0) }) -> String {
         var parts: [String] = []
-        if old.title != new.title { parts.append("Title \(old.title) → \(new.title)") }
+        if old.title != new.title { parts.append(String(localized: "Title \(old.title) → \(new.title)")) }
         if old.minutes != new.minutes {
-            parts.append("Time \(Format.duration(minutes: old.minutes)) → \(Format.duration(minutes: new.minutes))")
+            parts.append(String(localized: "Time \(Format.duration(minutes: old.minutes)) → \(Format.duration(minutes: new.minutes))"))
         }
         if old.expense?.amountCents != new.expense?.amountCents {
-            let before = old.expense.map { money($0.amountCents) } ?? "none"
-            let after = new.expense.map { money($0.amountCents) } ?? "none"
-            parts.append("Amount \(before) → \(after)")
+            let before = old.expense.map { money($0.amountCents) } ?? String(localized: "none")
+            let after = new.expense.map { money($0.amountCents) } ?? String(localized: "none")
+            parts.append(String(localized: "Amount \(before) → \(after)"))
         }
-        if old.occurredAt != new.occurredAt { parts.append("Date changed") }
-        if old.note != new.note { parts.append("Note changed") }
-        return parts.isEmpty ? "Details changed" : parts.joined(separator: ", ")
+        if old.occurredAt != new.occurredAt { parts.append(String(localized: "Date changed")) }
+        if old.note != new.note { parts.append(String(localized: "Note changed")) }
+        return parts.isEmpty ? String(localized: "Details changed") : parts.joined(separator: ", ")
     }
 
     static func loggedLine(_ entry: Entry, calendar: Calendar = .current) -> String {

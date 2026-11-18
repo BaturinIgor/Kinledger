@@ -43,7 +43,7 @@ struct LogListView: View {
             }
             .overlay(alignment: .bottom) {
                 if let trashed {
-                    Toast(text: "Moved to trash. Kept for 30 days.", action: "Undo") {
+                    Toast(text: String(localized: "Moved to trash. Kept for 30 days."), action: String(localized: "Undo")) {
                         model.restoreFromTrash(trashed)
                         self.trashed = nil
                     }

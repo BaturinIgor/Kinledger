@@ -12,7 +12,7 @@ struct MeView: View {
                 CloudBackupSection()
                 Section("Family on the report") {
                     ForEach(model.recipients) { person in
-                        LabeledContent(person.name, value: person.relation)
+                        LabeledContent(person.name, value: person.relationLabel)
                     }
                     .onDelete { offsets in
                         for index in offsets { model.deleteRecipient(model.recipients[index].id) }

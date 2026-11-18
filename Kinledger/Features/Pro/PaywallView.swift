@@ -15,9 +15,9 @@ struct PaywallView: View {
                         .font(.largeTitle.weight(.semibold))
                         .foregroundStyle(Palette.text)
                     VStack(alignment: .leading, spacing: 12) {
-                        Benefit(text: "Monthly report link and PDF for your family")
-                        Benefit(text: "US medical-expense export with receipts")
-                        Benefit(text: "Unlimited receipt photos")
+                        Benefit(text: String(localized: "Monthly report link and PDF for your family"))
+                        Benefit(text: String(localized: "US medical-expense export with receipts"))
+                        Benefit(text: String(localized: "Unlimited receipt photos"))
                     }
                     Text("Free forever: logging, totals, backup and exporting all your data.")
                         .font(.callout.weight(.medium))
@@ -34,7 +34,7 @@ struct PaywallView: View {
                                     isOn: choice == yearly.id) { choice = yearly.id }
                         }
                         if let monthly = pro.monthly {
-                            PlanRow(product: monthly, subtitle: "Cancel any time", badge: nil,
+                            PlanRow(product: monthly, subtitle: String(localized: "Cancel any time"), badge: nil,
                                     isOn: choice == monthly.id) { choice = monthly.id }
                         }
                     }
@@ -48,7 +48,7 @@ struct PaywallView: View {
             .background(Palette.background)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 8) {
-                    PrimaryButton(title: "Try free for 7 days") {
+                    PrimaryButton(title: String(localized: "Try free for 7 days")) {
                         guard let product = pro.products.first(where: { $0.id == choice }) else { return }
                         Task {
                             await pro.purchase(product)
@@ -114,7 +114,7 @@ private struct PlanRow: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 8) {
-                        Text(product.id == ProStore.yearlyID ? "Yearly" : "Monthly").font(.headline)
+                        Text(product.id == ProStore.yearlyID ? String(localized: "Yearly") : String(localized: "Monthly")).font(.headline)
                         if let badge {
                             Text(badge)
                                 .font(.caption.weight(.bold))

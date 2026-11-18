@@ -6,7 +6,7 @@ struct OnboardingView: View {
     @State private var step = 1
     @State private var parentName = ""
     @State private var nickname = ""
-    @State private var country: Country = .us
+    @State private var country: Country = .guess()
     @State private var people: [Recipient] = []
     @State private var isRestoring = false
 
@@ -17,7 +17,12 @@ struct OnboardingView: View {
     private var profile: CareProfile {
         let name = parentName.trimmingCharacters(in: .whitespaces)
         let called = nickname.trimmingCharacters(in: .whitespaces)
-        return CareProfile(parentName: name, nickname: called.isEmpty ? name : called, country: country)
+        return CareProfile(
+            parentName: name,
+            nickname: called.isEmpty ? name : called,
+            country: country,
+            currency: country == .other ? Locale.current.currency?.identifier : nil
+        )
     }
 
     var body: some View {
@@ -37,11 +42,11 @@ struct OnboardingView: View {
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 8) {
                     if step == 1 {
-                        PrimaryButton(title: "Next") { step = 2 }
+                        PrimaryButton(title: String(localized: "Next")) { step = 2 }
                             .disabled(!canContinue)
                             .opacity(canContinue ? 1 : 0.5)
                     } else {
-                        PrimaryButton(title: "Start logging", action: finish)
+                        PrimaryButton(title: String(localized: "Start logging"), action: finish)
                         Button("I'll add them later", action: finish)
                             .frame(minHeight: Metrics.minTouch)
                     }
@@ -69,11 +74,11 @@ struct OnboardingView: View {
             Text("Who are you caring for?")
                 .font(.largeTitle.weight(.semibold))
                 .foregroundStyle(Palette.text)
-            LabeledField(label: "Their name") {
+            LabeledField(label: String(localized: "Their name")) {
                 TextField("Margaret", text: $parentName)
                     .textContentType(.name)
             }
-            LabeledField(label: "What you call them", hint: "Used in the app and the report, like \"Mom's care in November\".") {
+            LabeledField(label: String(localized: "What you call them"), hint: String(localized: "Used in the app and the report, like \"Mom's care in November\".")) {
                 TextField("Mom", text: $nickname)
             }
             VStack(alignment: .leading, spacing: 8) {
@@ -149,14 +154,14 @@ struct RecipientEditor: View {
                 Spacer()
                 Button("Remove", role: .destructive, action: onRemove).font(.subheadline)
             }
-            LabeledField(label: "Name") { TextField("Dave", text: $person.name) }
-            LabeledField(label: "Phone or email") {
+            LabeledField(label: String(localized: "Name")) { TextField("Dave", text: $person.name) }
+            LabeledField(label: String(localized: "Phone or email")) {
                 TextField("dave@example.com", text: $person.contact)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
             }
             Picker("Relation", selection: $person.relation) {
-                ForEach(["Sister", "Brother", "Sibling", "Other family"], id: \.self) { Text($0).tag($0) }
+                ForEach(Recipient.relations, id: \.self) { Text(Recipient.label(forRelation: $0)).tag($0) }
             }
             .pickerStyle(.segmented)
         }

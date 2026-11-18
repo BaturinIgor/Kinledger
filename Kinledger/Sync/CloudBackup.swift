@@ -18,22 +18,22 @@ enum BackupStatus: Equatable, Sendable {
     /// One calm line for Today and Me. The phone copy is always safe, so nothing here sounds alarming.
     func text(now: Date = .now) -> String {
         switch self {
-        case .notConfigured: "Saved on this iPhone. Cloud backup is not set up in this build."
-        case .signedOut: "Saved on this iPhone only. Turn on cloud backup in Me."
-        case .syncing: "Backing up…"
+        case .notConfigured: String(localized: "Saved on this iPhone. Cloud backup is not set up in this build.")
+        case .signedOut: String(localized: "Saved on this iPhone only. Turn on cloud backup in Me.")
+        case .syncing: String(localized: "Backing up…")
         case .upToDate(let date):
             if now.timeIntervalSince(date) < 60 {
-                "Backed up just now"
+                String(localized: "Backed up just now")
             } else {
-                "Backed up \(date.formatted(.relative(presentation: .named, unitsStyle: .wide)))"
+                String(localized: "Backed up \(date.formatted(.relative(presentation: .named, unitsStyle: .wide)))")
             }
-        case .waiting(0): "Backup starts in a moment"
+        case .waiting(0): String(localized: "Backup starts in a moment")
         case .waiting(let count):
             count == 1
-                ? "1 change saved on this iPhone, waiting to back up"
-                : "\(count) changes saved on this iPhone, waiting to back up"
-        case .failed: "Saved on this iPhone. Backup will try again shortly."
-        case .needsSignIn: "Saved on this iPhone. Sign in again in Me to keep backing up."
+                ? String(localized: "1 change saved on this iPhone, waiting to back up")
+                : String(localized: "\(count) changes saved on this iPhone, waiting to back up")
+        case .failed: String(localized: "Saved on this iPhone. Backup will try again shortly.")
+        case .needsSignIn: String(localized: "Saved on this iPhone. Sign in again in Me to keep backing up.")
         }
     }
 
@@ -123,32 +123,32 @@ final class CloudBackup {
 
     /// Backs up first, so the link shows everything logged so far, then creates the link.
     func shareReportLink(month: Date, includeNotes: Bool) async -> Result<URL, ReportLinkFailure> {
-        guard let client, isSignedIn else { return .failure(ReportLinkFailure("Turn on backup in Me to share a link.")) }
+        guard let client, isSignedIn else { return .failure(ReportLinkFailure(String(localized: "Turn on backup in Me to share a link."))) }
         await syncNow()
-        guard let session else { return .failure(ReportLinkFailure("Sign in again in Me to share a link.")) }
+        guard let session else { return .failure(ReportLinkFailure(String(localized: "Sign in again in Me to share a link."))) }
         let link = ReportLink(month: month, includeNotes: includeNotes)
         do {
             try await client.createReportLink(link, session: session)
             return .success(link.url)
         } catch {
-            return .failure(ReportLinkFailure("The link could not be made: \(error.localizedDescription)"))
+            return .failure(ReportLinkFailure(String(localized: "The link could not be made: \(error.localizedDescription)")))
         }
     }
 
     func revokeReportLinks() async -> String? {
-        guard let client, let session else { return "Backup is not on, so there are no links." }
+        guard let client, let session else { return String(localized: "Backup is not on, so there are no links.") }
         do {
             try await client.revokeAllReportLinks(session: session)
             return nil
         } catch {
-            return "Links were not turned off: \(error.localizedDescription)"
+            return String(localized: "Links were not turned off: \(error.localizedDescription)")
         }
     }
 
     /// Deletes the cloud copy and the account. Entries on this iPhone stay.
     /// Returns an error message to show, or nil when it worked.
     func deleteAccount(appleAuthorizationCode: String) async -> String? {
-        guard let client, var session else { return "Backup is not on, so there is no cloud account to delete." }
+        guard let client, var session else { return String(localized: "Backup is not on, so there is no cloud account to delete.") }
         scheduled?.cancel()
         do {
             if session.isExpired() {
@@ -158,7 +158,7 @@ final class CloudBackup {
             signOut()
             return nil
         } catch {
-            return "The cloud account was not deleted: \(error.localizedDescription)"
+            return String(localized: "The cloud account was not deleted: \(error.localizedDescription)")
         }
     }
 

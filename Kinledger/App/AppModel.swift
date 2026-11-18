@@ -35,7 +35,7 @@ final class AppModel {
         } catch {
             // Keep the app usable, and say clearly that nothing is being kept.
             let fallback = try! EntryStore.inMemory()
-            return AppModel(store: fallback, receipts: try! ReceiptStore.temporary(), problem: "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (\(error.localizedDescription))")
+            return AppModel(store: fallback, receipts: try! ReceiptStore.temporary(), problem: String(localized: "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (\(error.localizedDescription))"))
         }
     }
 
@@ -56,7 +56,7 @@ final class AppModel {
             profile = try store.profile()
             recipients = try store.recipients()
         } catch {
-            problem = "Could not read your entries: \(error.localizedDescription)"
+            problem = String(localized: "Could not read your entries: \(error.localizedDescription)")
         }
     }
 
@@ -105,7 +105,7 @@ final class AppModel {
         do {
             return try receipts.save(jpeg)
         } catch {
-            problem = "Could not save the receipt photo: \(error.localizedDescription)"
+            problem = String(localized: "Could not save the receipt photo: \(error.localizedDescription)")
             return nil
         }
     }
@@ -137,7 +137,7 @@ final class AppModel {
             cloud.syncSoon()
             return true
         } catch {
-            problem = "Could not save: \(error.localizedDescription)"
+            problem = String(localized: "Could not save: \(error.localizedDescription)")
             return false
         }
     }

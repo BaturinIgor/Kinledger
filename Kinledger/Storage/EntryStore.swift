@@ -108,6 +108,11 @@ final class EntryStore: Sendable {
                 t.column("uploadedAt", .datetime).notNull()
             }
         }
+        migrator.registerMigration("v4-currency") { db in
+            try db.alter(table: "profile") { t in
+                t.add(column: "currency", .text)
+            }
+        }
         return migrator
     }
 
