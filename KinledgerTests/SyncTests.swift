@@ -137,6 +137,43 @@ struct SyncTests {
         #expect(body["authorization_code"] == "code-1")
     }
 
+    @Test func reportLinkTokensAreLongAndUrlSafe() {
+        let a = ReportLink.makeToken()
+        let b = ReportLink.makeToken()
+        #expect(a.count == 43)
+        #expect(a != b)
+        #expect(a.allSatisfy { $0.isLetter || $0.isNumber || $0 == "-" || $0 == "_" })
+    }
+
+    @Test func reportLinkCoversTheWholeMonthInLocalTime() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/New_York")!
+        let mid = calendar.date(from: DateComponents(year: 2026, month: 11, day: 18, hour: 12))!
+        let link = ReportLink(token: "t", month: mid, includeNotes: false, calendar: calendar)
+        #expect(link.periodStart == calendar.date(from: DateComponents(year: 2026, month: 11, day: 1)))
+        #expect(link.periodEnd == calendar.date(from: DateComponents(year: 2026, month: 12, day: 1)))
+        #expect(link.url.absoluteString == "https://baturinigor.github.io/Kinledger/r/#t")
+    }
+
+    @Test func reportLinkRequests() async throws {
+        let transport = RecordingTransport()
+        let client = CloudClient(config: config, transport: transport)
+        let link = ReportLink(token: "tok", month: t0, includeNotes: true)
+        try await client.createReportLink(link, session: session)
+        try await client.revokeAllReportLinks(session: session)
+
+        let create = transport.requests[0]
+        #expect(create.httpMethod == "POST")
+        #expect(create.url?.path == "/rest/v1/report_links")
+        let rows = try #require(JSONSerialization.jsonObject(with: create.httpBody ?? Data()) as? [[String: Any]])
+        #expect(rows.first?["token"] as? String == "tok")
+        #expect(rows.first?["include_notes"] as? Bool == true)
+
+        let revoke = transport.requests[1]
+        #expect(revoke.httpMethod == "PATCH")
+        #expect(revoke.url?.query == "revoked_at=is.null")
+    }
+
     @Test func receiptNamesCannotLeaveTheFolder() {
         #expect(ReceiptStore.isSafeName("3F2A.jpg"))
         #expect(!ReceiptStore.isSafeName("../kinledger.sqlite"))

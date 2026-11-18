@@ -15,6 +15,12 @@ new phone gets everything back, and later serves the family report link.
 5. Sign in with Apple needs the paid Apple Developer account and the
    "Sign in with Apple" capability on the app id. Until then the app runs with backup off.
 
+## Family report links
+
+`migrations/20261118010000_report_links.sql` adds the links and `shared_report(token)`, the only
+thing a browser without an account can call. The page is `docs/r/index.html` on GitHub Pages;
+put the same project URL and anon key in `docs/r/config.js`.
+
 ## Account deletion (required by the App Store)
 
 `functions/delete-account` revokes the person's Sign in with Apple tokens, removes their receipt

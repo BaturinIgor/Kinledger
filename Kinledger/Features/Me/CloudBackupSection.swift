@@ -36,6 +36,11 @@ struct CloudBackupSection: View {
                 .disabled(cloud.status == .syncing)
                 Button("Turn off backup on this iPhone") { cloud.signOut() }
                     .foregroundStyle(Palette.textSecondary)
+                Button("Turn off all report links") {
+                    Task {
+                        if let failure = await cloud.revokeReportLinks() { model.problem = failure }
+                    }
+                }
                 Button("Delete cloud account", role: .destructive) { isDeleting = true }
             }
         } header: {
