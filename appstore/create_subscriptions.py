@@ -33,7 +33,7 @@ class Client:
         if time.time() - self.token_made > 600:
             now = int(time.time())
             self.token = jwt.encode(
-                {"iss": self.issuer, "iat": now, "exp": now + 1200, "aud": "appstoreconnect-v1"},
+                {"iss": self.issuer, "iat": now, "exp": now + 900, "aud": "appstoreconnect-v1"},
                 self.private_key,
                 algorithm="ES256",
                 headers={"kid": self.key_id, "typ": "JWT"},
@@ -90,9 +90,23 @@ def fail(what: str, response: requests.Response) -> None:
     print(f"Stopped at {what}: HTTP {response.status_code} {describe(response)}")
     if response.status_code == 401:
         print("The API key was refused. Check ASC_KEY_ID, ASC_ISSUER_ID and that ASC_PRIVATE_KEY holds the whole .p8 file.")
+        explain_key()
     if response.status_code == 403:
         print("The API key has no rights for this. Give it the App Manager (or Admin) role.")
     sys.exit(1)
+
+
+def explain_key() -> None:
+    """Facts about the key that help find a typo, without printing anything secret."""
+    import re
+    key_id = os.environ.get("ASC_KEY_ID", "").strip()
+    issuer = os.environ.get("ASC_ISSUER_ID", "").strip()
+    pem = os.environ.get("ASC_PRIVATE_KEY", "").strip()
+    print(f"- key id: {len(key_id)} characters, looks right: {bool(re.fullmatch(r'[A-Z0-9]{10}', key_id))}")
+    print(f"- issuer id: {len(issuer)} characters, looks like a UUID: "
+          f"{bool(re.fullmatch(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', issuer))}")
+    print(f"- private key: starts with BEGIN PRIVATE KEY: {pem.startswith('-----BEGIN PRIVATE KEY-----')}, "
+          f"ends with END PRIVATE KEY: {pem.endswith('-----END PRIVATE KEY-----')}, lines: {len(pem.splitlines())}")
 
 
 def ref(kind: str, ident: str) -> dict:
