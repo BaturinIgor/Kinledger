@@ -1,41 +1,72 @@
 import SwiftUI
 
-/// Four tabs from the mockups: Today, Log, Report, Me.
+/// Tabs from the mockups: Today, Log, a center + for a new entry, Report, Me.
 struct RootView: View {
-    enum Tab: Hashable { case today, log, report, me }
+    enum Tab: Hashable { case today, log, add, report, me }
 
+    @Environment(AppModel.self) private var model
     @State private var selection: Tab = .today
+    @State private var isLogging = false
 
     var body: some View {
         TabView(selection: $selection) {
-            TodayView(onLogCare: { selection = .log })
+            TodayView(onLogCare: { isLogging = true })
                 .tabItem { Label("Today", systemImage: "house") }
                 .tag(Tab.today)
 
-            PlaceholderView(
-                title: "Log care",
-                message: "Quick log: what, how long, any money spent. Coming next."
-            )
-            .tabItem { Label("Log", systemImage: "plus.circle") }
-            .tag(Tab.log)
+            LogListView()
+                .tabItem { Label("Log", systemImage: "list.bullet") }
+                .tag(Tab.log)
 
-            PlaceholderView(
-                title: "Monthly report",
-                message: "A private link your family can open without installing anything. Coming next."
-            )
-            .tabItem { Label("Report", systemImage: "doc.text") }
-            .tag(Tab.report)
+            Color.clear
+                .tabItem { Label("Add", systemImage: "plus.circle.fill") }
+                .tag(Tab.add)
 
-            PlaceholderView(
-                title: "Me",
-                message: "Account, backups, export and settings. Your data is yours: export any time."
-            )
-            .tabItem { Label("Me", systemImage: "person.crop.circle") }
-            .tag(Tab.me)
+            ReportView()
+                .tabItem { Label("Report", systemImage: "doc.text") }
+                .tag(Tab.report)
+
+            MeView()
+                .tabItem { Label("Me", systemImage: "person") }
+                .tag(Tab.me)
+        }
+        .onChange(of: selection) { old, new in
+            // The + tab opens the quick log instead of a screen.
+            if new == .add {
+                selection = old
+                isLogging = true
+            }
+        }
+        .sheet(isPresented: $isLogging) {
+            QuickLogView()
+        }
+        .safeAreaInset(edge: .top) {
+            if let problem = model.problem {
+                ProblemBanner(text: problem) { model.problem = nil }
+            }
         }
     }
 }
 
+/// A plain, calm notice. Red is kept for input errors next to a field.
+struct ProblemBanner: View {
+    let text: String
+    let dismiss: () -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "exclamationmark.triangle")
+            Text(text).frame(maxWidth: .infinity, alignment: .leading)
+            Button("OK", action: dismiss).fontWeight(.semibold)
+        }
+        .font(.subheadline)
+        .foregroundStyle(Palette.moneyInk)
+        .padding(12)
+        .background(Palette.moneySoft, in: RoundedRectangle(cornerRadius: 14))
+        .padding(.horizontal, 16)
+    }
+}
+
 #Preview {
-    RootView()
+    RootView().environment(AppModel.preview())
 }
