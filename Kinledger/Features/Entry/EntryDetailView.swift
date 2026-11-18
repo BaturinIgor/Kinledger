@@ -4,6 +4,7 @@ import SwiftUI
 struct EntryDetailView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.careProfile) private var profile
     let entryID: UUID
     @State private var isEditing = false
 
@@ -32,7 +33,7 @@ struct EntryDetailView: View {
                     HStack(spacing: 8) {
                         StatTile(label: "time", value: Format.duration(minutes: entry.minutes), tone: .time)
                         if let expense = entry.expense {
-                            StatTile(label: payerLabel(expense.payer), value: Format.money(cents: expense.amountCents), tone: .money)
+                            StatTile(label: payerLabel(expense.payer), value: profile.money(expense.amountCents), tone: .money)
                         }
                         if entry.visit {
                             StatTile(label: "visit", value: "1", tone: .visits)
@@ -58,7 +59,7 @@ struct EntryDetailView: View {
                 Card {
                     ForEach(history) { revision in
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(Changes.summary(from: revision.previous, to: entry))
+                            Text(Changes.summary(from: revision.previous, to: entry, money: profile.money))
                                 .font(.callout.weight(.semibold))
                                 .foregroundStyle(Palette.text)
                             HStack {
@@ -114,15 +115,15 @@ struct EntryDetailView: View {
 
 /// Plain-language descriptions of what changed between two versions.
 enum Changes {
-    static func summary(from old: Entry, to new: Entry) -> String {
+    static func summary(from old: Entry, to new: Entry, money: (Int) -> String = { Format.money(cents: $0) }) -> String {
         var parts: [String] = []
         if old.title != new.title { parts.append("Title \(old.title) → \(new.title)") }
         if old.minutes != new.minutes {
             parts.append("Time \(Format.duration(minutes: old.minutes)) → \(Format.duration(minutes: new.minutes))")
         }
         if old.expense?.amountCents != new.expense?.amountCents {
-            let before = old.expense.map { Format.money(cents: $0.amountCents) } ?? "none"
-            let after = new.expense.map { Format.money(cents: $0.amountCents) } ?? "none"
+            let before = old.expense.map { money($0.amountCents) } ?? "none"
+            let after = new.expense.map { money($0.amountCents) } ?? "none"
             parts.append("Amount \(before) → \(after)")
         }
         if old.occurredAt != new.occurredAt { parts.append("Date changed") }

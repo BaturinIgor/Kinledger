@@ -5,6 +5,7 @@ import SwiftUI
 struct QuickLogView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.careProfile) private var profile
 
     private let editing: Entry?
     @State private var category: EntryCategory
@@ -45,7 +46,7 @@ struct QuickLogView: View {
         switch amount {
         case .invalid: "Use numbers only, like 42.80."
         case .suspicious(_, let suggested) where !acceptedLargeAmount:
-            "That looks too large for one receipt. Did you mean \(Format.money(cents: suggested))?"
+            "That looks too large for one receipt. Did you mean \(profile.money(suggested))?"
         default: nil
         }
     }
@@ -92,7 +93,7 @@ struct QuickLogView: View {
 
                     section("Money") {
                         HStack {
-                            Text("$").foregroundStyle(Palette.textSecondary)
+                            Text(profile.country.locale.currencySymbol ?? "$").foregroundStyle(Palette.textSecondary)
                             TextField("0.00", text: $amountText)
                                 .keyboardType(.decimalPad)
                                 .onChange(of: amountText) { acceptedLargeAmount = false }
@@ -110,12 +111,12 @@ struct QuickLogView: View {
                                 .foregroundStyle(Palette.error)
                             if case .suspicious(let typed, let suggested) = amount {
                                 HStack {
-                                    Button("Use \(Format.money(cents: suggested))") {
+                                    Button("Use \(profile.money(suggested))") {
                                         amountText = AmountInput.text(cents: suggested)
                                     }
                                     .fontWeight(.semibold)
                                     Spacer()
-                                    Button("Keep \(Format.money(cents: typed))") { acceptedLargeAmount = true }
+                                    Button("Keep \(profile.money(typed))") { acceptedLargeAmount = true }
                                 }
                                 .font(.subheadline)
                             }

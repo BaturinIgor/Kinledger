@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct EntryRow: View {
+    @Environment(\.careProfile) private var profile
     let entry: Entry
     var showsTime = false
 
@@ -30,7 +31,7 @@ struct EntryRow: View {
             Spacer(minLength: 0)
             VStack(alignment: .trailing, spacing: 2) {
                 if let expense = entry.expense {
-                    Text(Format.money(cents: expense.amountCents))
+                    Text(profile.money(expense.amountCents))
                         .font(.callout.weight(.semibold))
                         .foregroundStyle(expense.payer == .me ? Palette.money : Palette.textSecondary)
                 }

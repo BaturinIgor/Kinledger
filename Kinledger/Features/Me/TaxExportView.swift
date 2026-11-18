@@ -3,6 +3,7 @@ import SwiftUI
 /// US medical-expense export (R14): a CSV and the receipts, for a tax preparer.
 struct TaxExportView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.careProfile) private var profile
     @State private var year = Calendar.current.component(.year, from: .now)
     @State private var shared: SharedFile?
 
@@ -18,7 +19,7 @@ struct TaxExportView: View {
                 .pickerStyle(.segmented)
 
                 Card {
-                    Text(Format.money(cents: summary.totalCents))
+                    Text(profile.money(summary.totalCents))
                         .font(.largeTitle.weight(.semibold))
                         .foregroundStyle(Palette.money)
                     Text("Paid by you and marked medical. \(summary.expenses.count) expenses, \(summary.withReceipt) with receipts.")

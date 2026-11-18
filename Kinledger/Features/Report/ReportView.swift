@@ -53,7 +53,7 @@ struct ReportView: View {
 
     private func sharePDF() {
         do {
-            shared = SharedFile(url: try ReportPDF.render(report: report, includeNotes: includeNotes))
+            shared = SharedFile(url: try ReportPDF.render(report: report, includeNotes: includeNotes, profile: model.careProfile))
         } catch {
             model.problem = "Could not make the PDF: \(error.localizedDescription)"
         }
@@ -64,15 +64,15 @@ struct ReportView: View {
 struct ReportPage: View {
     let report: MonthReport
     let includeNotes: Bool
-    var parentName = "Mom"
+    @Environment(\.careProfile) private var profile
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(parentName)'s care in \(report.month.formatted(.dateTime.month(.wide).year()))")
+                Text("\(profile.nickname)'s care in \(report.month.formatted(.dateTime.month(.wide).year()))")
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(Palette.text)
-                Text(report.headline(parentName: parentName))
+                Text(report.headline(parentName: profile.nickname, money: profile.money))
                     .font(.body)
                     .foregroundStyle(Palette.textSecondary)
             }
@@ -86,7 +86,7 @@ struct ReportPage: View {
                         HStack {
                             Text(line.category.label).foregroundStyle(Palette.text)
                             Spacer()
-                            Text(Format.money(cents: line.cents))
+                            Text(profile.money(line.cents))
                                 .fontWeight(.semibold)
                                 .foregroundStyle(Palette.money)
                         }
@@ -107,7 +107,7 @@ struct ReportPage: View {
                             Spacer()
                             Text(Format.duration(minutes: entry.minutes)).foregroundStyle(Palette.time)
                             if let expense = entry.expense, expense.payer == .me {
-                                Text(Format.money(cents: expense.amountCents)).foregroundStyle(Palette.money)
+                                Text(profile.money(expense.amountCents)).foregroundStyle(Palette.money)
                             }
                         }
                         .font(.subheadline)

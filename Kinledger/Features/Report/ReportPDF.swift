@@ -3,12 +3,13 @@ import SwiftUI
 enum ReportPDF {
     /// Renders the same `ReportPage` the screen shows into a one-page PDF, light theme.
     @MainActor
-    static func render(report: MonthReport, includeNotes: Bool) throws -> URL {
+    static func render(report: MonthReport, includeNotes: Bool, profile: CareProfile) throws -> URL {
         let page = ReportPage(report: report, includeNotes: includeNotes)
             .padding(32)
             .frame(width: 612)
             .background(Color.white)
             .environment(\.colorScheme, .light)
+            .environment(\.careProfile, profile)
 
         let renderer = ImageRenderer(content: page)
         renderer.proposedSize = ProposedViewSize(width: 612, height: nil)

@@ -19,11 +19,26 @@ struct MeView: View {
                         Image(systemName: "iphone").foregroundStyle(Palette.time)
                     }
                 }
-                Section {
+                Section("Family on the report") {
+                    ForEach(model.recipients) { person in
+                        LabeledContent(person.name, value: person.relation)
+                    }
+                    .onDelete { offsets in
+                        for index in offsets { model.deleteRecipient(model.recipients[index].id) }
+                    }
                     NavigationLink {
-                        TaxExportView()
+                        AddRecipientView()
                     } label: {
-                        Label("Tax export", systemImage: "doc.text")
+                        Label("Add a person", systemImage: "plus")
+                    }
+                }
+                Section {
+                    if model.careProfile.country.hasTaxExport {
+                        NavigationLink {
+                            TaxExportView()
+                        } label: {
+                            Label("Tax export", systemImage: "doc.text")
+                        }
                     }
                     Button {
                         if let url = model.exportAllData() { shared = SharedFile(url: url) }
@@ -48,6 +63,28 @@ struct MeView: View {
             }
             .navigationTitle("Me")
             .sheet(item: $shared) { file in ShareSheet(items: [file.url]) }
+        }
+    }
+}
+
+struct AddRecipientView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @State private var person = Recipient(id: UUID(), name: "", contact: "", relation: "Sibling")
+
+    var body: some View {
+        ScrollView {
+            RecipientEditor(person: $person) { dismiss() }
+                .padding(16)
+        }
+        .background(Palette.background)
+        .navigationTitle("Add a person")
+        .toolbar {
+            Button("Save") {
+                model.saveRecipient(person)
+                dismiss()
+            }
+            .disabled(person.name.trimmingCharacters(in: .whitespaces).isEmpty)
         }
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TodayView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.careProfile) private var profile
     var onLogCare: () -> Void = {}
     var now: Date = .now
 
@@ -56,7 +57,7 @@ struct TodayView: View {
                 .frame(maxWidth: .infinity)
             }
             .background(Palette.background)
-            .navigationTitle("Mom's care")
+            .navigationTitle("\(profile.nickname)'s care")
             .navigationDestination(for: UUID.self) { id in
                 EntryDetailView(entryID: id)
             }
@@ -65,12 +66,13 @@ struct TodayView: View {
 }
 
 struct MonthStats: View {
+    @Environment(\.careProfile) private var profile
     let totals: Totals
 
     var body: some View {
         HStack(spacing: 8) {
             StatTile(label: "of care", value: Format.durationSummary(minutes: totals.minutes), tone: .time)
-            StatTile(label: "I paid", value: Format.money(cents: totals.outOfPocketCents), tone: .money)
+            StatTile(label: "I paid", value: profile.money(totals.outOfPocketCents), tone: .money)
             StatTile(label: "visits", value: "\(totals.visits)", tone: .visits)
         }
     }
