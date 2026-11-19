@@ -181,6 +181,18 @@ def main() -> None:
                     added += 1
         print(f"  names: {added} added, {len(have_locales)} already there")
 
+        # Sold everywhere the app is, including countries Apple adds later.
+        # Apple refuses prices for a plan that is not on sale anywhere yet, so this comes first.
+        availability = asc.request("GET", f"/v1/subscriptions/{sub_id}/subscriptionAvailability")
+        if availability.status_code != 200 or not availability.json().get("data"):
+            if asc.create("subscriptionAvailabilities", {"availableInNewTerritories": True}, {
+                "subscription": ref("subscriptions", sub_id),
+                "availableTerritories": [ref("territories", t) for t in territory_ids],
+            }, f"{key} availability"):
+                print("  availability: all countries")
+        else:
+            print("  availability already set")
+
         # Price: the US price, and Apple's matching price in every other country.
         points, _ = asc.get_all(f"/v1/subscriptions/{sub_id}/pricePoints",
                                 {"filter[territory]": "USA", "include": "territory"})
@@ -210,17 +222,6 @@ def main() -> None:
             }, f"{key} price {territory}"):
                 added += 1
         print(f"  prices: {added} added, {len(priced)} already there, {len(point_for)} countries")
-
-        # Sold everywhere the app is, including countries Apple adds later.
-        availability = asc.request("GET", f"/v1/subscriptions/{sub_id}/subscriptionAvailability")
-        if availability.status_code != 200 or not availability.json().get("data"):
-            if asc.create("subscriptionAvailabilities", {"availableInNewTerritories": True}, {
-                "subscription": ref("subscriptions", sub_id),
-                "availableTerritories": [ref("territories", t) for t in territory_ids],
-            }, f"{key} availability"):
-                print("  availability: all countries")
-        else:
-            print("  availability already set")
 
         # One free week for new subscribers, in every country.
         offers, _ = asc.get_all(f"/v1/subscriptions/{sub_id}/introductoryOffers", {"include": "territory"})
