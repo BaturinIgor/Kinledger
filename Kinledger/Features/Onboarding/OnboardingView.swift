@@ -3,7 +3,7 @@ import SwiftUI
 /// Two steps, under a minute (R1): who you care for, then who gets the report.
 struct OnboardingView: View {
     @Environment(AppModel.self) private var model
-    @State private var step = 1
+    @State private var step = DesignFlags.onboardingStep
     @State private var parentName = ""
     @State private var nickname = ""
     @State private var country: Country = .guess()

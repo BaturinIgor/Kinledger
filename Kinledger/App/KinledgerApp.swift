@@ -2,8 +2,8 @@ import SwiftUI
 
 @main
 struct KinledgerApp: App {
-    @State private var model = ScreenshotData.isActive ? AppModel.screenshots() : AppModel.live()
-    @State private var pro = ProStore()
+    @State private var model = KinledgerApp.makeModel()
+    @State private var pro = ProStore(unlocked: DesignFlags.pro)
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -15,6 +15,7 @@ struct KinledgerApp: App {
                     RootView()
                 }
             }
+                .designPresenter()
                 .environment(model)
                 .environment(pro)
                 .task { pro.start() }
@@ -24,5 +25,12 @@ struct KinledgerApp: App {
                 .environment(\.careProfile, model.careProfile)
                 .tint(Palette.time)
         }
+    }
+
+    private static func makeModel() -> AppModel {
+        #if DEBUG
+        if DesignFlags.has("-design") { return .design() }
+        #endif
+        return ScreenshotData.isActive ? .screenshots() : .live()
     }
 }

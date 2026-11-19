@@ -33,7 +33,7 @@ struct QuickLogView: View {
         _minutes = State(initialValue: editing?.minutes ?? 60)
         _occurredAt = State(initialValue: editing?.occurredAt ?? .now)
         _visit = State(initialValue: editing?.visit ?? category.usuallyVisit)
-        _amountText = State(initialValue: editing?.expense.map { AmountInput.text(cents: $0.amountCents) } ?? "")
+        _amountText = State(initialValue: DesignFlags.amount ?? editing?.expense.map { AmountInput.text(cents: $0.amountCents) } ?? "")
         _payer = State(initialValue: editing?.expense?.payer ?? .me)
         _medical = State(initialValue: editing?.expense?.medical ?? category.usuallyMedical)
         _note = State(initialValue: editing?.note ?? "")
