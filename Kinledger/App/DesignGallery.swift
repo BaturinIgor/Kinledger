@@ -57,14 +57,14 @@ extension AppModel {
             for entry in entries { try? store.save(entry) }
             // The newest entry gets a later edit, so its history shows two versions.
             if var edited = entries.first {
-                edited.note = String(localized: "Picked up the new prescription too.")
+                edited.note = "Picked up the new prescription too."
                 try? store.save(edited)
             }
             // One entry in the trash.
             if let trashed = entries.last { try? store.moveToTrash(trashed.id) }
         }
         let problem = DesignFlags.has("-design-problem")
-            ? String(localized: "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (The disk is full.)")
+            ? "Kinledger could not open its storage on this iPhone, so new entries are not being kept. Restart the app. (The disk is full.)"
             : nil
         return AppModel(store: store, receipts: try! ReceiptStore.temporary(), problem: problem, cloudConfig: .current)
     }
