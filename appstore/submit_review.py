@@ -36,19 +36,6 @@ def main() -> None:
     if response.status_code != 204:
         problems.append(f"attach build: {describe(response)}")
 
-    print("Subscriptions")
-    groups, _ = asc.get_all(f"/v1/apps/{app_id}/subscriptionGroups")
-    for group in groups:
-        subscriptions, _ = asc.get_all(f"/v1/subscriptionGroups/{group['id']}/subscriptions")
-        for subscription in subscriptions:
-            name, sub_state = subscription["attributes"]["productId"], subscription["attributes"]["state"]
-            if sub_state == "READY_TO_SUBMIT":
-                if asc.create("subscriptionSubmissions", {}, {"subscription": ref("subscriptions", subscription["id"])},
-                              f"submit {name}"):
-                    print(f"  {name}: added to the submission")
-            else:
-                print(f"  {name}: {sub_state}")
-
     print("App Review")
     open_ones, _ = asc.get_all("/v1/reviewSubmissions", {"filter[app]": app_id, "filter[platform]": "IOS",
                                                           "filter[state]": "READY_FOR_REVIEW"})
@@ -62,6 +49,20 @@ def main() -> None:
             "reviewSubmission": ref("reviewSubmissions", submission["id"]),
             "appStoreVersion": ref("appStoreVersions", version["id"]),
         }, "add version to submission")
+    # The first subscriptions can only go in once the version is part of the submission.
+    print("Subscriptions")
+    groups, _ = asc.get_all(f"/v1/apps/{app_id}/subscriptionGroups")
+    for group in groups:
+        subscriptions, _ = asc.get_all(f"/v1/subscriptionGroups/{group['id']}/subscriptions")
+        for subscription in subscriptions:
+            name, sub_state = subscription["attributes"]["productId"], subscription["attributes"]["state"]
+            if sub_state == "READY_TO_SUBMIT":
+                if asc.create("subscriptionSubmissions", {}, {"subscription": ref("subscriptions", subscription["id"])},
+                              f"submit {name}"):
+                    print(f"  {name}: added to the submission")
+            else:
+                print(f"  {name}: {sub_state}")
+
     if not problems and patch(asc, "reviewSubmissions", submission["id"], "submit", {"submitted": True}):
         print("  sent: Waiting for Review")
     report_and_exit()
