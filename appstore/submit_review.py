@@ -42,7 +42,7 @@ def main() -> None:
     submission = open_ones[0] if open_ones else asc.create(
         "reviewSubmissions", {"platform": "IOS"}, {"app": ref("apps", app_id)}, "review submission")
     if submission is None:
-        report_and_exit()
+        report_and_exit(asc, app_id)
     items, _ = asc.get_all(f"/v1/reviewSubmissions/{submission['id']}/items")
     if not items:
         asc.create("reviewSubmissionItems", {}, {
@@ -65,10 +65,27 @@ def main() -> None:
 
     if not problems and patch(asc, "reviewSubmissions", submission["id"], "submit", {"submitted": True}):
         print("  sent: Waiting for Review")
-    report_and_exit()
+    report_and_exit(asc, app_id)
 
 
-def report_and_exit() -> None:
+def dump_app_info(asc: Client, app_id: str) -> None:
+    """Apple names no field for compliance refusals; print what App Information holds to spot the gap."""
+    infos, _ = asc.get_all(f"/v1/apps/{app_id}/appInfos")
+    for info in infos:
+        print(f"\nApp Information {info['id']}")
+        for key, value in sorted(info.get("attributes", {}).items()):
+            print(f"  {key}: {value}")
+        for name in sorted(info.get("relationships", {})):
+            print(f"  -> {name}")
+    app = asc.request("GET", f"/v1/apps/{app_id}").json().get("data", {})
+    print("\nApp")
+    for key, value in sorted(app.get("attributes", {}).items()):
+        print(f"  {key}: {value}")
+
+
+def report_and_exit(asc: Client | None = None, app_id: str = "") -> None:
+    if problems and asc and any("compliance" in p for p in problems):
+        dump_app_info(asc, app_id)
     if problems:
         print(f"\n{len(problems)} problem(s):")
         for problem in problems:
