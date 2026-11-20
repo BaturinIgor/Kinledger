@@ -6,6 +6,10 @@ struct KinledgerApp: App {
     @State private var pro = ProStore(unlocked: DesignFlags.pro)
     @Environment(\.scenePhase) private var scenePhase
 
+    init() {
+        if !ScreenshotData.isActive { Diagnostics.shared.start() }
+    }
+
     var body: some Scene {
         WindowGroup {
             Group {

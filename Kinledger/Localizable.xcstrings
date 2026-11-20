@@ -7441,6 +7441,112 @@
         }
       }
     },
+    "Crash reports stay on this iPhone until you send them. They contain no entries, amounts or names.": {
+      "localizations": {
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nedbrudsrapporter bliver på denne iPhone, indtil du sender dem. De indeholder ingen poster, beløb eller navne."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Absturzberichte bleiben auf diesem iPhone, bis du sie sendest. Sie enthalten keine Einträge, Beträge oder Namen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los informes de fallos se quedan en este iPhone hasta que los envíes. No contienen registros, importes ni nombres."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les rapports de plantage restent sur cet iPhone jusqu’à ce que vous les envoyiez. Ils ne contiennent ni entrées, ni montants, ni noms."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I rapporti sugli arresti restano su questo iPhone finché non li invii. Non contengono voci, importi o nomi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラッシュレポートは送信するまでこの iPhone に保存されます。記録、金額、名前は含まれません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "충돌 보고서는 보내기 전까지 이 iPhone에만 남아 있습니다. 기록, 금액, 이름은 포함되지 않습니다."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Krasjrapporter blir på denne iPhonen til du sender dem. De inneholder ingen oppføringer, beløp eller navn."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crashrapporten blijven op deze iPhone tot je ze verstuurt. Ze bevatten geen notities, bedragen of namen."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raporty o awariach zostają na tym iPhonie, dopóki ich nie wyślesz. Nie zawierają wpisów, kwot ani imion."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os relatórios de falhas ficam neste iPhone até você enviá-los. Eles não contêm registros, valores nem nomes."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отчёты о сбоях хранятся на этом iPhone, пока вы их не отправите. В них нет записей, сумм и имён."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kraschrapporter stannar på den här iPhonen tills du skickar dem. De innehåller inga poster, belopp eller namn."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çökme raporları siz gönderene kadar bu iPhone’da kalır. Kayıt, tutar veya isim içermez."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звіти про збої зберігаються на цьому iPhone, доки ви їх не надішлете. У них немає записів, сум та імен."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "崩溃报告会保留在这台 iPhone 上，直到你发送。其中不包含记录、金额或姓名。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "當機報告會保留在這部 iPhone 上，直到你傳送。其中不包含紀錄、金額或姓名。"
+          }
+        }
+      }
+    },
     "Date changed": {
       "localizations": {
         "es": {
@@ -18499,6 +18605,112 @@
           "stringUnit": {
             "state": "translated",
             "value": "已儲存在此 iPhone 上。請在「我」中重新登入以繼續備份。"
+          }
+        }
+      }
+    },
+    "Send diagnostics": {
+      "localizations": {
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send diagnosticering"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnosedaten senden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar diagnóstico"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envoyer les diagnostics"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invia diagnostica"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "診断情報を送信"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "진단 정보 보내기"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send diagnostikk"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnose versturen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyślij diagnostykę"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar diagnóstico"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить диагностику"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skicka diagnostik"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tanılama gönder"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Надіслати діагностику"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送诊断信息"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "傳送診斷資訊"
           }
         }
       }
