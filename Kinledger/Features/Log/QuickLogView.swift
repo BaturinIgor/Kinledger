@@ -6,6 +6,7 @@ struct QuickLogView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @Environment(\.careProfile) private var profile
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     private let editing: Entry?
     @State private var category: EntryCategory
@@ -66,7 +67,7 @@ struct QuickLogView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     section(String(localized: "What did you do?")) {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104), spacing: 8)], spacing: 8) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: typeSize.isAccessibilitySize ? 240 : 104), spacing: 8)], spacing: 8) {
                             ForEach(EntryCategory.allCases, id: \.self) { item in
                                 ChipButton(title: item.label, symbol: item.symbol, isOn: item == category) {
                                     pick(item)
@@ -79,7 +80,9 @@ struct QuickLogView: View {
                     }
 
                     section(String(localized: "Time")) {
-                        HStack(spacing: 8) {
+                        // Four presets in a row at normal sizes, two by two with large text.
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
+                                                 count: typeSize.isAccessibilitySize ? 2 : 4), spacing: 8) {
                             ForEach([30, 60, 120, 240], id: \.self) { preset in
                                 ChipButton(title: Format.duration(minutes: preset), isOn: minutes == preset) {
                                     minutes = preset
@@ -123,7 +126,7 @@ struct QuickLogView: View {
                         }
                         if amountCents != nil {
                             Text("Whose money was it?").font(.subheadline.weight(.semibold))
-                            HStack(spacing: 8) {
+                            chipRow {
                                 ChipButton(title: String(localized: "Mine"), isOn: payer == .me, tone: .money) { payer = .me }
                                 ChipButton(title: String(localized: "\(profile.nickname)'s"), isOn: payer == .parent, tone: .money) { payer = .parent }
                                 ChipButton(title: String(localized: "Repaid"), isOn: payer == .repaid, tone: .money) { payer = .repaid }
@@ -157,6 +160,13 @@ struct QuickLogView: View {
         }
     }
 
+    /// Chips side by side, or one under another at accessibility text sizes.
+    private func chipRow<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+                                                  : AnyLayout(HStackLayout(spacing: 8))
+        return layout(content)
+    }
+
     @ViewBuilder
     private var receiptControls: some View {
         if let image = receiptPreview {
@@ -175,7 +185,7 @@ struct QuickLogView: View {
                 .font(.subheadline)
             }
         } else {
-            HStack(spacing: 8) {
+            chipRow {
                 ChipButton(title: String(localized: "Snap receipt"), symbol: "camera", isOn: false) { isTakingPhoto = true }
                 PhotosPicker(selection: $photoItem, matching: .images) {
                     Label("Choose photo", systemImage: "photo")
@@ -263,12 +273,12 @@ struct ChipButton: View {
         Button(action: action) {
             HStack(spacing: 6) {
                 if let symbol { Image(systemName: symbol) }
-                Text(title).lineLimit(1).minimumScaleFactor(0.8)
+                Text(title).lineLimit(2).minimumScaleFactor(0.8)
             }
             .font(.subheadline.weight(isOn ? .semibold : .medium))
             .padding(.horizontal, 14)
             .frame(minHeight: Metrics.minTouch)
-            .frame(maxWidth: symbol == nil ? nil : .infinity)
+            .frame(maxWidth: .infinity)
             .foregroundStyle(isOn ? Color.white : Palette.text)
             .background(isOn ? tone.color : Palette.card, in: Capsule())
             .overlay(Capsule().strokeBorder(isOn ? Color.clear : Palette.border))

@@ -60,9 +60,16 @@ struct PaywallView: View {
                         .font(.footnote)
                         .foregroundStyle(Palette.textSecondary)
                         .multilineTextAlignment(.center)
-                    HStack(spacing: 16) {
-                        Link("Terms of Use", destination: Links.terms)
-                        Link("Privacy Policy", destination: Links.privacy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    ViewThatFits {
+                        HStack(spacing: 16) {
+                            Link("Terms of Use", destination: Links.terms)
+                            Link("Privacy Policy", destination: Links.privacy)
+                        }
+                        VStack(spacing: 8) {
+                            Link("Terms of Use", destination: Links.terms)
+                            Link("Privacy Policy", destination: Links.privacy)
+                        }
                     }
                     .font(.footnote)
                 }

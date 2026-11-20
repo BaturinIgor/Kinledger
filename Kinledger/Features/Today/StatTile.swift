@@ -11,7 +11,7 @@ struct StatTile: View {
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(tone.color)
                 .minimumScaleFactor(0.7)
-                .lineLimit(1)
+                .lineLimit(2)
             Text(label)
                 .font(.subheadline.weight(.medium))
                 .foregroundStyle(Palette.textSecondary)

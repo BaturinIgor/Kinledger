@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EntryRow: View {
     @Environment(\.careProfile) private var profile
+    @Environment(\.dynamicTypeSize) private var typeSize
     let entry: Entry
     var showsTime = false
 
@@ -17,8 +18,11 @@ struct EntryRow: View {
     }
 
     var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            IconTile(symbol: entry.category.symbol, tone: entry.tone)
+        let large = typeSize.isAccessibilitySize
+        let layout = large ? AnyLayout(VStackLayout(alignment: .leading, spacing: 6))
+                           : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
+        layout {
+            if !large { IconTile(symbol: entry.category.symbol, tone: entry.tone) }
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.title)
                     .font(.callout.weight(.semibold))
@@ -26,10 +30,10 @@ struct EntryRow: View {
                 Text(details)
                     .font(.subheadline)
                     .foregroundStyle(Palette.textSecondary)
-                    .lineLimit(1)
+                    .lineLimit(large ? 3 : 1)
             }
-            Spacer(minLength: 0)
-            VStack(alignment: .trailing, spacing: 2) {
+            if !large { Spacer(minLength: 0) }
+            VStack(alignment: large ? .leading : .trailing, spacing: 2) {
                 if let expense = entry.expense {
                     Text(profile.money(expense.amountCents))
                         .font(.callout.weight(.semibold))
