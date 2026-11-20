@@ -2,6 +2,9 @@ import XCTest
 
 /// KAN-111: every screen from the design catalog passes Apple's accessibility audit
 /// at the largest accessibility text size, in English.
+///
+/// Runs only when asked, so the screenshot workflow (which runs every UI test) is not blocked:
+/// `TEST_RUNNER_A11Y_AUDIT=1 xcodebuild test -scheme Screenshots -only-testing:KinledgerUITests/AccessibilityUITests ...`
 @MainActor
 final class AccessibilityUITests: XCTestCase {
     private struct Screen {
@@ -28,6 +31,9 @@ final class AccessibilityUITests: XCTestCase {
     ]
 
     func testEveryScreenPassesTheAuditAtTheLargestTextSize() throws {
+        guard ProcessInfo.processInfo.environment["A11Y_AUDIT"] == "1" else {
+            throw XCTSkip("Set TEST_RUNNER_A11Y_AUDIT=1 to run the accessibility audit")
+        }
         continueAfterFailure = true
         for item in Self.screens {
             let app = XCUIApplication()
