@@ -146,6 +146,11 @@ struct LabeledField<Field: View>: View {
 struct RecipientEditor: View {
     @Binding var person: Recipient
     let onRemove: () -> Void
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    private var relationOptions: some View {
+        ForEach(Recipient.relations, id: \.self) { Text(Recipient.label(forRelation: $0)).tag($0) }
+    }
 
     var body: some View {
         Card {
@@ -160,10 +165,14 @@ struct RecipientEditor: View {
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
             }
-            Picker("Relation", selection: $person.relation) {
-                ForEach(Recipient.relations, id: \.self) { Text(Recipient.label(forRelation: $0)).tag($0) }
+            // Segments cut their words at accessibility text sizes; a menu shows them whole.
+            if typeSize.isAccessibilitySize {
+                Picker("Relation", selection: $person.relation) { relationOptions }
+                    .pickerStyle(.menu)
+            } else {
+                Picker("Relation", selection: $person.relation) { relationOptions }
+                    .pickerStyle(.segmented)
             }
-            .pickerStyle(.segmented)
         }
     }
 }

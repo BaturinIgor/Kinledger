@@ -143,6 +143,7 @@ struct ReportPage: View {
                 Text("All \(report.entries.count) entries").font(.headline).foregroundStyle(Palette.text)
                 ForEach(report.entries) { entry in
                     VStack(alignment: .leading, spacing: 2) {
+                        ViewThatFits(in: .horizontal) {
                         HStack(alignment: .firstTextBaseline) {
                             Text(entry.occurredAt.formatted(.dateTime.month(.abbreviated).day()))
                                 .font(.subheadline.monospacedDigit())
@@ -156,6 +157,19 @@ struct ReportPage: View {
                             if let expense = entry.expense, expense.payer == .me {
                                 Text(profile.money(expense.amountCents)).foregroundStyle(Palette.money)
                             }
+                        }
+                        // Large text: date, title and amounts each get a line.
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(entry.occurredAt.formatted(.dateTime.month(.abbreviated).day()))
+                                .foregroundStyle(Palette.textSecondary)
+                            Text(entry.title).foregroundStyle(Palette.text)
+                            HStack(spacing: 12) {
+                                Text(Format.duration(minutes: entry.minutes)).foregroundStyle(Palette.time)
+                                if let expense = entry.expense, expense.payer == .me {
+                                    Text(profile.money(expense.amountCents)).foregroundStyle(Palette.money)
+                                }
+                            }
+                        }
                         }
                         .font(.subheadline)
                         if includeNotes, let note = entry.note, !note.isEmpty {

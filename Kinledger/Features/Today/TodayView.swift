@@ -68,10 +68,13 @@ struct TodayView: View {
 
 struct MonthStats: View {
     @Environment(\.careProfile) private var profile
+    @Environment(\.dynamicTypeSize) private var typeSize
     let totals: Totals
 
     var body: some View {
-        HStack(spacing: 8) {
+        // At accessibility text sizes three tiles in a row leave no room for the numbers.
+        let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: 8)) : AnyLayout(HStackLayout(spacing: 8))
+        layout {
             StatTile(label: String(localized: "of care"), value: Format.durationSummary(minutes: totals.minutes), tone: .time)
             StatTile(label: String(localized: "I paid"), value: profile.money(totals.outOfPocketCents), tone: .money)
             StatTile(label: String(localized: "visits"), value: "\(totals.visits)", tone: .visits)
@@ -102,16 +105,30 @@ private struct EmptyToday: View {
 struct PrimaryButton: View {
     let title: String
     var action: () -> Void
+    @Environment(\.isEnabled) private var isEnabled
 
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
                 .frame(maxWidth: .infinity, minHeight: Metrics.primaryTouch)
-                .foregroundStyle(Palette.onTime)
-                .background(Palette.time, in: Capsule())
+                // Disabled: an outlined button with readable text, not a faded one that fails contrast.
+                .foregroundStyle(isEnabled ? Palette.onTime : Palette.textSecondary)
+                .background(isEnabled ? Palette.time : Palette.card, in: Capsule())
+                .overlay(Capsule().strokeBorder(isEnabled ? Color.clear : Palette.border))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressedStyle())
+    }
+}
+
+/// Dims only while pressed; the disabled look is drawn by the button itself.
+private struct PressedStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.opacity(configuration.isPressed ? 0.8 : 1)
     }
 }
 
