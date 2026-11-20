@@ -5,6 +5,7 @@ struct RootView: View {
     enum Tab: Hashable { case today, log, add, report, me }
 
     @Environment(AppModel.self) private var model
+    @Environment(ReportReminderCenter.self) private var reminders
     @State private var selection: Tab = DesignFlags.initialTab
     @State private var isLogging = false
 
@@ -36,6 +37,10 @@ struct RootView: View {
                 selection = old
                 isLogging = true
             }
+        }
+        .onChange(of: reminders.openMonth) { _, month in
+            // A tapped reminder opens the report preview; nothing is sent.
+            if month != nil { selection = .report }
         }
         .sheet(isPresented: $isLogging) {
             QuickLogView()
@@ -69,4 +74,5 @@ struct ProblemBanner: View {
 
 #Preview {
     RootView().environment(AppModel.preview()).environment(ProStore(unlocked: true))
+        .environment(ReportReminderCenter.shared)
 }

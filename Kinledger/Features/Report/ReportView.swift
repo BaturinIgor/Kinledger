@@ -4,6 +4,7 @@ import SwiftUI
 struct ReportView: View {
     @Environment(AppModel.self) private var model
     @Environment(ProStore.self) private var pro
+    @Environment(ReportReminderCenter.self) private var reminders
     @State private var showPaywall = false
     @State private var month: Date = Calendar.current.startOfMonth(for: .now)
     @State private var includeNotes = false
@@ -66,14 +67,24 @@ struct ReportView: View {
             }
             .background(Palette.background)
             .navigationTitle("Report")
-            .sheet(item: $shared) { file in
+            .onChange(of: reminders.openMonth, initial: true) { _, opened in
+                guard let opened else { return }
+                month = Calendar.current.startOfMonth(for: opened)
+                reminders.openMonth = nil
+            }
+            .sheet(item: $shared, onDismiss: askForReminder) { file in
                 ShareSheet(items: [file.url])
             }
             .sheet(isPresented: $showPaywall) { PaywallView() }
-            .sheet(item: $sharedLink) { link in
+            .sheet(item: $sharedLink, onDismiss: askForReminder) { link in
                 ShareSheet(items: [link.url])
             }
         }
+    }
+
+    /// Asked once, right after the first report goes out, when a monthly nudge makes sense.
+    private func askForReminder() {
+        Task { await reminders.askAfterFirstShare(entries: model.entries) }
     }
 
     private func shareLink() async {
@@ -171,6 +182,7 @@ extension Calendar {
 
 #Preview {
     ReportView().environment(AppModel.preview()).environment(ProStore(unlocked: false))
+        .environment(ReportReminderCenter.shared)
 }
 
 struct SharedLink: Identifiable {
