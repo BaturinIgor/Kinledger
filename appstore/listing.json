@@ -9,11 +9,27 @@
   "screenshotDisplayType": "APP_IPHONE_67",
   "reviewScreenshot": "en-7-paywall.png",
   "ageRating": {
-    "healthOrWellnessTopics": true
+    "healthOrWellnessTopics": true,
+    "socialMedia": false
   },
   "screenshotLanguages": {
-    "en-US": "en", "es-ES": "es", "fr-FR": "fr", "de-DE": "de", "it": "it", "pt-BR": "pt-BR",
-    "nl-NL": "nl", "sv": "sv", "da": "da", "no": "nb", "pl": "pl", "ru": "ru", "uk": "uk",
-    "tr": "tr", "ja": "ja", "ko": "ko", "zh-Hans": "zh-Hans", "zh-Hant": "zh-Hant"
+    "en-US": "en",
+    "es-ES": "es",
+    "fr-FR": "fr",
+    "de-DE": "de",
+    "it": "it",
+    "pt-BR": "pt-BR",
+    "nl-NL": "nl",
+    "sv": "sv",
+    "da": "da",
+    "no": "nb",
+    "pl": "pl",
+    "ru": "ru",
+    "uk": "uk",
+    "tr": "tr",
+    "ja": "ja",
+    "ko": "ko",
+    "zh-Hans": "zh-Hans",
+    "zh-Hant": "zh-Hant"
   }
 }
