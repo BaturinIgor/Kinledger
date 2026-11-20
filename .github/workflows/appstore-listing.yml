@@ -1,0 +1,38 @@
+name: App Store listing
+
+# Run from the Actions tab. Fills the 1.0 page in App Store Connect in all 18 languages:
+# name, subtitle, description, keywords, links, screenshots (from the store-screenshots branch),
+# categories, age rating, free price, worldwide availability, notes for App Review and the
+# paywall screenshot for subscription review. Safe to run again. Script: appstore/upload_listing.py.
+#
+# Secrets: ASC_KEY_ID, ASC_ISSUER_ID, ASC_PRIVATE_KEY (as for the subscriptions workflow).
+# Optional, the App Review contact: REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  listing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: store-screenshots
+          path: shots
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "pyjwt[crypto]==2.9.0" requests==2.32.3
+      - name: Fill the listing
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+          REVIEW_FIRST_NAME: ${{ secrets.REVIEW_FIRST_NAME }}
+          REVIEW_LAST_NAME: ${{ secrets.REVIEW_LAST_NAME }}
+          REVIEW_PHONE: ${{ secrets.REVIEW_PHONE }}
+          REVIEW_EMAIL: ${{ secrets.REVIEW_EMAIL }}
+          SHOTS_DIR: shots
+        run: python appstore/upload_listing.py
