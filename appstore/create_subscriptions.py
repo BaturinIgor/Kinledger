@@ -81,7 +81,14 @@ class Client:
 def describe(response: requests.Response) -> str:
     try:
         errors = response.json().get("errors", [])
-        return "; ".join(f"{e.get('title')} - {e.get('detail')}" for e in errors) or response.text[:300]
+        parts = []
+        for e in errors:
+            parts.append(f"{e.get('title')} - {e.get('detail')}")
+            # Review refusals list the actual reasons here, per resource.
+            for resource, reasons in (e.get("meta", {}).get("associatedErrors") or {}).items():
+                for reason in reasons:
+                    parts.append(f"  [{resource.rsplit('/', 1)[0]}] {reason.get('detail') or reason.get('title')}")
+        return "\n    ".join(parts) or response.text[:300]
     except ValueError:
         return f"HTTP {response.status_code} {response.text[:300]}"
 
