@@ -36,6 +36,25 @@ A logged entry is never lost: not on a lost phone, an app update, a network fail
 5. Accidental delete: the entry comes back from trash within 30 days.
 6. Wrong edit: the previous version can be restored from history.
 7. Upgrade from 1.0 to the current version on a 5,000-entry database loses nothing.
-8. Bad network: a receipt upload fails three times, then arrives; the local copy is removed only after confirmation.
+8. Bad network: a receipt upload fails three times, then arrives; the photo stays on the phone throughout and after.
 9. Conflict: the same entry edited on two offline phones keeps both versions: the later edit shows, the other can be restored from history.
 10. Leaving Pro: after cancelling, every entry is visible and exports to CSV and ZIP.
+
+## Scenario → test
+
+Every scenario runs in CI (`.github/workflows/ios.yml`) on each pull request.
+
+| # | Scenario | Tests (`KinledgerTests/`) |
+| --- | --- | --- |
+| 1 | Offline | `DataSafetyTests.offlineEntriesAndReceiptsAllReachTheCloudLater` |
+| 2 | App killed mid-save | `StorageTests.failedWriteLeavesNothingHalfSaved`, `StorageTests.dataSurvivesReopeningTheFile`, `DataSafetyTests.uploadRepeatedAfterACrashMakesNoDuplicate` |
+| 3 | New phone | `SyncTests.newPhoneGetsEverythingBack` |
+| 4 | Lost phone | `SyncTests.newPhoneGetsEverythingBack` (second iPhone), `SyncTests.reportLinkRequests` (web report) |
+| 5 | Accidental delete | `StorageTests.deleteMovesToTrashAndRestoreBringsItBack`, `StorageTests.trashIsPurgedOnlyAfter30Days` |
+| 6 | Wrong edit | `StorageTests.editKeepsPreviousVersion`, `StorageTests.restoringAVersionKeepsTheReplacedOne` |
+| 7 | Upgrade on 5,000 entries | `DataSafetyTests.fiveThousandEntriesSurviveReopening`; after 1.0 ships, add its database as a fixture and open it with the current migrations |
+| 8 | Bad network | `DataSafetyTests.receiptUploadThatFailsThreeTimesArrivesOnTheFourth` |
+| 9 | Conflict | `SyncTests.editsOnTwoPhonesMeetWithoutLoss`, `SyncTests.newerCloudVersionWinsAndLocalGoesToHistory`, `SyncTests.olderCloudVersionNeverOverwritesThePhone` |
+| 10 | Leaving Pro | `DataSafetyTests.exportWorksWithoutPro` |
+
+Deleting the cloud account: `SyncTests.deleteAccountSendsTheAppleCode`. Manual checks on two devices: KAN-37.
