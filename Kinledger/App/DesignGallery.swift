@@ -106,6 +106,8 @@ struct DesignPresenter: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            // A pushed screen covers the app; hide what is underneath, as a real push does.
+            .accessibilityHidden(push != nil)
             .overlay {
                 if let push {
                     NavigationStack { push.content(model) }

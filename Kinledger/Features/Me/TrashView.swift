@@ -13,6 +13,7 @@ struct TrashView: View {
                                                               : AnyLayout(HStackLayout())
                     layout {
                         EntryRow(entry: item.entry)
+                            .fixedSize(horizontal: false, vertical: true)
                         Button("Restore") { model.restoreFromTrash(item.id) }
                             .font(.callout.weight(.semibold))
                             .buttonStyle(.borderless)

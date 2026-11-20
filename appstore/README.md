@@ -15,3 +15,5 @@ into the matching field in App Store Connect → App Information / version page.
 
 Locales: en-US, es-ES, fr-FR, de-DE, it, pt-BR, nl-NL, sv, da, no, pl, ru, uk, tr, ja, ko, zh-Hans, zh-Hant.
 The app itself ships the same 18 languages and follows the iPhone's language.
+
+For the rest of the version page: `app-privacy.md` has the App Privacy answers, `review-notes.md` the notes for App Review.
