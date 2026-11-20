@@ -110,7 +110,8 @@ def app_info_and_texts(asc: Client, app_id: str) -> None:
         present = declaration.get("attributes", {})
         answers = {key: "NONE" for key in AGE_ENUMS if key in present}
         answers |= {key: False for key in AGE_FLAGS if key in present}
-        answers |= {key: value for key, value in CONFIG["ageRating"].items() if key in present}
+        # Answers Apple added later may be required before they show up in the declaration.
+        answers |= CONFIG["ageRating"]
         patch(asc, "ageRatingDeclarations", declaration["id"], "age rating", answers)
 
     print("Name, subtitle and privacy link")
