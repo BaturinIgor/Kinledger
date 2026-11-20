@@ -7,8 +7,8 @@ A logged entry is never lost: not on a lost phone, an app update, a network fail
 | Layer | What we do |
 | --- | --- |
 | Phone | Every entry is written to local SQLite first, before any network call. |
-| Account | Sign in with Apple turns on backup; data belongs to the person, not the phone. Google sign-in comes with Android. |
-| Backend | Supabase (Postgres), not CloudKit, so the web report and a future Android app read the same data. Schema and rules: `supabase/`. |
+| Account | Sign in with Apple turns on backup; data belongs to the person, not the phone. No Google sign-in for now. |
+| Backend | Supabase (Postgres), not CloudKit, so the web report reads the same data and the backend is not tied to Apple. Schema and rules: `supabase/`. |
 | Sync | Upload two seconds after a change and when the app opens, retry every minute on failure. Every entry has a client-generated id, so retries never duplicate. An entry is marked synced only after the server confirms, and only if it was not edited meanwhile. |
 | Receipts | Photos upload before the entries that point to them, and the phone keeps its copy. A new phone downloads missing photos. |
 | Trash | Delete moves an entry to trash for 30 days. |

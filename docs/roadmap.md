@@ -7,12 +7,12 @@ Full plan with reasoning: [Kinledger: plan by version](https://claude.ai/artifac
 | 1.0 | before 2027-01-20 | iPhone only. Must have: log, money, monthly report, US medical-expense export, no data loss |
 | 1.1 | March 2027 | Family nearby: siblings reply to the report, second caregiver, reminders, several parents, UK/EU/CA/AU formats |
 | 1.2 | May 2027 | Faster: lock-screen timer, home widget, document vault, who-owes-whom, calendar sync, search |
-| Android | after 1.1, once iOS shows demand | Separate native app on the same backend and report page |
+| Android | not planned for now | Revisit only with a separate decision; the backend and report page stay platform-neutral |
 | 2.0 | autumn 2027 | Family account with roles, paid-helper hours, yearly report, plain-language monthly summary, Spanish |
 
 ## 1.0 must have
 
-- Onboarding: who you care for, sign in with Apple or Google.
+- Onboarding: who you care for, sign in with Apple (no Google sign-in for now).
 - Quick log in under 10 seconds: category, time, visit, note.
 - Expenses with payer (me / parent / repaid), medical flag and receipt photo.
 - Today: month totals for time, out of pocket and visits; recent entries.

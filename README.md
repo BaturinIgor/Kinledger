@@ -2,7 +2,7 @@
 
 A care log for the one person who looks after an aging parent. Log hours, expenses and visits in seconds; once a month, send siblings a private report they open in the browser, with no app and no account.
 
-iOS first, native SwiftUI (iOS 17+). Android comes later as a separate app.
+iPhone only, native SwiftUI (iOS 17+). No Android version is planned for now.
 
 ## Docs
 
