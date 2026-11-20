@@ -1,0 +1,80 @@
+{
+  "group": "Public beta",
+  "testers": 20,
+  "privacyPolicyUrl": "https://baturinigor.github.io/Kinledger/privacy",
+  "reviewNotes": "No sign-in needed. Enter any name on the first screen and start logging. Cloud backup (optional) uses Sign in with Apple. Pro is a subscription; in TestFlight purchases are free sandbox purchases.",
+  "texts": {
+    "en-US": {
+      "description": "Kinledger is a care journal for people looking after a parent. Log time, money and visits in a few taps, keep receipts, and share a calm monthly report with your family.",
+      "whatsNew": "Thank you for testing! Please try: set up who you care for, log a few entries with a receipt photo, share the monthly report, and turn on backup. Pro costs nothing in TestFlight. Take a screenshot in the app to send feedback."
+    },
+    "es-ES": {
+      "description": "Kinledger es un diario de cuidados para quienes cuidan de un padre o una madre. Registra tiempo, dinero y visitas en pocos toques, guarda los recibos y comparte cada mes un informe claro con tu familia.",
+      "whatsNew": "¡Gracias por probarla! Prueba esto: indica a quién cuidas, registra algunas entradas con foto del recibo, comparte el informe mensual y activa la copia de seguridad. Pro es gratis en TestFlight. Haz una captura de pantalla en la app para enviar comentarios."
+    },
+    "fr-FR": {
+      "description": "Kinledger est un journal d'aide pour ceux qui s'occupent d'un parent. Notez le temps, l'argent et les visites en quelques touches, gardez les reçus et partagez chaque mois un rapport clair avec votre famille.",
+      "whatsNew": "Merci de tester ! À essayer : indiquez la personne que vous aidez, ajoutez quelques entrées avec une photo de reçu, partagez le rapport mensuel et activez la sauvegarde. Pro est gratuit dans TestFlight. Faites une capture d'écran dans l'app pour envoyer un avis."
+    },
+    "de-DE": {
+      "description": "Kinledger ist ein Pflegetagebuch für alle, die sich um ein Elternteil kümmern. Zeit, Geld und Besuche mit wenigen Tippern erfassen, Belege aufbewahren und jeden Monat einen klaren Bericht mit der Familie teilen.",
+      "whatsNew": "Danke fürs Testen! Bitte ausprobieren: angeben, wen du pflegst, ein paar Einträge mit Belegfoto erfassen, den Monatsbericht teilen und das Backup einschalten. Pro kostet in TestFlight nichts. Mach in der App ein Bildschirmfoto, um Feedback zu senden."
+    },
+    "it": {
+      "description": "Kinledger è un diario di assistenza per chi si prende cura di un genitore. Registra tempo, denaro e visite in pochi tocchi, conserva le ricevute e condividi ogni mese un resoconto chiaro con la famiglia.",
+      "whatsNew": "Grazie per il test! Prova a: indicare chi assisti, registrare alcune voci con la foto della ricevuta, condividere il resoconto mensile e attivare il backup. Pro è gratuito in TestFlight. Fai uno screenshot nell'app per inviare un commento."
+    },
+    "pt-BR": {
+      "description": "Kinledger é um diário de cuidados para quem cuida de um pai ou de uma mãe. Registre tempo, dinheiro e visitas em poucos toques, guarde os recibos e compartilhe todo mês um relatório claro com a família.",
+      "whatsNew": "Obrigado por testar! Experimente: informe de quem você cuida, registre algumas entradas com foto do recibo, compartilhe o relatório mensal e ative o backup. O Pro é gratuito no TestFlight. Tire uma captura de tela no app para enviar comentários."
+    },
+    "nl-NL": {
+      "description": "Kinledger is een zorgdagboek voor wie voor een ouder zorgt. Leg tijd, geld en bezoeken vast in een paar tikken, bewaar bonnetjes en deel elke maand een helder verslag met je familie.",
+      "whatsNew": "Bedankt voor het testen! Probeer dit: geef aan voor wie je zorgt, leg een paar items vast met een foto van het bonnetje, deel het maandverslag en zet de back-up aan. Pro is gratis in TestFlight. Maak een schermafbeelding in de app om feedback te sturen."
+    },
+    "sv": {
+      "description": "Kinledger är en omsorgsdagbok för dig som tar hand om en förälder. Logga tid, pengar och besök med några tryck, spara kvitton och dela en tydlig månadsrapport med familjen.",
+      "whatsNew": "Tack för att du testar! Prova att: ange vem du tar hand om, logga några poster med kvittofoto, dela månadsrapporten och slå på säkerhetskopian. Pro är gratis i TestFlight. Ta en skärmbild i appen för att skicka feedback."
+    },
+    "da": {
+      "description": "Kinledger er en omsorgsdagbog til dig, der passer en forælder. Registrer tid, penge og besøg med få tryk, gem kvitteringer, og del en klar månedsrapport med familien.",
+      "whatsNew": "Tak fordi du tester! Prøv at: angive hvem du passer, registrere et par poster med foto af kvitteringen, dele månedsrapporten og slå backup til. Pro er gratis i TestFlight. Tag et skærmbillede i appen for at sende feedback."
+    },
+    "no": {
+      "description": "Kinledger er en omsorgsdagbok for deg som tar vare på en forelder. Registrer tid, penger og besøk med noen trykk, ta vare på kvitteringer og del en oversiktlig månedsrapport med familien.",
+      "whatsNew": "Takk for at du tester! Prøv å: angi hvem du tar vare på, registrere noen oppføringer med bilde av kvitteringen, dele månedsrapporten og slå på sikkerhetskopi. Pro er gratis i TestFlight. Ta et skjermbilde i appen for å sende tilbakemelding."
+    },
+    "pl": {
+      "description": "Kinledger to dziennik opieki dla osób, które opiekują się rodzicem. Zapisuj czas, pieniądze i wizyty kilkoma dotknięciami, przechowuj paragony i co miesiąc udostępniaj rodzinie przejrzysty raport.",
+      "whatsNew": "Dziękujemy za testowanie! Spróbuj: wskaż, kim się opiekujesz, dodaj kilka wpisów ze zdjęciem paragonu, udostępnij raport miesięczny i włącz kopię zapasową. Pro jest bezpłatne w TestFlight. Zrób zrzut ekranu w aplikacji, aby wysłać opinię."
+    },
+    "ru": {
+      "description": "Kinledger — дневник заботы для тех, кто ухаживает за родителем. Записывайте время, деньги и визиты в пару касаний, храните чеки и раз в месяц делитесь с семьёй понятным отчётом.",
+      "whatsNew": "Спасибо, что тестируете! Попробуйте: укажите, о ком заботитесь, добавьте несколько записей с фото чека, поделитесь месячным отчётом и включите резервную копию. Pro в TestFlight бесплатен. Чтобы отправить отзыв, сделайте снимок экрана в приложении."
+    },
+    "uk": {
+      "description": "Kinledger — щоденник турботи для тих, хто доглядає за батьками. Записуйте час, гроші та візити кількома дотиками, зберігайте чеки й щомісяця діліться з родиною зрозумілим звітом.",
+      "whatsNew": "Дякуємо за тестування! Спробуйте: вкажіть, про кого дбаєте, додайте кілька записів із фото чека, поділіться місячним звітом і ввімкніть резервну копію. Pro у TestFlight безкоштовний. Щоб надіслати відгук, зробіть знімок екрана в застосунку."
+    },
+    "tr": {
+      "description": "Kinledger, annesine ya da babasına bakanlar için bir bakım günlüğüdür. Zamanı, parayı ve ziyaretleri birkaç dokunuşla kaydedin, fişleri saklayın ve her ay ailenizle anlaşılır bir rapor paylaşın.",
+      "whatsNew": "Test ettiğiniz için teşekkürler! Şunları deneyin: kime baktığınızı girin, fiş fotoğrafıyla birkaç kayıt ekleyin, aylık raporu paylaşın ve yedeklemeyi açın. Pro, TestFlight'ta ücretsizdir. Geri bildirim göndermek için uygulamada ekran görüntüsü alın."
+    },
+    "ja": {
+      "description": "Kinledgerは、親の介護をする人のための介護記録アプリです。時間・お金・訪問を数タップで記録し、レシートを保存して、毎月わかりやすいレポートを家族と共有できます。",
+      "whatsNew": "テストへのご協力ありがとうございます。お試しください：介護している方を設定し、レシート写真付きで記録をいくつか追加し、月次レポートを共有し、バックアップをオンにしてください。TestFlightではProは無料です。アプリ内でスクリーンショットを撮るとフィードバックを送れます。"
+    },
+    "ko": {
+      "description": "Kinledger는 부모님을 돌보는 분들을 위한 돌봄 일지입니다. 시간, 비용, 방문을 몇 번의 탭으로 기록하고 영수증을 보관하며, 매달 가족과 깔끔한 보고서를 공유하세요.",
+      "whatsNew": "테스트해 주셔서 감사합니다! 이렇게 해 보세요: 돌보는 분을 설정하고, 영수증 사진과 함께 기록을 몇 개 추가하고, 월간 보고서를 공유하고, 백업을 켜 보세요. TestFlight에서는 Pro가 무료입니다. 앱에서 스크린샷을 찍으면 피드백을 보낼 수 있습니다."
+    },
+    "zh-Hans": {
+      "description": "Kinledger 是为照顾父母的人设计的照护日记。轻点几下即可记录时间、花费和探望，保存收据，并每月与家人分享一份清晰的报告。",
+      "whatsNew": "感谢参与测试！请试试：设置你照顾的人，添加几条带收据照片的记录，分享月度报告，并开启备份。在 TestFlight 中 Pro 免费。在应用中截屏即可发送反馈。"
+    },
+    "zh-Hant": {
+      "description": "Kinledger 是為照顧父母的人設計的照護日記。輕點幾下即可記錄時間、花費和探望，保存收據，並每月與家人分享一份清楚的報告。",
+      "whatsNew": "感謝參與測試！請試試：設定你照顧的人，新增幾筆附收據照片的紀錄，分享月度報告，並開啟備份。在 TestFlight 中 Pro 免費。在 App 中截圖即可傳送意見回饋。"
+    }
+  }
+}
