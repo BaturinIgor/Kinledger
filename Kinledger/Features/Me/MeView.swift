@@ -3,6 +3,7 @@ import SwiftUI
 struct MeView: View {
     @Environment(AppModel.self) private var model
     @Environment(ProStore.self) private var pro
+    @Environment(ReportReminderCenter.self) private var reminders
     @State private var showPaywall = false
     @State private var shared: SharedFile?
 
@@ -64,6 +65,9 @@ struct MeView: View {
                             Label("Trash", systemImage: "trash")
                         }
                     }
+                    Toggle(isOn: reminderBinding) {
+                        Label("Remind me on the 1st to send the report", systemImage: "bell")
+                    }
                     Label("Notes are private by default", systemImage: "lock")
                     Link(destination: Links.privacy) {
                         Label("Privacy Policy", systemImage: "hand.raised")
@@ -84,6 +88,22 @@ struct MeView: View {
             .sheet(item: $shared) { file in ShareSheet(items: [file.url]) }
             .sheet(isPresented: $showPaywall) { PaywallView() }
         }
+    }
+}
+
+extension MeView {
+    /// On asks iOS for permission; if notifications are off for Kinledger, the switch stays off.
+    private var reminderBinding: Binding<Bool> {
+        Binding(
+            get: { reminders.isOn },
+            set: { on in
+                if on {
+                    Task { await reminders.turnOn(entries: model.entries) }
+                } else {
+                    reminders.turnOff()
+                }
+            }
+        )
     }
 }
 
