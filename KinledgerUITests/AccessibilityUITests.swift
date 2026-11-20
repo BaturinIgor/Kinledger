@@ -57,6 +57,8 @@ final class AccessibilityUITests: XCTestCase {
                         if let element = issue.element {
                             // Content under a sheet is dimmed and covered; the audit still sees it.
                             if !element.isHittable { return true }
+                            // WCAG 1.4.3 exempts inactive controls, like Save before a name is typed.
+                            if issue.auditType == .contrast, !element.isEnabled { return true }
                             // System bar buttons keep their size; iOS shows them in the large content viewer.
                             if issue.auditType == .dynamicType, navBar.exists, navBar.frame.intersects(element.frame) { return true }
                         }

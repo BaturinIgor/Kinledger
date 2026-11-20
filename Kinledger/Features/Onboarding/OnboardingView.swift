@@ -44,7 +44,6 @@ struct OnboardingView: View {
                     if step == 1 {
                         PrimaryButton(title: String(localized: "Next")) { step = 2 }
                             .disabled(!canContinue)
-                            .opacity(canContinue ? 1 : 0.5)
                     } else {
                         PrimaryButton(title: String(localized: "Start logging"), action: finish)
                         Button("I'll add them later", action: finish)
@@ -161,7 +160,12 @@ struct RecipientEditor: View {
             }
             LabeledField(label: String(localized: "Name")) { TextField("Dave", text: $person.name) }
             LabeledField(label: String(localized: "Phone or email")) {
-                TextField("dave@example.com", text: $person.contact)
+                // Wraps instead of cutting a long address at large text sizes; Return adds no new line.
+                TextField("dave@example.com", text: $person.contact, axis: .vertical)
+                    .lineLimit(1...3)
+                    .onChange(of: person.contact) { _, text in
+                        if text.contains("\n") { person.contact = text.replacingOccurrences(of: "\n", with: "") }
+                    }
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
             }

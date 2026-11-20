@@ -31,6 +31,7 @@ struct EntryRow: View {
                     .font(.subheadline)
                     .foregroundStyle(Palette.textSecondary)
                     .lineLimit(large ? 3 : 1)
+                    .fixedSize(horizontal: false, vertical: large)
             }
             if !large { Spacer(minLength: 0) }
             VStack(alignment: large ? .leading : .trailing, spacing: 2) {

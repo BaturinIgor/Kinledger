@@ -22,6 +22,9 @@ struct TaxExportView: View {
                     Text(profile.money(summary.totalCents))
                         .font(.largeTitle.weight(.semibold))
                         .foregroundStyle(Palette.money)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .accessibilityLabel(Text("Medical expenses: \(profile.money(summary.totalCents))"))
                     Text("Paid by you and marked medical. \(summary.expenses.count) expenses, \(summary.withReceipt) with receipts.")
                         .foregroundStyle(Palette.text)
                     if summary.withoutReceipt > 0 {

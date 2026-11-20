@@ -1,0 +1,40 @@
+name: Supabase migrations
+
+# Starts an empty local Supabase (Postgres, auth, storage) and applies every migration
+# from scratch, then runs the database linter. Catches a migration that only works on
+# the production database because of something applied by hand (KAN-55).
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "supabase/**"
+      - ".github/workflows/supabase.yml"
+  push:
+    branches: [main]
+    paths:
+      - "supabase/**"
+
+jobs:
+  migrations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start an empty Supabase and apply all migrations
+        # Only what the migrations need: Postgres, auth and storage.
+        run: supabase start -x realtime,studio,imgproxy,mailpit,edge-runtime,logflare,vector,supavisor,postgres-meta
+
+      - name: Apply the migrations again from scratch
+        run: supabase db reset --local
+
+      - name: Lint the database
+        run: supabase db lint --local --level error --fail-on error
+
+      - name: Stop
+        if: always()
+        run: supabase stop --no-backup
