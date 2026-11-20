@@ -55,6 +55,8 @@ final class ProStore {
     }
 
     func refreshEntitlements() async {
+        // Mockups show Pro from a launch flag; the simulator has no purchases.
+        if DesignFlags.pro { return }
         var owned: Set<String> = []
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result, transaction.revocationDate == nil {

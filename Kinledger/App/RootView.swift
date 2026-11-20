@@ -5,7 +5,7 @@ struct RootView: View {
     enum Tab: Hashable { case today, log, add, report, me }
 
     @Environment(AppModel.self) private var model
-    @State private var selection: Tab = .today
+    @State private var selection: Tab = DesignFlags.initialTab
     @State private var isLogging = false
 
     var body: some View {
