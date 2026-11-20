@@ -1,0 +1,25 @@
+name: App Store submit
+
+# Run from the Actions tab once the listing is filled and a build is processed.
+# Attaches the newest 1.0 build, adds the subscriptions and sends the version to App Review.
+# Release stays manual after approval. Script: appstore/submit_review.py.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "pyjwt[crypto]==2.9.0" requests==2.32.3
+      - name: Send to App Review
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+        run: python appstore/submit_review.py
