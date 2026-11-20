@@ -71,6 +71,13 @@ struct MeView: View {
                     Link(destination: Links.support) {
                         Label("Help and contact", systemImage: "questionmark.circle")
                     }
+                    Button {
+                        if let url = Diagnostics.shared.makeReport(app: .current) { shared = SharedFile(url: url) }
+                    } label: {
+                        Label("Send diagnostics", systemImage: "stethoscope")
+                    }
+                } footer: {
+                    Text("Crash reports stay on this iPhone until you send them. They contain no entries, amounts or names.")
                 }
             }
             .navigationTitle("Me")
