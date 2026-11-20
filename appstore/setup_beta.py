@@ -50,12 +50,16 @@ def main() -> None:
     build = wait_for_build(asc, app_id, env("BUILD_NUMBER"))
     build_id = build["id"]
 
-    contact_email = env("REVIEW_EMAIL")
-    feedback = env("FEEDBACK_EMAIL", contact_email)
+    # The contact and feedback email may come from secrets or be typed in App Store Connect.
+    detail = get_one(asc, f"/v1/apps/{app_id}/betaAppReviewDetail")
+    typed = (detail or {}).get("attributes", {})
+    contact_email = env("REVIEW_EMAIL", typed.get("contactEmail") or "")
 
     print("Test information in every language")
     have, _ = asc.get_all(f"/v1/apps/{app_id}/betaAppLocalizations")
     by_locale = {item["attributes"]["locale"]: item for item in have}
+    typed_feedback = next((i["attributes"].get("feedbackEmail") for i in have if i["attributes"].get("feedbackEmail")), "")
+    feedback = env("FEEDBACK_EMAIL", typed_feedback or contact_email)
     for locale, texts in BETA["texts"].items():
         attributes = {"description": texts["description"], "privacyPolicyUrl": BETA["privacyPolicyUrl"]}
         if feedback:
@@ -76,7 +80,6 @@ def main() -> None:
                ("build", ref("builds", build_id)), f"what to test {locale}")
 
     print("Contact for beta review")
-    detail = get_one(asc, f"/v1/apps/{app_id}/betaAppReviewDetail")
     attributes = {"notes": BETA["reviewNotes"], "demoAccountRequired": False}
     for field, name in {"contactFirstName": "REVIEW_FIRST_NAME", "contactLastName": "REVIEW_LAST_NAME",
                         "contactPhone": "REVIEW_PHONE", "contactEmail": "REVIEW_EMAIL"}.items():
@@ -104,7 +107,7 @@ def main() -> None:
 
     print("Beta review")
     if not contact_email:
-        problems.append("beta review needs a contact: set REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL")
+        problems.append("beta review needs a contact: TestFlight → Test Information → Beta App Review Information")
     elif get_one(asc, f"/v1/builds/{build_id}/betaAppReviewSubmission"):
         print("  already sent")
     elif asc.create("betaAppReviewSubmissions", {}, {"build": ref("builds", build_id)}, "beta review"):
